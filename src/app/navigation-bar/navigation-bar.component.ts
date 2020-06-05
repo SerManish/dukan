@@ -10,7 +10,7 @@ export class NavigationBarComponent implements OnInit {
   @ViewChild('navToggle') navToggleElement: ElementRef;
   @Output() onExpandToggle = new EventEmitter<boolean>();
   isExpanded: boolean = false;
-  isLoggedIn: boolean = false;
+  isLoggedIn: boolean = true;
 
   constructor() { }
 
