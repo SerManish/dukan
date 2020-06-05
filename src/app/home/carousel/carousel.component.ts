@@ -23,7 +23,7 @@ export class CarouselComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    setInterval(this.slideLeft.bind(this), 5000);
+    setInterval(this.slideRight.bind(this), 5000);
   }
 
   slideLeft()
