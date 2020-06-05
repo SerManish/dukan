@@ -1,0 +1,15 @@
+<div class="carousel">
+    <span *ngFor="let image of images;index as i">
+        <img class="slide" [src]="images[i]" *ngIf="i === currentSlide" @carouselAnimation>
+    </span>
+    
+    <button class="control prev">
+        <span class="arrow left" (click)="slideLeft()"></span>
+    </button>
+    <button class="control next">
+        <span class="arrow right" (click)="slideRight()"></span>
+    </button>
+</div>
+
+
+
