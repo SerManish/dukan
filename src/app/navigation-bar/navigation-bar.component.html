@@ -1,18 +1,18 @@
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">Dukan</a>
     
-    <button class="navbar-toggler" type="button">
+    <button class="navbar-toggler" type="button" (click)="onNavToggle()">
       <span class="navbar-toggler-icon"></span>
     </button>
   
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item nav-link">
-            <input class="searchbar form-control my-2 my-sm-0" placeholder="Search">
+    <div class="collapse navbar-collapse row" #navToggle>
+      <ul class="navbar-nav col-12 justify-content-end">
+        <li class="nav-item nav-link mx-auto">
+            <input class="searchbar form-control" placeholder="Search Product">
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">
-            <button class=" btn btn-outline-light my-2 my-sm-0" type="button">Login</button>
+            <button class=" btn btn-outline-light loginbtn" type="button">Login</button>
           </a>
         </li>
       </ul>

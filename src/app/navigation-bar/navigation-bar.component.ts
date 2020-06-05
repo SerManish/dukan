@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationBarComponent implements OnInit {
 
+  @ViewChild('navToggle') navToggleElement: ElementRef;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  onNavToggle(){
+    this.navToggleElement.nativeElement.style.display = this.navToggleElement.nativeElement.style.display == '' ? 'inline-block':''; 
   }
 
 }
