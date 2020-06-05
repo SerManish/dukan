@@ -7,5 +7,9 @@ import { Component, Input } from '@angular/core';
 })
 export class AppComponent {
   title = 'dukan';
-  @Input() isExpanded: boolean = false;
+  isExpanded: boolean = false;
+
+  onExpandToggle(expanded: boolean){
+    this.isExpanded = expanded;
+  }
 }

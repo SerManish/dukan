@@ -1,4 +1,4 @@
-<app-navigation-bar></app-navigation-bar>
+<app-navigation-bar (onExpandToggle) = "onExpandToggle($event)"></app-navigation-bar>
 <div [ngClass]="{ 'collapsed': !isExpanded, 'expanded': isExpanded}">
     <app-home></app-home>
 </div>

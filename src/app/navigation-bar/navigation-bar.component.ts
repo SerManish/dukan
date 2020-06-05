@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -8,8 +8,9 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 export class NavigationBarComponent implements OnInit {
 
   @ViewChild('navToggle') navToggleElement: ElementRef;
-  isLoggedIn: boolean = false;
+  @Output() onExpandToggle = new EventEmitter<boolean>();
   isExpanded: boolean = false;
+  isLoggedIn: boolean = false;
 
   constructor() { }
 
@@ -22,7 +23,7 @@ export class NavigationBarComponent implements OnInit {
 
   onNavToggle(){
     this.isExpanded = !this.isExpanded;
-    
+    this.onExpandToggle.emit(this.isExpanded); 
     this.navToggleElement.nativeElement.style.display = this.navToggleElement.nativeElement.style.display == 'none' ? 'inline-block':'none'; 
   }
 
