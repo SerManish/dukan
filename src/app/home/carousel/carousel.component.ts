@@ -20,24 +20,39 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class CarouselComponent implements OnInit {
   @Input() images:string[] = [];
   currentSlide = 0;
+  timer:any;
   constructor() { }
 
   ngOnInit(): void {
-    setInterval(this.slideRight.bind(this), 5000);
+    this.timer = setInterval(this.rightSlider.bind(this), 10000);
   }
 
-  slideLeft()
+  leftSlider()
+  {
+    this.currentSlide--;
+    if(this.currentSlide==-1)
+      this.currentSlide = this.images.length-1;
+  }
+
+  rightSlider()
   {
     this.currentSlide++;
     if(this.currentSlide==this.images.length)
       this.currentSlide = 0;
   }
 
+  slideLeft()
+  {
+    clearTimeout(this.timer);
+    this.leftSlider();
+    this.timer = setInterval(this.rightSlider.bind(this), 10000);
+  }
+
   slideRight()
   {
-    this.currentSlide--;
-    if(this.currentSlide==-1)
-      this.currentSlide = this.images.length-1;
+    clearTimeout(this.timer);
+    this.rightSlider();
+    this.timer = setInterval(this.rightSlider.bind(this), 10000);
   }
 
 }
