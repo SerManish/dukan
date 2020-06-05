@@ -13,6 +13,12 @@ export class HomeComponent implements OnInit {
    "../assets/images/carousal2.jpg"
   ];
 
+  products = [
+    {name:'Product X',imagePath:'../assets/images/carousal0.jpg'},
+    {name:'Product Y',imagePath:'../assets/images/carousal1.jpg'},
+    {name:'Product Z',imagePath:'../assets/images/carousal2.jpg'}
+  ]
+
   constructor() { }
 
   ngOnInit(): void {

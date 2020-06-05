@@ -1,6 +1,5 @@
 .carousel{
   display: block;
-  background-color: antiquewhite;
   height: 50vh;
 }
 
@@ -11,7 +10,6 @@
   top: 0;
   left : 15vw;
 }
-
 
 .control {
   border: none;
@@ -55,4 +53,24 @@
 .arrow.right {
     transform: rotate(225deg);
   }
-  
+ 
+/* Small Screen*/
+
+@media (max-width: 576px)
+{
+
+  .slide {
+    height: 50vh;
+    width: 100vw;
+    position: absolute;
+    top: 0;
+    left : 0vw;
+  }
+  .control.next {
+    right: 0vw;
+  }
+  .control.prev {
+    left: 0vw;
+  }
+
+}

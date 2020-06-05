@@ -1,0 +1,14 @@
+.products{
+    margin: 1rem;
+    transition: 150ms cubic-bezier(0.25, 0.46, 0.45, 0.84);
+    cursor: pointer;
+}
+
+.products img {
+    padding : 1rem;
+}
+
+.products:Hover{
+    background-color: rgb(211, 208, 208);
+    transform: scale(1.025);
+}
