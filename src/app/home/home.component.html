@@ -1,13 +1,12 @@
-<div class="home">
-    <app-carousel [images]="carouselImages"></app-carousel>
-    <div class="container">
-        <div class="row">
-            <ng-container *ngFor="let product of products">
-                <div class="col-12 col-md-4 text-center">
-                    <app-home-products [productDetails]="product"></app-home-products>
-                </div>
-            </ng-container>
-        </div>
+<app-carousel [images]="carouselImages"></app-carousel>
+<div class="container">
+    <div class="row">
+        <ng-container *ngFor="let product of products">
+            <div class="col-12 col-md-4 text-center">
+                <app-home-products [productDetails]="product"></app-home-products>
+            </div>
+        </ng-container>
     </div>
 </div>
+
 

@@ -1,10 +1,14 @@
 .searchbar {
-    width: 40vw;
+    width: 35vw;
     border-radius: 20px;
 }
 
 .collapsed-element {
     width: auto;
+}
+
+.nav {
+    margin-bottom: 600px;
 }
 
 
