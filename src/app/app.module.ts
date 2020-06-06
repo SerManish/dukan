@@ -3,9 +3,11 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { HomeModule} from './home/home.module';
+import { ProductListModule } from './product-list/product-list.module';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +17,8 @@ import { AppRoutingModule } from './app-routing.module';
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+    ProductListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
