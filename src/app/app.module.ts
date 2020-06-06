@@ -2,22 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
-import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { HomeProductsComponent } from './home/home-products/home-products.component';
-import { CarouselComponent } from './home/carousel/carousel.component';
+import { HomeModule} from './home/home.module';
 
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    HomeProductsComponent,
-    CarouselComponent
+    AppComponent
   ],
   imports: [
     BrowserAnimationsModule,
-    BrowserModule
+    BrowserModule,
+    AppRoutingModule,
+    HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
