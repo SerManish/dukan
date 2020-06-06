@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'dukan';
+  isExpanded: boolean = false;
+
+  onExpandToggle(expanded: boolean){
+    this.isExpanded = expanded;
+  }
 }

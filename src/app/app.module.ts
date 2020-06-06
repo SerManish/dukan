@@ -7,7 +7,6 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { HomeComponent } from './home/home.component';
 import { HomeProductsComponent } from './home/home-products/home-products.component';
 import { CarouselComponent } from './home/carousel/carousel.component';
-import { from } from 'rxjs';
 
 
 @NgModule({

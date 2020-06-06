@@ -1,18 +1,30 @@
-<nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
     <a class="navbar-brand" href="#">Dukan</a>
     
+
+    <li class="nav-item nav-link navbar-nav mx-auto">
+      <input class="searchbar form-control" placeholder="Search Product">
+    </li>
+
     <button class="navbar-toggler" type="button" (click)="onNavToggle()">
       <span class="navbar-toggler-icon"></span>
     </button>
   
-    <div class="collapse navbar-collapse row" #navToggle>
+    <div class="col-md-1 collapse navbar-collapse" #navToggle>
       <ul class="navbar-nav col-12 justify-content-end">
-        <li class="nav-item nav-link mx-auto">
-            <input class="searchbar form-control" placeholder="Search Product">
-        </li>
-        <li class="nav-item">
+        <li class="nav-item collapsed-element" *ngIf="!isLoggedIn">
           <a class="nav-link" href="#">
-            <button class=" btn btn-outline-light loginbtn" type="button">Login</button>
+            <button class=" btn btn-outline-light collapsed-element" type="button">Login</button>
+          </a>
+        </li>
+        <li class="nav-item collapsed-element" *ngIf="isLoggedIn">
+          <a class="nav-link" href="#">
+            <button class=" btn btn-outline-light collapsed-element" type="button">Cart</button>
+          </a>
+        </li>
+        <li class="nav-item collapsed-element" *ngIf="isLoggedIn">
+          <a class="nav-link" href="#">
+            <button class=" btn btn-outline-light collapsed-element" type="button">Logout</button>
           </a>
         </li>
       </ul>

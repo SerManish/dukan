@@ -1,19 +1,23 @@
 .searchbar {
-    width: 40vw;
+    width: 35vw;
     border-radius: 20px;
 }
 
-.loginbtn {
+.collapsed-element {
     width: auto;
 }
 
+.nav {
+    margin-bottom: 600px;
+}
 
-@media only screen and (max-width: 768px) {
+
+@media only screen and (max-width: 767px) {
     .searchbar {
         width: 50vw;
     }
 
-    .loginbtn {
+    .collapsed-element {
         width: 50vw;
         margin: auto;
     }
