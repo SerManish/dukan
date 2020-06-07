@@ -6,7 +6,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 999;
+    z-index: 9;
 }
 
 .logo {
@@ -46,31 +46,37 @@
 }
 
 .nav-links button {
-  width: 30%;
-  padding: 2px;
+  width: 40%;
+  padding: 8px;
   background: #1b1b1b;
   color: white;
-  font-size: 27px;
+  font-size: 15px;
   border: 1px transparent;
   cursor: pointer;
 }
   
 .nav-links :hover {
   background: #f8bac7;
+  letter-spacing: 3px ;
+  transition: letter-spacing ease-in-out 0.5s;
 }
 
 @media only screen and (max-width: 576px) {
 
   .nav-links button {
-    width: 48%;
+    width: 55%;
   }
 
   .search button {
-    width: 30%;
+    width: 45%;
   }
 }
 
 @media only screen and (max-width: 768px) {
+
+  #nav {
+    height: 20vh;
+  }
 
   .nav-links button {
     width: 37%;

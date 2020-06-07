@@ -1,15 +1,19 @@
 <div class="row no-gutters align-items-center" id="nav">
-    <div class="col">
+    <div class="col-sm-6 col-md-3">
         <img class="logo" src="../../assets/images/logowhite.svg" alt="brand-logo">       
     </div>
-    <div class="col-6">
+    <div class="col-sm-6 col-md-6">
         <div class="search">
             <input type="text" placeholder="Search product">
             <button><i class="fa fa-search"></i></button>
         </div>
     </div>
-    <div class="col-3 nav-links">
-        <button><i class="fa fa-cart-plus"></i></button>
-        <button><i class="fa fa-user-circle"></i></button>
+    <div class="col-sm-12 col-md-3 nav-links" *ngIf="isLoggedIn">
+        <button>CART</button>
+        <button>LOGOUT</button>
+    </div>
+    <div class="col-sm-12 col-md-3 nav-links" *ngIf="!isLoggedIn">
+        <button>LOGIN</button>
+        <button>SIGNUP</button>
     </div>
 </div>
