@@ -1,0 +1,103 @@
+#nav {
+    height: 10vh;
+    background-color: black;
+    color: white;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9;
+}
+
+.logo {
+  height: 7vh;
+  width: 100%;
+}
+
+.search {
+  text-align: center;
+  margin: auto;
+}
+
+.search input[type=text] {
+  padding: 8px;
+  font-size: 15px;
+  border: 1px transparent;
+  width: 70%;
+  background: #f1f1f1;
+}
+  
+.search button {
+  width: 20%;
+  padding: 8px;
+  background: #1b1b1b;
+  color: white;
+  font-size: 15px;
+  border: 1px transparent;
+  cursor: pointer;
+}
+  
+.search :hover{
+  background: #f8bac7;
+}
+
+.nav-links {
+  text-align: right;
+  padding-right: 3vw;
+  font-family: 'Fjalla One', sans-serif;
+}
+
+.nav-links button {
+  width: 35%;
+  padding: 8px;
+  background: #1b1b1b;
+  color: white;
+  font-size: 15px;
+  border: 1px transparent;
+  cursor: pointer;
+}
+  
+.nav-links :hover {
+  background: #f8bac7;
+  letter-spacing: 3px ;
+  transition: letter-spacing ease-in-out 0.5s;
+}
+
+@media only screen and (max-width: 576px) {
+
+  .nav-links {
+    text-align: center;
+  }
+
+  .nav-links button {
+    width: 55%;
+  }
+
+  .search button {
+    width: 45%;
+  }
+
+  .search input[type=text] {
+    width: 60%;
+  }
+
+}
+
+@media only screen and (max-width: 768px) {
+
+  #nav {
+    height: 20vh;
+  }
+
+  .nav-links {
+    text-align: center;
+  }
+
+  .nav-links button {
+    width: 37%;
+  }
+
+  .search button {
+    width: 25%;
+  }
+}
