@@ -1,0 +1,7 @@
+.filter{
+    position: fixed;
+}
+.productlist{
+    position: absolute;
+    left:20vw;
+}

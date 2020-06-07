@@ -1,0 +1,25 @@
+.listimage{
+    height: 100%;
+    width: 100%;
+}
+
+.display-4{
+    font-size: 2rem;
+}
+
+.item{
+    margin: 1rem 0rem 1rem 0rem;
+    border: 2px #A9A9A9 solid;
+    background-color: #EFEFEF;
+}
+
+.addtocart{
+    background-color: #D5D5D5;
+    padding: 0.5rem;
+    width:100%;
+}
+
+.addtocart:hover{
+    background-color: #96858F;
+    color: white;
+}
