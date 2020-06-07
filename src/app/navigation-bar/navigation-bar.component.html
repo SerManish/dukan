@@ -2,18 +2,18 @@
     <div class="col-sm-6 col-md-3">
         <img class="logo" src="../../assets/images/logowhite.svg" alt="brand-logo">       
     </div>
-    <div class="col-sm-6 col-md-6">
+    <div class="col-sm-5 col-md-5">
         <div class="search">
             <input type="text" placeholder="Search product">
             <button><i class="fa fa-search"></i></button>
         </div>
     </div>
-    <div class="col-sm-12 col-md-3 nav-links" *ngIf="isLoggedIn">
+    <div class="col-sm-12 col-md-4 nav-links" *ngIf="isLoggedIn">
         <button>CART</button>
         <button>LOGOUT</button>
     </div>
-    <div class="col-sm-12 col-md-3 nav-links" *ngIf="!isLoggedIn">
-        <button>LOGIN</button>
+    <div class="col-sm-12 col-md-4 nav-links" *ngIf="!isLoggedIn">
         <button>SIGNUP</button>
+        <button>LOGIN</button>
     </div>
 </div>
