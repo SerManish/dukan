@@ -4,10 +4,9 @@
             <app-filter></app-filter>
         </div>
         <div class="col-12 col-md-9 productlist">
-            <app-product-list-item></app-product-list-item>
-            <app-product-list-item></app-product-list-item>
-            <app-product-list-item></app-product-list-item>
-            <app-product-list-item></app-product-list-item>
+            <ng-container *ngFor="let result of searchResult">
+                <app-product-list-item [product]="result"></app-product-list-item>
+            </ng-container>
         </div>
     </div>
 </div>
