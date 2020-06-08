@@ -1,7 +1,42 @@
-.filter{
+.filter
+{
     position: fixed;
+    top: 20vh;
+    padding: 0rem 1rem 0rem 1rem;
+    z-index: 500;
+    background-color: grey;
+    color: whitesmoke;
+    width: 20vw;
+    left: 2vw;
+    border-radius: 0.3rem;
 }
-.productlist{
+.productlist
+{
     position: absolute;
-    left:20vw;
+    left:25vw;
+    z-index: -500;
+    width: 70vw;
+}
+
+
+/* Small Screen CSS*/
+
+@media (max-width: 576px)
+{
+    .productlist
+    {
+        position : absolute;
+        padding: 0rem 1rem 0rem 1rem;
+        left: 0vw;
+        top: 28vh;
+        width: 100%;
+    }
+
+    .filter
+    {
+        width: 100%;
+        left: 0vw;
+        border-radius: 0rem;
+    }
+    
 }
