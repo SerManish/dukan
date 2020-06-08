@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CartComponent } from './cart.component';
 import { CartListComponent } from './cart-list/cart-list.component';
-import { CartListItemComponent } from './cart-list-item/cart-list-item.component';
+import { CartListItemComponent } from './cart-list/cart-list-item/cart-list-item.component';
 import { AddressComponent } from './address/address.component';
 import { PaymentModeComponent } from './payment-mode/payment-mode.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';

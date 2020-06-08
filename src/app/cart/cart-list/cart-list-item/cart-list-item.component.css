@@ -1,0 +1,22 @@
+.item
+{
+    background-color: khaki;
+    height: 12vh;
+    padding: 1vh 0.5rem;
+    border:2px black solid;
+}
+
+.listimage
+{
+    height: 8vh;
+    width: 8vh;
+    margin: 0rem;
+}
+
+.serial
+{
+    background-color: chocolate;
+    font-weight: 500;
+    font-size: 2rem;
+    padding: 0.6rem 0rem ;
+}
