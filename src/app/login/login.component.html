@@ -1,0 +1,56 @@
+<div class="screen-container">
+    <div class="form-wrap">
+        <div class="flex-container">
+            <div
+            [ngClass]="{ 'cur-mode':isLoginMode }"
+            (click)="switchToLogin(true)"
+            type="button">Login</div>
+            
+            <div
+            [ngClass]="{ 'cur-mode':!isLoginMode }"
+            (click)="switchToLogin(false)"
+            type="button">Signup</div>
+        </div>
+        <form class="d-form" (ngSubmit)="onSubmit(authForm)" #authForm="ngForm" *ngIf="!isLoading">
+            <div class="form-group" *ngIf="!isLoginMode">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name"
+                ngModel
+                required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">E-Mail</label>
+                <input type="email" class="form-control" name="email" id="email"
+                ngModel
+                email
+                required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" class="form-control" name="password" id="password"
+                ngModel
+                required
+                minlength="6">
+            </div>
+            <div *ngIf="!isLoginMode">
+                <label>Gender: </label>
+                <div class="radio gender" *ngFor = "let gender of genders">
+                    <input type="radio" 
+                    name="gender" 
+                    ngModel 
+                    [value]="gender" 
+                    required> 
+                    {{gender}}
+                </div>
+            </div>
+                
+            <div class="row justify-content-center mt-3">
+                <button class="btn btn-success submit-btn"
+                type="submit"
+                [disabled]="!authForm.valid"> {{isLoginMode?'Login':'Signup'}} </button>
+            </div>
+        </form>
+    </div>
+</div>

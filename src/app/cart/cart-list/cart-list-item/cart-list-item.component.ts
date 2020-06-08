@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductList } from 'src/app/product-list/product-list.modal';
+import { ProductList } from 'src/app/product-list/product-list.model';
 
 @Component({
   selector: '[table-row]',
