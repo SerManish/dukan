@@ -1,0 +1,86 @@
+.listimage
+{
+    height: 100%;
+    width: 100%;
+    padding: 0.3vh;
+}
+
+.image-div
+{
+    border-right: 2px #2B7A78 solid;
+    width: 20%;
+}
+
+.details
+{
+    width: 80%;
+    height: 100%;
+    padding: 1rem 2rem;
+}
+
+.display-4
+{
+    font-size: 1.5rem;
+    margin: 0rem;
+}
+
+.item
+{
+    margin: 1rem 0rem 1rem 0rem;
+    border: 2px #2B7A78 solid;
+    background-color: #3AAFA9;
+    border-radius: 0.3rem;
+    color:  #DEF2F1;
+    cursor: pointer;
+}
+
+.price
+{
+    font-size: 1.5rem;
+    background-color: #8FC1E3;
+    padding: 0.2rem 1rem 0.2rem 0rem;
+    border-radius: 0.4rem;
+    color: #F7F9FB;
+}
+
+.addtocart
+{
+    background-color: #2B7A78;
+    padding: 0.5rem;
+    width: 100%;
+    color: #DEF2F1;
+}
+
+.addtocart:hover
+{
+    background-color: #17252A;
+    color: white;
+}
+
+@media (max-width: 576px)
+{
+    .listimage
+    {
+        height: 100%;
+        width: 100%;
+        padding: 0.3vh;
+    }
+
+    .image-div
+    {
+        border-right: 0px;
+        border-bottom: 2px #2B7A78 solid;
+        width: 100%;
+    }
+
+    .details
+    {
+        width: 100%;
+        height: 100%;
+        
+    }
+    .badge
+    {
+        margin-bottom: 1rem;
+    }
+}

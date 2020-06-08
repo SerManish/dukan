@@ -3,10 +3,12 @@ import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 
 import { HomeModule} from './home/home.module';
+import { ProductListModule } from './product-list/product-list.module';
 
-import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
+
+import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,8 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
     BrowserAnimationsModule,
     BrowserModule,
     AppRoutingModule,
-    HomeModule
+    HomeModule,
+    ProductListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

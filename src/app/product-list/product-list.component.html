@@ -1,0 +1,12 @@
+<div class="content">
+    <div class="row no-gutters">
+        <div class="col-12 col-md-3 filter">
+            <app-filter></app-filter>
+        </div>
+        <div class="col-12 col-md-9 productlist">
+            <ng-container *ngFor="let result of searchResult">
+                <app-product-list-item [product]="result"></app-product-list-item>
+            </ng-container>
+        </div>
+    </div>
+</div>
