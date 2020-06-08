@@ -13,10 +13,9 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr table-row></tr>
-                    <tr table-row></tr>
-                    <tr table-row></tr>
-                    <tr table-row></tr>
+                    <ng-container *ngFor = "let item of cartList">
+                        <tr table-row [cartItem]="item"></tr>
+                    </ng-container>
                     <tr class="table-light">
                         <th colspan="2"> </th>
                         <th colspan="2" class="text-right bg-info">Total Cart Price</th>
