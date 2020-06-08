@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 
 import { AppComponent } from './app.component';
+import { CartModule } from './cart/cart.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { AppComponent } from './app.component';
     BrowserModule,
     AppRoutingModule,
     HomeModule,
-    ProductListModule
+    ProductListModule,
+    CartModule
   ],
   providers: [],
   bootstrap: [AppComponent]
