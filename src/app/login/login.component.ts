@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   isLoginMode = false;
   isLoading = false;
+  genders: string[] = ['Male', 'Female'];
   error: string = null;
 
   constructor(

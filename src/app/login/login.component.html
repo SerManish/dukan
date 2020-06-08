@@ -12,6 +12,13 @@
             type="button">Signup</div>
         </div>
         <form class="d-form" (ngSubmit)="onSubmit(authForm)" #authForm="ngForm" *ngIf="!isLoading">
+            <div class="form-group" *ngIf="!isLoginMode">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" name="name" id="name"
+                ngModel
+                required>
+            </div>
+            
             <div class="form-group">
                 <label for="email">E-Mail</label>
                 <input type="email" class="form-control" name="email" id="email"
@@ -19,6 +26,7 @@
                 email
                 required>
             </div>
+            
             <div class="form-group">
                 <label for="password">Password</label>
                 <input type="password" class="form-control" name="password" id="password"
@@ -26,8 +34,20 @@
                 required
                 minlength="6">
             </div>
-            <div>
-                <button class="btn btn-primary"
+            <div *ngIf="!isLoginMode">
+                <label>Gender: </label>
+                <div class="radio gender" *ngFor = "let gender of genders">
+                    <input type="radio" 
+                    name="gender" 
+                    ngModel 
+                    [value]="gender" 
+                    required> 
+                    {{gender}}
+                </div>
+            </div>
+                
+            <div class="row justify-content-center mt-3">
+                <button class="btn btn-success submit-btn"
                 type="submit"
                 [disabled]="!authForm.valid"> {{isLoginMode?'Login':'Signup'}} </button>
             </div>
