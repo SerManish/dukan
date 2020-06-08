@@ -1,19 +1,19 @@
 .content{
     margin-top: 15vh;
 }
+  
+@media only screen and (max-width: 768px) {
+    
+    .content {
+        margin-top: 20vh;
+    }
+
+}
 
 @media only screen and (max-width: 576px) {
 
     .content {
         margin-top: 30vh;
-    }
-
-}
-  
-@media only screen and (max-width: 768px) {
-    
-    .content {
-        margin-top: 25vh;
     }
 
 }

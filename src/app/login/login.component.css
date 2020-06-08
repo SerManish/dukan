@@ -1,0 +1,66 @@
+.screen-container {
+    width: 100%;
+    height: 100vh;
+    padding: 50px;
+    padding-top: 15vh;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    z-index: 8;
+    background-color: rgba(0, 0, 0, 0.65);
+}
+
+.form-wrap {
+    width: 40%;
+    margin: auto;
+    background-color: white;
+    border: 2px solid rgba(0, 0, 0, 0.7);;
+    border-radius: 10px;
+}
+
+.d-form {
+    padding: 20px;
+}
+
+.flex-container {
+    display: flex;
+    background-color: #cfcfcf;
+    border-radius: 5px 5px 5px 5px;
+}
+
+.flex-container > div {
+    flex-basis: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+.form-group {
+    border-radius: 5px;
+}
+    
+.cur-mode {
+    background-color: white;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .screen-container {
+        padding-top: 25vh;
+    }
+
+    .form-wrap {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+
+    .screen-container {
+        padding-top: 35vh;
+    }
+
+    .form-wrap {
+        width: 100%;
+    }
+}

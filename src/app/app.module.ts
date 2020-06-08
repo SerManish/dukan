@@ -9,18 +9,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 
 import { AppComponent } from './app.component';
+import { LoginComponent } from './login/login.component';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavigationBarComponent
+    NavigationBarComponent,
+    LoginComponent
   ],
   imports: [
     BrowserAnimationsModule,
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HomeModule,
-    ProductListModule
+    ProductListModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
