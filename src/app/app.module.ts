@@ -12,13 +12,15 @@ import { AppComponent } from './app.component';
 import { CartModule } from './cart/cart.module';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ProductPageComponent } from './product-page/product-page.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
-    LoginComponent
+    LoginComponent,
+    ProductPageComponent
   ],
   imports: [
     BrowserAnimationsModule,
