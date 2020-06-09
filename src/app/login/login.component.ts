@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { LoginService } from './login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,14 +16,28 @@ export class LoginComponent implements OnInit {
   error: string = null;
 
   constructor(
+    private loginService: LoginService,
     private router: Router  
-  ) { }
+  ) {
+    this.loginService.isModeLogin.subscribe(
+      isModeLogin => {
+        this.isLoginMode = isModeLogin;
+      }
+    );
+  }
+
+  close = this.loginService.onClose;
 
   ngOnInit(): void {
+    
   }
 
   switchToLogin(isLogin: boolean){
     this.isLoginMode = isLogin;
+  }
+
+  onClose(){
+    this.close.next();
   }
 
 
