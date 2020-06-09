@@ -2,46 +2,58 @@
     <div class="col-10 offset-1 col-md-6 offset-md-3">
         <h4>Delivery Address</h4>
         <br>
-        <form>
+        <form (ngSubmit)="onSubmit()" #f="ngForm">
             <div class="form-group row">
               <label for="name" class="col-sm-3 col-form-label">Name on Order</label>
               <div class="col-sm-9">
-                <input type="text" class="form-control" name="name">
+                <input type="text" class="form-control" name="name" ngModel required #name="ngModel">
+                <div class="alert alert-danger mt-1" *ngIf="!name.valid && name.touched">
+                    Your name is necessary for the Order
+                </div>
               </div>
             </div>
             <div class="form-group row">
                 <label for="pincode" class="col-sm-3 col-form-label">Pin Code</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" name="pincode">
+                  <input type="text" class="form-control" name="pincode" ngModel required pattern="^[1-9][0-9]{5}$" #pincode="ngModel">
+                  <div class="alert alert-danger mt-1" *ngIf="!pincode.valid && pincode.touched">
+                     Enter a valid Six digit PIN Code(We only deliver in India)
+                   </div>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="address" class="col-sm-3 col-form-label">Address</label>
                 <div class="col-sm-9">
-                    <textarea class="form-control" name="address" rows="6"></textarea>
-                </div>
+                    <textarea class="form-control" name="address" rows="6" ngModel required #address="ngModel"></textarea>
+                    <div class="alert alert-danger mt-1" *ngIf="!address.valid && address.touched">
+                        Your address is necessary for the Order
+                    </div>
+                </div> 
             </div>
             <div class="form-group row">
                 <label for="landmark" class="col-sm-3 col-form-label">Landmark</label>
                 <div class="col-sm-9">
-                  <input type="text" class="form-control" name="landmark" placeholder="(optional)">
+                  <input type="text" class="form-control" name="landmark" placeholder="(optional)" ngModel>
                 </div>
             </div>
             <div class="form-group row">
                 <label for="telnum" class="col-md-3 col-form-label">Contact Number</label>
                 <div class="col-5 col-md-3">
-                    <input type="number" class="form-control" id="areacode" name="areacode" placeholder="Area code">
+                    <input type="number" class="form-control" id="areacode" name="areacode" placeholder="+91" ngModel value="+91" disabled>
                 </div>
                 <div class="col-7 col-md-6">
-                    <input type="number" class="form-control" id="telnum" name="telnum" placeholder="Phone number">
+                    <input type="number" class="form-control" id="telnum" name="telnum" placeholder="Phone number" ngModel required  required pattern="^[1-9][0-9]{9}$" #telnum="ngModel">
                 </div>
             </div>
+            <div class="col-sm-9 offset-md-3 alert alert-danger" *ngIf="!telnum.valid && telnum.touched">
+                Enter a valid Ten digit phone number
+             </div>
             <div class="form-group row">
                 <div class="col-12 col-md-6">
                     <button type="button" class="btn btn-info btn-block mb-1">Clear</button>
                 </div>
                 <div class="col-12 col-md-6">
-                    <button type="submit" class="btn btn-warning btn-block">Save and Continue</button>
+                    <button type="submit" class="btn btn-warning btn-block" [disabled]="!f.valid">Save and Continue</button>
                 </div>
             </div>
         </form>

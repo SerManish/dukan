@@ -13,25 +13,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <ng-container *ngFor = "let item of cartList">
-                        <tr table-row [cartItem]="item"></tr>
+                    <ng-container *ngFor = "let item of cartList;index as i">
+                        <tr table-row [cartItem]="item" [index]="i"></tr>
                     </ng-container>
                     <tr class="table-light">
                         <th colspan="2"  class="d-none d-md-table-cell"> </th>
                         <th colspan="2" class="text-right bg-info">Total Cart Price</th>
-                        <th class="text-center bg-info">&#8377;&nbsp;500.00</th>
+                        <th class="text-center bg-info">&#8377;&nbsp;{{cartPrice | number:'1.2-2'}}</th>
                         <th class=" bg-info"> </th>
                     </tr>
                     <tr class="table-light">
                         <th colspan="2"  class="d-none d-md-table-cell"> </th>
                         <th colspan="2" class="text-right bg-info">Shipping Charges</th>
-                        <th class="text-center bg-info">&#8377;&nbsp;50.00</th>
+                        <th class="text-center bg-info">&#8377;&nbsp;{{shippingCharges | number:'1.2-2'}}</th>
                         <th class=" bg-info"> </th>
                     </tr>
                     <tr class="table-light">
                         <th colspan="2" class="d-none  d-md-table-cell"> </th>
                         <th colspan="2" class="text-right bg-info">Total Price</th>
-                        <th class="text-center bg-info">&#8377;&nbsp;550.00</th>
+                        <th class="text-center bg-info">&#8377;&nbsp;{{totalPrice | number:'1.2-2'}}</th>
                         <th class=" bg-info"> </th>
                     </tr>
                 </tbody>
@@ -40,10 +40,10 @@
         <div class="col mb-2">
             <div class="row">
                 <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light">Continue Shopping</button>
+                    <button class="btn btn-block btn-light" type="button" (click)="continueShopping()">Continue Shopping</button>
                 </div>
                 <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
+                    <button class="btn btn-lg btn-block btn-success text-uppercase" (click)="checkout()">Checkout</button>
                 </div>
             </div>
         </div>
