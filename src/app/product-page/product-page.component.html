@@ -1,0 +1,44 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="p-container">
+                <img [src]="product.basicDetails.imagePath" 
+                [alt]=" 'Image of '+product.basicDetails.name "
+                height="">
+            </div>
+            <div class="row" style="padding: 0% 1% 0% 1%;">
+                <div class="buy col ">
+                    <button>
+                        <i class="fa fa-shopping-cart"> ADD TO CART</i>
+                    </button>
+                </div>
+                <div class="buy col">
+                    <button>
+                        <i class="fa fa-bolt"> BUY NOW</i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-7 mg-top">
+            
+            <h2> {{product.basicDetails.name}} </h2>
+            <h5><i class="fa fa-inr"> {{product.basicDetails.price}} </i></h5>
+            
+            <div class="p-container">
+                <h4> Description </h4>
+                <hr>
+                <p> {{product.basicDetails.description}} </p>
+            </div>
+            
+            <div class="p-container">
+                <h4> Specifications </h4>
+                <hr>
+                <div *ngFor="let detail of product.details">
+                    <p>
+                        <b> {{detail.detailType + ' : '}} </b>  {{detail.detailDesc}} 
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
