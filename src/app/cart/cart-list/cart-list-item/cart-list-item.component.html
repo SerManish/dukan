@@ -2,9 +2,12 @@
 <td>{{cartItem.name}}</td>
 <td class="text-center d-none d-md-table-cell">&#8377;&nbsp;{{cartItem.price}}</td>
 <td>
-    <select class="form-control">
-        <option *ngFor="let i of quantityArray" [text]="i+1"></option>
+    <select class="form-control" [(ngModel)]="quantity" name="quantity" (change)="updatePrice()">
+        <option *ngFor="let i of quantityArray">{{i}}</option>
     </select>
 </td>
-<td class="text-center">&#8377;&nbsp;100.00</td>
-<td class="text-center"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+<td class="text-center">&#8377;&nbsp;{{ (cartItem.price*quantity) | number:'1.2-2'}}</td>
+<td class="text-center"><button class="btn btn-sm btn-danger" type="button" (click)="deleteItem()">
+        <i class="fa fa-trash"></i>
+    </button>
+ </td>

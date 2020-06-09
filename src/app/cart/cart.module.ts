@@ -7,6 +7,7 @@ import { CartListItemComponent } from './cart-list/cart-list-item/cart-list-item
 import { AddressComponent } from './address/address.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 const routes:Routes = [
     { path:'cart',component:CartComponent, children:[
@@ -26,7 +27,8 @@ const routes:Routes = [
     ],
     imports:[
         RouterModule.forChild(routes),
-        CommonModule
+        CommonModule,
+        FormsModule
     ],
     exports:[
         RouterModule
