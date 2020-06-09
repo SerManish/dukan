@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,13 +7,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./address.component.css']
 })
 export class AddressComponent implements OnInit {
-
+  @ViewChild('f') addressForm;
   constructor(private router:Router) { }
 
   ngOnInit(): void {
   }
-
-  successPage()
+  
+  onSubmit()
   {
     this.router.navigate(['/cart','ordersuccess']);
   }
