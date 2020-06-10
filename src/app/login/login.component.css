@@ -26,7 +26,7 @@
 }
 
 .flex-container > div {
-    flex-basis: 50%;
+    flex-basis: 48%;
     padding: 10px;
     text-align: center;
 }
@@ -44,6 +44,12 @@
     background-color: white;
 }
 
+.f-close {
+    flex-basis: 10%;
+    cursor: pointer;
+    background: #1b1b1b;
+    color: white;
+}
 
 @media only screen and (max-width: 768px) {
 

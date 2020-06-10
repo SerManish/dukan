@@ -9,11 +9,11 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-4 nav-links" *ngIf="isLoggedIn">
-        <button>CART</button>
-        <button style="margin-left: 2px;">LOGOUT</button>
+        <button type="button">CART</button>
+        <button type="button" style="margin-left: 2px;">LOGOUT</button>
     </div>
     <div class="col-sm-12 col-md-4 nav-links" *ngIf="!isLoggedIn">
-        <button>SIGNUP</button>
-        <button style="margin-left: 2px;">LOGIN</button>
+        <button type="button" (click)="onSignup()">SIGNUP</button>
+        <button type="button" (click)="onLogin()" style="margin-left: 2px;">LOGIN</button>
     </div>
 </div>

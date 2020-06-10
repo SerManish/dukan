@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../login/login.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -7,11 +8,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavigationBarComponent implements OnInit {
 
-  isLoggedIn: boolean = !true;
+  isLoggedIn: boolean;
+  
+  constructor(
+    private loginService: LoginService
+  ) { }
 
-  constructor() { }
+  isModeLogin = this.loginService.isModeLogin;
 
   ngOnInit(): void {
+    this.isLoggedIn = this.loginService.isLoggedIn;
+  }
+
+  onLogin(){
+    this.isModeLogin.next(true);
+  }
+
+  onSignup(){
+    this.isModeLogin.next(false);
   }
 
 }
