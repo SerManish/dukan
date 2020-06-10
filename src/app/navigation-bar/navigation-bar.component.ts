@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login/login.service';
 
 @Component({
@@ -8,7 +8,7 @@ import { LoginService } from '../login/login.service';
 })
 export class NavigationBarComponent implements OnInit {
 
-  isLoggedIn: boolean = !true;
+  isLoggedIn: boolean;
   
   constructor(
     private loginService: LoginService
@@ -17,6 +17,7 @@ export class NavigationBarComponent implements OnInit {
   isModeLogin = this.loginService.isModeLogin;
 
   ngOnInit(): void {
+    this.isLoggedIn = this.loginService.isLoggedIn;
   }
 
   onLogin(){
