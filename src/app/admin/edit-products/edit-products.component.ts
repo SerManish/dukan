@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, FormArray,Validators } from '@angular/forms';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-products',
@@ -10,20 +10,21 @@ export class EditProductsComponent implements OnInit {
 
   mode:string;
   newForm:FormGroup;
-  details:FormArray = new FormArray([]);
+  @ViewChild('f') deleteForm:ElementRef;
+  detailsArray:FormArray = new FormArray([]);
 
   constructor() { }
 
   ngOnInit(): void {
     this.newForm = new FormGroup({
-      'id':new FormControl("",Validators.required),
-      'name':new FormControl("",Validators.required),
-      'imagePath':new FormControl("",Validators.required),
-      'shortDescription':new FormControl("",Validators.required),
-      'longDescription':new FormControl("",Validators.required),
-      'price':new FormControl("",[Validators.required,Validators.pattern(/^[1-9]+[0-9]*$/)]),
-      'isBestSeller':new FormControl(),
-      'details': this.details
+      'id':new FormControl(null,Validators.required),
+      'name':new FormControl(null,Validators.required),
+      'imagePath':new FormControl(null,Validators.required),
+      'shortDescription':new FormControl(null,Validators.required),
+      'longDescription':new FormControl(null,Validators.required),
+      'price':new FormControl(null,[Validators.required,Validators.pattern(/^[1-9]+[0-9]*$/)]),
+      'isBestSeller':new FormControl(false),
+      'details': this.detailsArray
     });
   }
 
@@ -39,12 +40,24 @@ export class EditProductsComponent implements OnInit {
 
   removeDetail(index:number)
   {
-
+    this.detailsArray.controls.splice(index,1);
+    this.newForm.value['details'].splice(index,1);
   }
 
-  onSubmit()
+  addProduct()
   {
     console.log(this.newForm.value);
+    this.clearForm();
+  }
+
+  deleteProduct()
+  {
+    console.log(this.deleteForm);
+  }
+
+  clearForm()
+  {
+    this.newForm.reset();
   }
 
 }
