@@ -1,58 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { ProductList } from './product-list.model';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProductService } from '../product-page/product.service';
+import { ActivatedRoute } from '@angular/router';
+import { Product } from '../product-page/product.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit {
+export class ProductListComponent implements OnInit, OnDestroy {
 
-  searchResult:ProductList[] = [{
-    name:"Grapes",
-    imagePath:"../../../assets/images/carousal0.jpg",
-    description:`Some Description about the item in few words,
-    Some Description about the item in few words,
-    Some Description about the item in few words
-    Some Description about the item in few words`,
-    price:29.99,
-    isBestSeller: true
-  },
-  {
-    name:"Camera",
-    imagePath:"../../../assets/images/carousal1.jpg",
-    description:`Some Description about the item in few words,
-    Some Description about the item in few words,
-    Some Description about the item in few words
-    Some Description about the item in few words`,
-    price:19999.99,
-    isBestSeller: false
-  },
-  {
-    name:"Bananas",
-    imagePath:"../../../assets/images/carousal2.jpg",
-    description:`Some Description about the item in few words,
-    Some Description about the item in few words,
-    Some Description about the item in few words
-    Some Description about the item in few words`,
-    price:109.99,
-    isBestSeller: true
-  },
-  {
-    name:"Rich Grapes",
-    imagePath:"../../../assets/images/carousal0.jpg",
-    description:`Some Description about the item in few words,
-    Some Description about the item in few words,
-    Some Description about the item in few words
-    Some Description about the item in few words`,
-    price:2099.99,
-    isBestSeller: false
-  }
-]
+  searchQuery: string = null;
+  searchResult:Product[] = [];
+  routeSub: Subscription;
 
-  constructor() { }
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute
+  ) {}
   
   ngOnInit(): void {
+    this.routeSub = this.route.fragment.subscribe(
+      (fragment) => {
+        this.searchQuery = fragment;
+        this.searchResult = this.productService.getProducts(this.searchQuery);
+        // console.log(this.searchResult);
+      }
+    );
+  }
+
+  ngOnDestroy(){
+    this.routeSub.unsubscribe();
   }
 
 }

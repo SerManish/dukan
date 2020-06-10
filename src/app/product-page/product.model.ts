@@ -6,6 +6,12 @@ class Details{
 }
 
 export class Product{
-    public basicDetails: ProductList;
+    public id: string;
+    public name: string;
+    public imagePath: string;
+    public description: string;
+    public price: number;
+    public isBestSeller:boolean;
+
     public details: Details[];
 }

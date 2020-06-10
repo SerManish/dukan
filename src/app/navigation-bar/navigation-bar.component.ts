@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login/login.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -11,7 +12,8 @@ export class NavigationBarComponent implements OnInit {
   isLoggedIn: boolean;
   
   constructor(
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ) { }
 
   isModeLogin = this.loginService.isModeLogin;
@@ -26,6 +28,11 @@ export class NavigationBarComponent implements OnInit {
 
   onSignup(){
     this.isModeLogin.next(false);
+  }
+
+  onSearch(query:string){
+    console.log('navigate');
+    this.router.navigate(['productlist'], {fragment: query});
   }
 
 }
