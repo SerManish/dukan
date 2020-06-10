@@ -1,4 +1,4 @@
-<div class="row no-gutters">
+<div class="row no-gutters" *ngIf="cartList.length">
     <div class="col-12 col-md-8 offset-md-2">
         <div class="table-responsive">
             <table class="table table-striped">
@@ -45,6 +45,24 @@
                 <div class="col-sm-12 col-md-6 text-right">
                     <button class="btn btn-lg btn-block btn-success text-uppercase" (click)="checkout()">Checkout</button>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row no-gutters" *ngIf="!cartList.length">
+    <div class="col-10 offset-1 col-md-6 offset-md-3">
+        <h3>Your Cart is Empty</h3>
+        <br>
+        <span class="d-flex justify-content-center">
+            <img src="https://cdn.dribbble.com/users/687236/screenshots/5838300/group_852_2x.png"
+            class="img-fluid" style="height: 40vh;"
+            >
+        </span>
+        <br>
+        <div class="row">
+            <div class="col-sm-12 col-md-6 offset-md-3 text-right">
+                <button class="btn btn-block btn-lg btn-dark" type="button" (click)="continueShopping()">Continue Shopping</button>
             </div>
         </div>
     </div>
