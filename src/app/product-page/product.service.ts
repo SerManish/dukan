@@ -10,7 +10,7 @@ export class ProductService{
     constructor(){
         this.loadedProducts['1000'] = {
             id: '1000',
-            name:"Grapes",
+            name:"Orange",
             imagePath:"../../../assets/images/carousal0.jpg",
             description:`Some Description about the item in few words,
             Some Description about the item in few words,
@@ -42,6 +42,37 @@ export class ProductService{
               {detailType:'Company', detailDesc:'Kanon'},
             ]
           };
+
+          this.loadedProducts['1002'] = {
+            id: '1002',
+            name:"Bananas",
+            imagePath:"../../../assets/images/carousal2.jpg",
+            description:`Some Description about the item in few words,
+            Some Description about the item in few words,
+            Some Description about the item in few words
+            Some Description about the item in few words`,
+            price:109.99,
+            isBestSeller: true,
+            details: [
+              {detailType:'Best before', detailDesc:'3 days'},
+              {detailType:'Colour', detailDesc:'Yellow'}
+            ]
+          }
+          this.loadedProducts['1003'] = {
+            id: '1003',
+            name:"Rich Grapes",
+            imagePath:"../../../assets/images/carousal0.jpg",
+            description:`Some Description about the item in few words,
+            Some Description about the item in few words,
+            Some Description about the item in few words
+            Some Description about the item in few words`,
+            price:2099.99,
+            isBestSeller: false,
+            details: [
+              {detailType:'Best before', detailDesc:'8 days'},
+              {detailType:'Colour', detailDesc:'Purple'}
+            ]
+          }
     }
 
     getProductById(id: string){
@@ -54,10 +85,9 @@ export class ProductService{
       let product: Product;
 
       for(let key in this.loadedProducts){
-        product = this.loadedProducts[key];
         for(let q of queries){
-          if( product.name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
-            products.push(product);
+          if( q!='' && this.loadedProducts[key].name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
+            products.push(this.loadedProducts[key]);
             break;
           }
         }

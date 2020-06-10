@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../login/login.service';
-import { ProductService } from '../product-page/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -13,7 +13,7 @@ export class NavigationBarComponent implements OnInit {
   
   constructor(
     private loginService: LoginService,
-    private productService: ProductService
+    private router: Router
   ) { }
 
   isModeLogin = this.loginService.isModeLogin;
@@ -31,7 +31,8 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onSearch(query:string){
-    console.log(this.productService.getProducts(query));
+    console.log('navigate');
+    this.router.navigate(['productlist'], {fragment: query});
   }
 
 }
