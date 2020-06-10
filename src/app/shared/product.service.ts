@@ -10,9 +10,11 @@ export class ProductService{
     constructor(){
         this.loadedProducts['1000'] = {
             id: '1000',
+            category: 'fruit',
             name:"Orange",
             imagePath:"../../../assets/images/carousal0.jpg",
-            description:`Some Description about the item in few words,
+            shortDescription:`Some Description about the item in few words`,
+            longDescription:`Some Description about the item in few words,
             Some Description about the item in few words,
             Some Description about the item in few words
             Some Description about the item in few words`,
@@ -27,9 +29,11 @@ export class ProductService{
 
           this.loadedProducts['1001'] = {
             id: '1001',
+            category: 'camera',
             name:"Camera",
             imagePath:"../../../assets/images/carousal1.jpg",
-            description:`Some Description about the item in few words,
+            shortDescription:`Some Description about the item in few words`,
+            longDescription:`Some Description about the item in few words,
             Some Description about the item in few words,
             Some Description about the item in few words
             Some Description about the item in few words`,
@@ -45,9 +49,11 @@ export class ProductService{
 
           this.loadedProducts['1002'] = {
             id: '1002',
+            category: 'fruit',
             name:"Bananas",
             imagePath:"../../../assets/images/carousal2.jpg",
-            description:`Some Description about the item in few words,
+            shortDescription:`Some Description about the item in few words`,
+            longDescription:`Some Description about the item in few words,
             Some Description about the item in few words,
             Some Description about the item in few words
             Some Description about the item in few words`,
@@ -60,9 +66,11 @@ export class ProductService{
           }
           this.loadedProducts['1003'] = {
             id: '1003',
+            category: 'fruit',
             name:"Rich Grapes",
             imagePath:"../../../assets/images/carousal0.jpg",
-            description:`Some Description about the item in few words,
+            shortDescription:`Some Description about the item in few words`,
+            longDescription:`Some Description about the item in few words,
             Some Description about the item in few words,
             Some Description about the item in few words
             Some Description about the item in few words`,
@@ -82,7 +90,6 @@ export class ProductService{
     getProducts(query: string): Product[] {
       let queries: string[] = query.split(' ');
       let products: Product[] = [];
-      let product: Product;
 
       for(let key in this.loadedProducts){
         for(let q of queries){

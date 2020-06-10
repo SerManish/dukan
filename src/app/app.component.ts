@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { LoginService } from './login/login.service';
+import { LoginService } from './shared/login.service';
 import { Subscription } from 'rxjs';
 
 @Component({

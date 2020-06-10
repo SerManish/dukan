@@ -1,4 +1,4 @@
-import { ProductList } from '../product-list/product-list.model' 
+import { ProductList } from './product-list.model' 
 
 class Details{
     detailType: string;
@@ -7,11 +7,12 @@ class Details{
 
 export class Product{
     public id: string;
+    public category: string;
     public name: string;
     public imagePath: string;
-    public description: string;
+    public shortDescription: string;
+    public longDescription: string;
     public price: number;
     public isBestSeller:boolean;
-
     public details: Details[];
 }
