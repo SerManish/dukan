@@ -48,4 +48,22 @@ export class ProductService{
         return this.loadedProducts[id];
     }
 
+    getProducts(query: string): Product[] {
+      let queries: string[] = query.split(' ');
+      let products: Product[] = [];
+      let product: Product;
+
+      for(let key in this.loadedProducts){
+        product = this.loadedProducts[key];
+        for(let q of queries){
+          if( product.name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
+            products.push(product);
+            break;
+          }
+        }
+      }
+
+      return products; 
+    }
+
 }

@@ -4,8 +4,8 @@
     </div>
     <div class="col-sm-5 col-md-5">
         <div class="search">
-            <input type="search" placeholder="Search product">
-            <button><i class="fa fa-search"></i></button>
+            <input type="search" placeholder="Search product" #searchInput>
+            <button type="button" (click)="onSearch(searchInput.value)"><i class="fa fa-search"></i></button>
         </div>
     </div>
     <div class="col-sm-12 col-md-4 nav-links" *ngIf="isLoggedIn">

@@ -29,7 +29,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     );
 
     this.product = this.productService.getProductById(this.productId);
-    //console.log(this.product);
+    
   }
 
   ngOnDestroy(){
