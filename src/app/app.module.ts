@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { LoginComponent } from './login/login.component';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { LoginComponent } from './login/login.component';
     HomeModule,
     ProductListModule,
     CartModule,
-    ProductPageModule
+    ProductPageModule,
+    AdminModule
   ],
   providers: [],
   bootstrap: [AppComponent]
