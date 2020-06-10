@@ -51,6 +51,22 @@
     color: white;
 }
 
+input.ng-invalid.ng-dirty{
+    border: 1px red solid;
+    background-color: rgba(100%, 0%, 0%, 0.1);
+}
+
+input.ng-valid.ng-dirty{
+    border: 1px green solid;
+    background-color: rgba(0%, 100%, 0%, 0.1);
+}
+
+p {
+    padding: 2px;
+    font-size: 10px;
+    color: red;
+}
+
 @media only screen and (max-width: 768px) {
 
     .screen-container {
