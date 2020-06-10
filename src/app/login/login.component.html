@@ -13,35 +13,40 @@
 
             <div class="f-close" style="flex-basis: 10%;" (click)="onClose()"><i class="fa fa-close"></i></div>
         </div>
-        <form class="d-form" (ngSubmit)="onSubmit(authForm)" #authForm="ngForm" *ngIf="!isLoading">
+        
+        <form class="d-form" (ngSubmit)="onSubmit()" [formGroup]="authForm" *ngIf="!isLoading">
             <div class="form-group" *ngIf="!isLoginMode">
                 <label for="name">Name</label>
-                <input type="text" class="form-control" name="name" id="name"
-                ngModel
-                required>
+                <input type="text" 
+                class="form-control" 
+                formControlName="name" 
+                id="name">
             </div>
             
-            <div class="form-group">
-                <label for="email">E-Mail</label>
-                <input type="email" class="form-control" name="email" id="email"
-                ngModel
-                email
-                required>
+            <div formGroupName='userData'>
+                <div class="form-group">
+                    <label for="email">E-Mail</label>
+                    <input type="email" 
+                    class="form-control" 
+                    formControlName="email" 
+                    id="email">
+                    <p *ngIf = "!authForm.get('userData.email').valid && authForm.get('userData.email').touched ">Enter a valid email.</p>
+                </div>    
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" 
+                    class="form-control" 
+                    formControlName="password" 
+                    id="password">
+                    <p *ngIf = "!authForm.get('userData.password').valid && authForm.get('userData.password').touched ">Password should be of atleast 6 characters.</p>
+                </div>
             </div>
-            
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" name="password" id="password"
-                ngModel
-                required
-                minlength="6">
-            </div>
+
             <div *ngIf="!isLoginMode">
                 <label>Gender: </label>
                 <div class="radio gender" *ngFor = "let gender of genders">
                     <input type="radio" 
-                    name="gender" 
-                    ngModel 
+                    formControlName="gender" 
                     [value]="gender" 
                     required> 
                     {{gender}}
@@ -51,7 +56,9 @@
             <div class="row justify-content-center mt-3">
                 <button class="btn btn-success submit-btn"
                 type="submit"
-                [disabled]="!authForm.valid"> {{isLoginMode?'Login':'Signup'}} </button>
+                [disabled]="
+                    (isLoginMode && !authForm.get('userData').valid) ||
+                    (!isLoginMode && !authForm.valid)"> {{isLoginMode?'Login':'Signup'}} </button>
             </div>
         </form>
     </div>
