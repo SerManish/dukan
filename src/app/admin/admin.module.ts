@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 import { AdminComponent } from './admin.component';
 import { EditHomeComponent } from './edit-home/edit-home.component';
@@ -26,7 +26,8 @@ const routes:Routes = [
     imports:[
         RouterModule.forChild(routes),
         CommonModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        FormsModule
     ],
     exports:[
         RouterModule
