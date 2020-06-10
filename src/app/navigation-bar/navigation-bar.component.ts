@@ -31,8 +31,9 @@ export class NavigationBarComponent implements OnInit {
   }
 
   onSearch(query:string){
-    console.log('navigate');
-    this.router.navigate(['productlist'], {fragment: query});
+    // console.log('navigate');
+    if(query.trim()!='')
+      this.router.navigate(['productlist'], {fragment: query});
   }
 
 }

@@ -4,7 +4,7 @@
     </div>
     <div class="col-sm-5 col-md-5">
         <div class="search">
-            <input type="search" placeholder="Search product" #searchInput>
+            <input type="search" placeholder="Search product" (keyup.enter)="onSearch(searchInput.value)" #searchInput>
             <button type="button" (click)="onSearch(searchInput.value)"><i class="fa fa-search"></i></button>
         </div>
     </div>
