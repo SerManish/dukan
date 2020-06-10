@@ -1,28 +1,45 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { LoginService } from './login.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
 
   isLoginMode = false;
   isLoading = false;
   genders: string[] = ['Male', 'Female'];
   error: string = null;
+  loginSub: Subscription;
 
   constructor(
+    private loginService: LoginService,
     private router: Router  
-  ) { }
+  ) {}
 
   ngOnInit(): void {
+    this.loginSub = this.loginService.isModeLogin.subscribe(
+      isModeLogin => {
+        this.isLoginMode = isModeLogin;
+      }
+    );
   }
 
   switchToLogin(isLogin: boolean){
     this.isLoginMode = isLogin;
+  }
+
+  onClose(){
+    this.loginService.onClose.next();
+  }
+
+  ngOnDestroy(){
+    this.loginSub.unsubscribe();
   }
 
 
