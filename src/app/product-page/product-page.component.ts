@@ -1,47 +1,39 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Product } from './product.model';
-import { ProductList } from '../product-list/product-list.model';
+import { ProductService } from './product.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css']
 })
-export class ProductPageComponent implements OnInit {
+export class ProductPageComponent implements OnInit, OnDestroy {
 
-  basicDetails: ProductList = {
-    name:"Grapes",
-    imagePath:"../../../assets/images/carousal0.jpg",
-    description:`Some Description about the item in few words,
-    Some Description about the item in few words,
-    Some Description about the item in few words
-    Some Description about the item in few words`,
-    price:29.99,
-    isBestSeller: true
-  } 
+  productId: string = '1000';
+  product: Product;
+  productSub: Subscription;
 
-  product: Product = {
-    basicDetails: this.basicDetails,
-    details: [
-      {detailType:'Size', detailDesc:'10x10'},
-      {detailType:'Battery', detailDesc:'10000 mah'},
-      {detailType:'Colour', detailDesc:'Yellow'},
-      {detailType:'RAM', detailDesc:'16GB'},
-      {detailType:'Size', detailDesc:'10x10'},
-      {detailType:'Battery', detailDesc:'10000 mah'},
-      {detailType:'Colour', detailDesc:'Yellow'},
-      {detailType:'RAM', detailDesc:'16GB'},
-      {detailType:'Size', detailDesc:'10x10'},
-      {detailType:'Battery', detailDesc:'10000 mah'},
-      {detailType:'Colour', detailDesc:'Yellow'},
-      {detailType:'RAM', detailDesc:'16GB'},
-      {detailType:'Size', detailDesc:'10x10'}
-    ]
-  } ;
+  constructor(
+    private productService: ProductService,
+    private route: ActivatedRoute
+  ) {}
 
-  constructor() { }
+  ngOnInit(): void { 
+    
+    this.productSub = this.route.params.subscribe(
+      (params: Params) => {
+        this.productId = params['id'];
+      }
+    );
 
-  ngOnInit(): void {
+    this.product = this.productService.getProductById(this.productId);
+    //console.log(this.product);
+  }
+
+  ngOnDestroy(){
+    this.productSub.unsubscribe();
   }
 
 }
