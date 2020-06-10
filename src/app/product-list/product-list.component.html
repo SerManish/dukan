@@ -4,6 +4,7 @@
             <app-filter></app-filter>
         </div>
         <div class="col-12 col-md-9 productlist">
+            <p *ngIf="searchResult.length<1">No products found.</p>
             <ng-container *ngFor="let result of searchResult">
                 <app-product-list-item [product]="result"></app-product-list-item>
             </ng-container>

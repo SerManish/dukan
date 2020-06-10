@@ -88,14 +88,22 @@ export class ProductService{
     }
 
     getProducts(query: string): Product[] {
-      let queries: string[] = query.split(' ');
       let products: Product[] = [];
+      
+      if(query==null){
+        for(let key in this.loadedProducts){
+          products.push(this.loadedProducts[key]);
+        }
+      }
+      else{
+        let queries: string[] = query.split(' ');
 
-      for(let key in this.loadedProducts){
-        for(let q of queries){
-          if( q!='' && this.loadedProducts[key].name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
-            products.push(this.loadedProducts[key]);
-            break;
+        for(let key in this.loadedProducts){
+          for(let q of queries){
+            if( q!='' && this.loadedProducts[key].name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
+              products.push(this.loadedProducts[key]);
+              break;
+            }
           }
         }
       }
