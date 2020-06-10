@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ProductList } from 'src/app/product-list/product-list.model';
+import { OrdersService } from '../../orders.service';
 
 @Component({
   selector: '[table-row]',
@@ -8,12 +9,26 @@ import { ProductList } from 'src/app/product-list/product-list.model';
 })
 export class CartListItemComponent implements OnInit {
   @Input() cartItem:ProductList;
-  private maxAllowedQuantity = 6;
-  quantityArray = Array(this.maxAllowedQuantity).keys();
+  @Input() index:number;
+  quantity:number;
+  total:number;
 
-  constructor() { }
+  quantityArray=[1,2,3,4,5,6];
 
-  ngOnInit(): void {
+  constructor(private orderService:OrdersService) {  
+  }
+  
+  deleteItem()
+  {
+    this.orderService.removeOrder(this.index);
   }
 
+  updatePrice()
+  {
+    this.orderService.updateQuantity(this.index,this.quantity);
+  }
+
+  ngOnInit(): void {
+    this.quantity=1;
+  }
 }
