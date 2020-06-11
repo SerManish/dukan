@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { LoginService } from '../shared/login.service';
 import { Subscription } from 'rxjs';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(
     private loginService: LoginService,
+    private authService: AuthService,
     private router: Router  
   ) {}
 
@@ -49,46 +51,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginService.onClose.next();
   }
 
-  ngOnDestroy(){
-    this.loginSub.unsubscribe();
+  async onSubmit(){
+    let email = this.authForm.get('userData').get('email').value;
+    let password = this.authForm.get('userData').get('password').value;
+    let result;
+    if(this.isLoginMode){
+      result = await this.authService.login(email, password);
+    }
+    else{
+      let name = this.authForm.get('name').value;
+      let gender = this.authForm.get('gender').value;
+      result = await this.authService.signup(email, password, name , gender);
+    }
+    console.log('res',result);
+    if(result == 0){
+      this.onClose();
+    }    
   }
 
-
-  onSubmit(){
-    //console.log(this.authForm);
-    // if(!form.valid){
-    //   return;
-    // }
-
-    // let authObs: Observable<AuthResponseData>;
-
-    // const email = form.value.email;
-    // const password = form.value.password;
-
-    // this.isLoading = true;
-    // this.error = null;
-    // if(this.isLoginMode){
-    //   authObs = this.authService.login(email, password);
-    // }
-    // else{
-    //   authObs = this.authService.signUp(email, password);
-    // }
-
-    // authObs.subscribe(
-    //   responseData => {
-    //     console.log('Authentication successful', responseData);
-    //     this.isLoading = false;
-    //     this.router.navigate(['/firebase']);
-    //   },
-    //   errorMsg => {
-    //     console.log('error occured : ',errorMsg);
-    //     this.error = errorMsg;
-    //     this.isLoading = false;
-    //   }
-    // );
-
-    // form.reset();
-    
+  ngOnDestroy(){
+    this.loginSub.unsubscribe();
   }
 
 }
