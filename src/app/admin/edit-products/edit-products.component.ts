@@ -1,5 +1,6 @@
-import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
+import { ProductService } from 'src/app/shared/product.service';
 
 @Component({
   selector: 'app-edit-products',
@@ -10,15 +11,16 @@ export class EditProductsComponent implements OnInit {
 
   mode:string;
   newForm:FormGroup;
-  @ViewChild('f') deleteForm:ElementRef;
+  @ViewChild('f') deleteForm;
   detailsArray:FormArray = new FormArray([]);
 
-  constructor() { }
+  constructor(private productService:ProductService) { }
 
   ngOnInit(): void {
     this.newForm = new FormGroup({
       'id':new FormControl(null,Validators.required),
       'name':new FormControl(null,Validators.required),
+      'category':new FormControl(null,Validators.required),
       'imagePath':new FormControl(null,Validators.required),
       'shortDescription':new FormControl(null,Validators.required),
       'longDescription':new FormControl(null,Validators.required),
@@ -52,7 +54,7 @@ export class EditProductsComponent implements OnInit {
 
   deleteProduct()
   {
-    console.log(this.deleteForm);
+    this.productService.deleteProduct(this.deleteForm.value.id);
   }
 
   clearForm()
