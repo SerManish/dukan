@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { LoginService } from '../shared/login.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -9,12 +10,15 @@ import { Router } from '@angular/router';
 })
 export class NavigationBarComponent implements OnInit {
 
-  isLoggedIn: boolean;
+  isLoggedIn: boolean = false;
   
   constructor(
     private loginService: LoginService,
+    private authService: AuthService,
     private router: Router
-  ) { }
+  ) {
+    
+  }
 
   isModeLogin = this.loginService.isModeLogin;
 
