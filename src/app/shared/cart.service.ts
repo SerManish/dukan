@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Product } from './product.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn:'root'
@@ -13,11 +15,54 @@ export class CartService
 
     private cartPrice = 0;
     private shippingCharges = 50;
-    pricarttotalPrice = 0;
 
     private quantity:number[]=[];
-
     private orders:Product[] = [];
+
+    private uid:string = null;
+
+    constructor(private afs: AngularFirestore,private authservice :AuthService)
+    {
+        authservice.user.subscribe(
+            (user) => {
+                if(user)
+                    this.uid = user.uid;
+            }
+        );
+    //     afs.collection('carts').doc('XhZZdtraIncGqfYNnDWR').collection('item').get().subscribe(
+    //         (snapshot) => snapshot.docs.forEach(
+    //             (doc) => console.log(doc.data())
+    //         )
+    //     )
+    //    afs.collection('carts').doc('XhZZdtraIncGqfYNnDWR').collection('item').doc('65CmbpWp3PQQfdX79zSv').update({id:1212});
+    this.authservice.user.subscribe(
+        (user) => {
+            if(user)
+            {
+              this.afs.collection('carts').doc(user.uid).collection('item').get().subscribe(
+                  (snapshot) => 
+                  {
+                    this.orders = [];
+                    snapshot.docs.forEach(
+                    (doc) => {
+                        let data = doc.data()
+                        this.orders.push(new Product(data.id,data.category,data.name,data.imagePath,data.shortDescription,data.longDescription,data.price,data.details,data.isBestSeller));
+                    }
+                    )
+                    this.ordersUpdated.next(this.orders);
+                  }
+              )
+            }
+        }
+      );
+
+}
+
+    uploadItem(order:Product)
+    {
+        this.afs.collection('carts').doc(this.uid).collection('item').add(order);
+    }
+
     getOrders()
     {
         return this.orders.slice();
@@ -45,6 +90,7 @@ export class CartService
             this.quantity.push(1);
             this.ordersUpdated.next(this.orders);
             this.quantityUpdated.next(this.quantity);
+            this.uploadItem(order);
         }
     }
 

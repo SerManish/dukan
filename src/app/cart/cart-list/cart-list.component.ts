@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { CartService } from '../../shared/cart.service';
 import { Subscription } from 'rxjs';
 import { Product } from 'src/app/shared/product.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
   selector: 'app-cart-list',
@@ -20,8 +22,9 @@ export class CartListComponent implements OnInit,OnDestroy {
   cartPriceSubscription :Subscription;
   shippingCharges:number;
   totalPrice:number;
+  uid:string = null;
 
-  constructor(private cartService:CartService,private router:Router) { }
+  constructor(private cartService:CartService,private router:Router,private afs: AngularFirestore,private authservice :AuthService) { }
 
   ngOnInit(): void 
   {
@@ -51,6 +54,11 @@ export class CartListComponent implements OnInit,OnDestroy {
         this.totalPrice = this.cartPrice+this.shippingCharges;
       }
     );
+
+    
+
+
+
   }
   
   checkout()
