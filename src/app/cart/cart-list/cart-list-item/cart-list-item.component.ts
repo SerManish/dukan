@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductList } from 'src/app/shared/product-list.model';
-import { OrdersService } from '../../orders.service';
+import { CartService } from '../../../shared/cart.service';
+import { Product } from 'src/app/shared/product.model';
 
 @Component({
   selector: '[table-row]',
@@ -8,24 +8,24 @@ import { OrdersService } from '../../orders.service';
   styleUrls: ['./cart-list-item.component.css']
 })
 export class CartListItemComponent implements OnInit {
-  @Input() cartItem:ProductList;
+  @Input() cartItem:Product;
   @Input() index:number;
   quantity:number;
   total:number;
 
   quantityArray=[1,2,3,4,5,6];
 
-  constructor(private orderService:OrdersService) {  
+  constructor(private cartService:CartService) {  
   }
   
   deleteItem()
   {
-    this.orderService.removeOrder(this.index);
+    this.cartService.removeOrder(this.index);
   }
 
   updatePrice()
   {
-    this.orderService.updateQuantity(this.index,this.quantity);
+    this.cartService.updateQuantity(this.index,this.quantity);
   }
 
   ngOnInit(): void {

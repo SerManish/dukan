@@ -111,4 +111,19 @@ export class ProductService{
       return products; 
     }
 
+    addProduct(product:Product)
+    {
+      if(this.loadedProducts[product.id])
+        throw("Product Already Exists");
+      this.loadedProducts[product.id]=product;
+    }
+
+    deleteProduct(id:string)
+    {
+      if(!this.loadedProducts[id])
+        throw("Invalid Product ID");
+      else
+        delete this.loadedProducts[id];
+    }
+
 }

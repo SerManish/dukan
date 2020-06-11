@@ -43,20 +43,6 @@
     color: #F7F9FB;
 }
 
-.addtocart
-{
-    background-color: #2B7A78;
-    padding: 0.5rem;
-    width: 100%;
-    color: #DEF2F1;
-}
-
-.addtocart:hover
-{
-    background-color: #17252A;
-    color: white;
-}
-
 @media (max-width: 576px)
 {
     .listimage
