@@ -48,7 +48,7 @@ export class EditProductsComponent implements OnInit {
 
   addProduct()
   {
-    console.log(this.newForm.value);
+    this.productService.addProduct(this.newForm.value);
     this.clearForm();
   }
 

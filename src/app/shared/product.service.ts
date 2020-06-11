@@ -111,40 +111,19 @@ export class ProductService{
       return products; 
     }
 
-    // EDIT THE FOLLOWING FUNTIONS (PREFERABLY RECODE THIS SERVICE)
-
     addProduct(product:Product)
     {
-      let index:number = -1;
-      for(let i=0;i<this.loadedProducts.length;i++)
-      {
-        if(product.id == this.loadedProducts[i].id)
-        {
-          index = i;
-          break;
-        }
-      }
-      if(index != -1)
+      if(this.loadedProducts[product.id])
         throw("Product Already Exists");
-      else
-        this.loadedProducts.push(product);
+      this.loadedProducts[product.id]=product;
     }
 
     deleteProduct(id:string)
     {
-      let index:number = -1;
-      for(let i=0;i<this.loadedProducts.length;i++)
-      {
-        if(id == this.loadedProducts[i].id)
-        {
-          index = i;
-          break;
-        }
-      }
-      if(index == -1)
+      if(!this.loadedProducts[id])
         throw("Invalid Product ID");
       else
-        this.loadedProducts.splice(index,1);
+        delete this.loadedProducts[id];
     }
 
 }
