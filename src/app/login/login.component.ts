@@ -51,22 +51,26 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginService.onClose.next();
   }
 
-  ngOnDestroy(){
-    this.loginSub.unsubscribe();
-  }
-
-
-  onSubmit(){
+  async onSubmit(){
     let email = this.authForm.get('userData').get('email').value;
     let password = this.authForm.get('userData').get('password').value;
+    let result;
     if(this.isLoginMode){
-      this.authService.login(email, password);
+      result = await this.authService.login(email, password);
     }
     else{
       let name = this.authForm.get('name').value;
       let gender = this.authForm.get('gender').value;
-      this.authService.signup(email, password, name , gender);
+      result = await this.authService.signup(email, password, name , gender);
+    }
+    console.log('res',result);
+    if(result == 0){
+      this.onClose();
     }    
+  }
+
+  ngOnDestroy(){
+    this.loginSub.unsubscribe();
   }
 
 }

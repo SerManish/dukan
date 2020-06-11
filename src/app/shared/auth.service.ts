@@ -1,27 +1,40 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore } from '@angular/fire/firestore/';
 import { auth } from 'firebase/app';
-import { Observable, BehaviorSubject } from 'rxjs';
-import { User } from './user.model';
+import { Observable, BehaviorSubject, Subscription } from 'rxjs';
+import { User } from 'firebase';
 import { Router } from '@angular/router';
 
 @Injectable({providedIn: 'root'})
 
-export class AuthService{
+export class AuthService implements OnDestroy{
+
+  user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  afSub: Subscription;
 
     constructor(
       private afAuth: AngularFireAuth,
       private afs: AngularFirestore,
       private router: Router
     ){
-      
+      this.afSub = this.afAuth.authState.subscribe( user => {
+        if(user){
+          this.user.next(user);
+          localStorage.setItem('user', JSON.stringify(user));
+        }
+        else{
+          localStorage.setItem('user', null);
+        }
+        // console.log('user',user);
+      });
     }
 
-    login(email: string, password: string){
+    async login(email: string, password: string){
         
-      this.afAuth.signInWithEmailAndPassword(email, password).then( ()=> {
-        console.log('login successful');
+      return await this.afAuth.signInWithEmailAndPassword(email, password).then( ()=> {
+        alert('login successful');
+        return 0;
       })
       .catch((error)=> {
         // Handle Errors here.
@@ -33,19 +46,17 @@ export class AuthService{
           alert(errorMessage);
         }
         console.log(error);
+        return 1;
       });
     }
 
-    signup(email: string, password: string, name: string , gender: string){
-      this.afAuth.createUserWithEmailAndPassword( email, password).then( ()=>{
-          console.log('signed up');
+    async signup(email: string, password: string, name: string , gender: string){
+      return await this.afAuth.createUserWithEmailAndPassword( email, password).then( ()=>{
+          alert('signup successful');
           const collection = this.afs.collection<User>('users');
           const data = {name: name, email: email, gender: gender, id: auth().currentUser.uid};
-          collection.doc( auth().currentUser.uid ).set(data).then( () => {
-          })
-          .catch( (error)=>{
-            console.log(error);
-          });
+          collection.doc( auth().currentUser.uid ).set(data);
+          return 0;
       })
       .catch( (error)=> {
         // Handle Errors here.
@@ -57,12 +68,14 @@ export class AuthService{
           alert(errorMessage);
         }
         console.log(error);
+        return 1;
       });
     }
 
-    logout(){
-      this.afAuth.signOut().then( ()=> {
-        console.log('logout');
+    async logout(){
+      await this.afAuth.signOut().then( ()=> {
+        alert('logged out');
+        this.user.next(null);
         this.router.navigate(['/home']);
       })
       .catch( (error)=> {
@@ -76,5 +89,9 @@ export class AuthService{
         // }
         console.log(error);
       });
+    }
+
+    ngOnDestroy(){
+      this.afSub.unsubscribe();
     }
 }

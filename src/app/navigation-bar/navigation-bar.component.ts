@@ -1,23 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../shared/login.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-navigation-bar',
   templateUrl: './navigation-bar.component.html',
   styleUrls: ['./navigation-bar.component.css']
 })
-export class NavigationBarComponent implements OnInit {
+export class NavigationBarComponent implements OnInit, OnDestroy {
 
   isLoggedIn: boolean = false;
+  userSub: Subscription;
   
   constructor(
     private loginService: LoginService,
     private authService: AuthService,
     private router: Router
   ) {
-    
+    this.userSub = this.authService.user.subscribe( (user) => {
+      // console.log('user in nav', user);
+      this.isLoggedIn = user==null?false:true;
+    });
   }
 
   isModeLogin = this.loginService.isModeLogin;
@@ -34,10 +39,18 @@ export class NavigationBarComponent implements OnInit {
     this.isModeLogin.next(false);
   }
 
+  onLogout(){
+    this.authService.logout();
+  }
+
   onSearch(query:string){
     // console.log('navigate');
     if(query.trim()!='')
       this.router.navigate(['productlist'], {fragment: query});
+  }
+
+  ngOnDestroy(){
+    this.userSub.unsubscribe();
   }
 
 }
