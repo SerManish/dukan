@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ProductList } from '../../shared/product-list.model';
+import { Product } from 'src/app/shared/product.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-list-item',
@@ -7,8 +8,13 @@ import { ProductList } from '../../shared/product-list.model';
   styleUrls: ['./product-list-item.component.css']
 })
 export class ProductListItemComponent implements OnInit {
-  @Input() product: ProductList;
-  constructor() { }
+  @Input() product: Product;
+  constructor(private router:Router) { }
+
+  openDetails()
+  {
+    this.router.navigate(['product',this.product.id])
+  }
 
   ngOnInit(): void {
   }

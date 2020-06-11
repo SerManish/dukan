@@ -1,4 +1,4 @@
-<div class="item">
+<div class="item" (click)="openDetails()">
   <div class="d-inline-flex flex-wrap">
     <div class="image-div">
       <img class= "listimage" [src]="product.imagePath">
@@ -6,7 +6,7 @@
     <div class="details">
       <h1 class="display-4" style="color: #FFFFFF;">{{product.name}}</h1>
       <p>
-          {{product.description}}
+          {{product.shortDescription}}
       </p>
       <div class="row">
         <div class="col-12 col-md-8">

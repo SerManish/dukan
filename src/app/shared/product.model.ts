@@ -1,5 +1,3 @@
-import { ProductList } from './product-list.model' 
-
 class Details{
     detailType: string;
     detailDesc: string;

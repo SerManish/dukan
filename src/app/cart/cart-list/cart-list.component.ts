@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ProductList } from 'src/app/shared/product-list.model';
-import { OrdersService } from '../orders.service';
+import { CartService } from '../../shared/cart.service';
 import { Subscription } from 'rxjs';
+import { Product } from 'src/app/shared/product.model';
 
 @Component({
   selector: 'app-cart-list',
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs';
 })
 export class CartListComponent implements OnInit,OnDestroy {
 
-  cartList:ProductList[];
+  cartList:Product[];
   cartListSubscription :Subscription;
   quantityList:number[];
   quantityListSubscription :Subscription;
@@ -21,30 +21,30 @@ export class CartListComponent implements OnInit,OnDestroy {
   shippingCharges:number;
   totalPrice:number;
 
-  constructor(private orderService:OrdersService,private router:Router) { }
+  constructor(private cartService:CartService,private router:Router) { }
 
   ngOnInit(): void 
   {
-    this.cartList = this.orderService.getOrders();
-    this.quantityList = this.orderService.getQuantity();
-    this.cartPrice = this.orderService.calculateCartPrice();
-    this.shippingCharges = this.orderService.getShippingCharges();
+    this.cartList = this.cartService.getOrders();
+    this.quantityList = this.cartService.getQuantity();
+    this.cartPrice = this.cartService.calculateCartPrice();
+    this.shippingCharges = this.cartService.getShippingCharges();
     this.totalPrice = this.cartPrice+this.shippingCharges;
-    this.cartListSubscription = this.orderService.ordersUpdated.subscribe(
-      (newProductList:ProductList[]) => 
+    this.cartListSubscription = this.cartService.ordersUpdated.subscribe(
+      (newProductList:Product[]) => 
       {
         if(newProductList)
           this.cartList = newProductList;
       }
     );
-    this.quantityListSubscription = this.orderService.quantityUpdated.subscribe(
+    this.quantityListSubscription = this.cartService.quantityUpdated.subscribe(
       (newQuantityList:number[]) =>
       {
         if(newQuantityList)
           this.quantityList = newQuantityList;
       }
     );
-    this.cartListSubscription = this.orderService.cartPriceUpdated.subscribe(
+    this.cartListSubscription = this.cartService.cartPriceUpdated.subscribe(
       (newCartPrice:number) =>
       {
         this.cartPrice = newCartPrice;
