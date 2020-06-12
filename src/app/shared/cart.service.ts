@@ -1,31 +1,40 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Product } from './product.model';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn:'root'
 })
 export class CartService
 {
+    
     ordersUpdated = new BehaviorSubject<Product[]>(null);
     quantityUpdated = new BehaviorSubject<number[]>(null);
     cartPriceUpdated = new Subject<number>();
 
     private cartPrice = 0;
     private shippingCharges = 50;
-    pricarttotalPrice = 0;
 
-    private quantity:number[]=[];
+    public quantity:number[]=[];
+    public orders:Product[] = [];
 
-    private orders:Product[] = [];
-    getOrders()
+    private uid:string = null;
+
+    constructor(private afs: AngularFirestore,private authservice :AuthService)
     {
-        return this.orders.slice();
-    }
+        authservice.user.subscribe(
+            (user) => {
+                if(user)
+                    this.uid = user.uid;
+            }
+        );
+}
 
-    getQuantity()
+    uploadItem(quantity:number,id:string)
     {
-        return this.quantity.slice();
+        this.afs.collection('carts').doc(this.uid).collection('item').doc(JSON.stringify(id)).set({quantity:quantity});
     }
 
     addToCart(order:Product)
@@ -45,12 +54,14 @@ export class CartService
             this.quantity.push(1);
             this.ordersUpdated.next(this.orders);
             this.quantityUpdated.next(this.quantity);
+            this.uploadItem(1,order.id);
         }
     }
 
-    removeOrder(index:number)
+    removeItem(index:number)
     {
         this.cartPrice-=this.orders[index].price*this.quantity[index];
+        this.afs.collection('carts').doc(this.uid).collection('item').doc(JSON.stringify(this.orders[index].id)).delete();
         this.orders.splice(index,1);
         this.quantity.splice(index,1);
         this.cartPriceUpdated.next(this.cartPrice);
@@ -60,12 +71,16 @@ export class CartService
 
     calculateCartPrice()
     {
+        console.log(this.orders);
         if(this.orders.length==0)
-            return 0;
+        {
+            this.cartPriceUpdated.next(0);
+            return;
+        }
         this.cartPrice=0;
         for(let i=0;i<this.quantity.length;i++)
             this.cartPrice+=(this.quantity[i]*this.orders[i].price);
-        return this.cartPrice;
+        this.cartPriceUpdated.next(this.cartPrice)
     }
 
     getShippingCharges()
@@ -75,6 +90,7 @@ export class CartService
 
     updateQuantity(index:number,newQuantity:number)
     {
+        this.uploadItem(newQuantity,this.orders[index].id);
         this.cartPrice-=this.orders[index].price*this.quantity[index];
         this.quantity[index] = newQuantity;
         this.cartPrice+=this.orders[index].price*this.quantity[index];
