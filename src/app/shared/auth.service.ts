@@ -12,6 +12,7 @@ export class AuthService implements OnDestroy{
 
   user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
   afSub: Subscription;
+  sendAlert: BehaviorSubject<string> = new BehaviorSubject<string>(null);
 
     constructor(
       private afAuth: AngularFireAuth,
@@ -27,7 +28,7 @@ export class AuthService implements OnDestroy{
     login(email: string, password: string){
         
       return this.afAuth.signInWithEmailAndPassword(email, password).then( ()=> {
-        alert('login successful');
+        this.sendAlert.next('login successful');
         return 0;
       })
       .catch( this.handleError);
@@ -35,7 +36,7 @@ export class AuthService implements OnDestroy{
 
     signup(email: string, password: string, name: string , gender: string){
       return this.afAuth.createUserWithEmailAndPassword( email, password).then( ()=>{
-          alert('signup successful');
+          this.sendAlert.next('signup successful');
           const collection = this.afs.collection<User>('users');
           const data = {name: name, email: email, gender: gender, id: auth().currentUser.uid};
           collection.doc( auth().currentUser.uid ).set(data);
@@ -46,7 +47,7 @@ export class AuthService implements OnDestroy{
 
     logout(){
         this.afAuth.signOut().then( ()=> {
-        alert('logged out');
+        this.sendAlert.next('logged out');
         this.user.next(null);
         this.router.navigate(['/home']);
       })
@@ -73,8 +74,9 @@ export class AuthService implements OnDestroy{
         errorMessage = 'This email is not registered !';
         break;
       }
-      alert(errorMessage);
+      
       console.log(error);
+      this.sendAlert.next(errorMessage);
       return 1;
     }
     
