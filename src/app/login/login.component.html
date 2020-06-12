@@ -14,7 +14,7 @@
             <div class="f-close" style="flex-basis: 10%;" (click)="onClose()"><i class="fa fa-close"></i></div>
         </div>
         
-        <form class="d-form" (ngSubmit)="onSubmit()" [formGroup]="authForm" *ngIf="!isLoading">
+        <form class="d-form" (ngSubmit)="onSubmit()" [formGroup]="authForm">
             <div class="form-group" *ngIf="!isLoginMode">
                 <label for="name">Name</label>
                 <input type="text" 
@@ -58,7 +58,8 @@
                 type="submit"
                 [disabled]="
                     (isLoginMode && !authForm.get('userData').valid) ||
-                    (!isLoginMode && !authForm.valid)"> {{isLoginMode?'Login':'Signup'}} </button>
+                    (!isLoginMode && !authForm.valid) || 
+                    isRequesting"> {{isLoginMode?'Login':'Signup'}} </button>
             </div>
         </form>
     </div>
