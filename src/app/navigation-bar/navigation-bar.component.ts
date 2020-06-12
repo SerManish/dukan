@@ -3,6 +3,7 @@ import { LoginService } from '../shared/login.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
 import { Subscription } from 'rxjs';
+import { ProductService } from '../shared/product.service';
 
 @Component({
   selector: 'app-navigation-bar',
@@ -17,6 +18,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   constructor(
     private loginService: LoginService,
     private authService: AuthService,
+    private productService: ProductService,
     private router: Router
   ) {
     this.userSub = this.authService.user.subscribe( (user) => {
@@ -46,7 +48,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   onSearch(query:string){
     // console.log('navigate');
     if(query.trim()!='')
-      this.router.navigate(['productlist'], {fragment: query});
+      this.router.navigate(['productlist'], {fragment: query.trim()});
   }
 
   ngOnDestroy(){

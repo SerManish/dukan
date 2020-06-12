@@ -86,7 +86,7 @@ export class ProductService{
     }
 
     getProductById(id: string){
-      console.log(this.loadedProducts);
+      // console.log(this.loadedProducts);
       return this.loadedProducts.get(id);
     }
 
