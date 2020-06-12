@@ -49,21 +49,40 @@ export class ProductService{
       private afs: AngularFirestore
     ){
       const productCollection = afs.collection("products");
-
-      productCollection.get().toPromise().then((querySnapshot => {
-        querySnapshot.forEach( doc => {
-          doc.ref.withConverter(this.productConverter)
-          .get().then( (doc) => {
-            if (doc.exists){  
-              let product = doc.data();
-              this.loadedProducts.set(product.id.toString(), product);
-            } else {
-              console.log("No such document!")
-            }}).catch( (error) => {
-              console.log("Error getting document:", error)
+      productCollection.ref.onSnapshot( snapshot=>{
+        snapshot.docChanges().forEach(change=>{
+          
+          if (change.type === "added") {
+            console.log("New product : ", change.doc.data());
+            
+            change.doc.ref.withConverter(this.productConverter).get().then(doc=>{
+              doc.ref.withConverter(this.productConverter)
+              .get().then( (doc) => {
+                if (doc.exists){  
+                  let product = doc.data();
+                  this.loadedProducts.set(product.id.toString(), product);
+                } else {
+                  console.log("No such document!")
+                }}).catch( (error) => {
+                  console.log("Error getting document:", error)
+                });
             });
+
+          }
+
+          if (change.type === "modified") {
+              console.log("Modified Product: ", change.doc.data());
+          }
+          
+          if (change.type === "removed") {
+            const id = change.doc.data().id.toString();
+            if(this.loadedProducts.has(id)){
+              this.loadedProducts.delete(id);
+            }
+            console.log("Removed product: ", change.doc.data().id);
+          }
         })
-      }));
+      });
     }
 
     getProductById(id: string){
@@ -91,21 +110,6 @@ export class ProductService{
         }
       }
       return products; 
-    }
-
-    addProduct(product:Product)
-    {
-      if(this.loadedProducts.has(product.id.toString()))
-        throw("Product Already Exists");
-      this.loadedProducts.set(product.id.toString(),product);
-    }
-
-    deleteProduct(id:string)
-    {
-      if(!this.loadedProducts.has(id.toString()))
-        throw("Invalid Product ID");
-      else
-        this.loadedProducts.delete(id.toString());
     }
 
 }

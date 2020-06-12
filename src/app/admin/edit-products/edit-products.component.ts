@@ -52,7 +52,7 @@ export class EditProductsComponent implements OnInit {
 
   addProduct()
   {
-    this.productService.addProduct(this.newForm.value);
+    // this.productService.addProduct(this.newForm.value);
     this.adminService.addProduct(this.newForm.value);
     this.clearForm();
   }
@@ -60,7 +60,7 @@ export class EditProductsComponent implements OnInit {
   deleteProduct()
   {
     this.adminService.deleteProduct(this.deleteForm.value.id);
-    this.productService.deleteProduct(this.deleteForm.value.id);
+    // this.productService.deleteProduct(this.deleteForm.value.id);
   }
 
   clearForm()
