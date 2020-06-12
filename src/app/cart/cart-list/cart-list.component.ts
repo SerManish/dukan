@@ -25,6 +25,7 @@ export class CartListComponent implements OnInit,OnDestroy {
   uid:string = null;
   userSubscription:Subscription;
   cartPriceSubsription:Subscription;
+  isLoading = false;
 
   itemsReceived = new BehaviorSubject<boolean> (false);
   itemsReceivedSubsription:Subscription;
@@ -37,46 +38,48 @@ export class CartListComponent implements OnInit,OnDestroy {
 
   ngOnInit(): void 
   {
+    this.isLoading=true;
     this.shippingCharges = this.cartService.getShippingCharges();
     this.totalPrice = this.cartPrice+this.shippingCharges;
     this.userSubscription = this.authservice.user.subscribe(
       (user) => {
-          if(user)
-          {
-            this.afs.collection('carts').doc(user.uid).collection('item').get().pipe(take(1)).subscribe(
-              (snapshot) => 
-              {
-                this.cartList = [];
-                this.quantityList = [];
-                this.cartPrice=0;
-                snapshot.docs.forEach(
-                (doc) => {
-                  let data = doc.data();
-                  this.afs.collection('products').doc(doc.id).get().pipe(take(1)).subscribe(
-                    (product) => this.cartList.push(<Product>product.data()),
-                    (error) => console.log(error),
-                    () =>{
-                      this.quantityList.push(+data.quantity);
-                      this.itemsReceived.next(true);
-                    }
-                  );
-                })
-                this.itemsReceivedSubsription = this.itemsReceived.subscribe(
-                  (done) => {
-                    if (done)
-                    {
-                      this.cartService.orders = this.cartList;
-                      this.cartService.quantity = this.quantityList;
-                      this.cartService.calculateCartPrice();
-                      this.cartService.quantityUpdated.next(this.quantityList);
-                      this.cartService.cartPriceUpdated.next(this.cartPrice);
-                      this.totalPrice = this.shippingCharges+this.cartPrice;
-                    }
+        if(user)
+        {
+          this.afs.collection('carts').doc(user.uid).collection('item').get().pipe(take(1)).subscribe(
+            (snapshot) => 
+            {
+              this.cartList = [];
+              this.quantityList = [];
+              this.cartPrice=0;
+              snapshot.docs.forEach(
+              (doc) => {
+                let data = doc.data();
+                this.afs.collection('products').doc(doc.id).get().pipe(take(1)).subscribe(
+                  (product) => this.cartList.push(<Product>product.data()),
+                  (error) => console.log(error),
+                  () =>{
+                    this.quantityList.push(+data.quantity);
+                    this.itemsReceived.next(true);
                   }
                 );
-              }
-            )
-          }
+              })
+              this.itemsReceivedSubsription = this.itemsReceived.subscribe(
+                (done) => {
+                  if (done)
+                  {
+                    this.cartService.orders = this.cartList;
+                    this.cartService.quantity = this.quantityList;
+                    this.cartService.calculateCartPrice();
+                    this.cartService.quantityUpdated.next(this.quantityList);
+                    this.cartService.cartPriceUpdated.next(this.cartPrice);
+                    this.totalPrice = this.shippingCharges+this.cartPrice;
+                    this.isLoading = false;
+                  }
+                }
+              );
+            }
+          )
+        }
       }
     );
 

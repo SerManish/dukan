@@ -8,6 +8,7 @@ import { AddressComponent } from './address/address.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
 
 const routes:Routes = [
     { path:'cart',component:CartComponent, children:[
@@ -23,7 +24,8 @@ const routes:Routes = [
         CartListComponent,
         CartListItemComponent,
         AddressComponent,
-        OrderSuccessComponent
+        OrderSuccessComponent,
+        LoadingSpinnerComponent
     ],
     imports:[
         RouterModule.forChild(routes),

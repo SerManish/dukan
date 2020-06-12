@@ -1,69 +1,74 @@
-<div class="row no-gutters" *ngIf="cartList.length">
-    <div class="col-12 col-md-8 offset-md-2">
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th style="width: 10%;" class="d-none d-md-table-cell"> </th>
-                        <th style="width: 40%;">Product Name</th>
-                        <th style="width: 10%;" class="d-none d-md-table-cell">Price</th>
-                        <th style="width: 10%;" class="text-center">Quantity</th>
-                        <th style="width: 20%;" class="text-center">Total</th>
-                        <th style="width: 10%;"> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <ng-container *ngFor = "let item of cartList;index as i">
-                        <tr table-row [cartItem]="item" [index]="i"></tr>
-                    </ng-container>
-                    <tr class="table-light">
-                        <th colspan="2"  class="d-none d-md-table-cell"> </th>
-                        <th colspan="2" class="text-right bg-info">Total Cart Price</th>
-                        <th class="text-center bg-info">&#8377;&nbsp;{{cartPrice | number:'1.2-2'}}</th>
-                        <th class=" bg-info"> </th>
-                    </tr>
-                    <tr class="table-light">
-                        <th colspan="2"  class="d-none d-md-table-cell"> </th>
-                        <th colspan="2" class="text-right bg-info">Shipping Charges</th>
-                        <th class="text-center bg-info">&#8377;&nbsp;{{shippingCharges | number:'1.2-2'}}</th>
-                        <th class=" bg-info"> </th>
-                    </tr>
-                    <tr class="table-light">
-                        <th colspan="2" class="d-none  d-md-table-cell"> </th>
-                        <th colspan="2" class="text-right bg-info">Total Price</th>
-                        <th class="text-center bg-info">&#8377;&nbsp;{{totalPrice | number:'1.2-2'}}</th>
-                        <th class=" bg-info"> </th>
-                    </tr>
-                </tbody>
-            </table>
+<div *ngIf="!isLoading">
+    <div class="row no-gutters" *ngIf="cartList.length">
+        <div class="col-12 col-md-8 offset-md-2">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;" class="d-none d-md-table-cell"> </th>
+                            <th style="width: 40%;">Product Name</th>
+                            <th style="width: 10%;" class="d-none d-md-table-cell">Price</th>
+                            <th style="width: 10%;" class="text-center">Quantity</th>
+                            <th style="width: 20%;" class="text-center">Total</th>
+                            <th style="width: 10%;"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor = "let item of cartList;index as i">
+                            <tr table-row [cartItem]="item" [index]="i"></tr>
+                        </ng-container>
+                        <tr class="table-light">
+                            <th colspan="2"  class="d-none d-md-table-cell"> </th>
+                            <th colspan="2" class="text-right bg-info">Total Cart Price</th>
+                            <th class="text-center bg-info">&#8377;&nbsp;{{cartPrice | number:'1.2-2'}}</th>
+                            <th class=" bg-info"> </th>
+                        </tr>
+                        <tr class="table-light">
+                            <th colspan="2"  class="d-none d-md-table-cell"> </th>
+                            <th colspan="2" class="text-right bg-info">Shipping Charges</th>
+                            <th class="text-center bg-info">&#8377;&nbsp;{{shippingCharges | number:'1.2-2'}}</th>
+                            <th class=" bg-info"> </th>
+                        </tr>
+                        <tr class="table-light">
+                            <th colspan="2" class="d-none  d-md-table-cell"> </th>
+                            <th colspan="2" class="text-right bg-info">Total Price</th>
+                            <th class="text-center bg-info">&#8377;&nbsp;{{totalPrice | number:'1.2-2'}}</th>
+                            <th class=" bg-info"> </th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col mb-2">
+                <div class="row">
+                    <div class="col-sm-12  col-md-6">
+                        <button class="btn btn-block btn-light" type="button" (click)="continueShopping()">Continue Shopping</button>
+                    </div>
+                    <div class="col-sm-12 col-md-6 text-right">
+                        <button class="btn btn-lg btn-block btn-success text-uppercase" (click)="checkout()">Checkout</button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col mb-2">
+    </div>
+    
+    <div class="row no-gutters" *ngIf="!cartList.length">
+        <div class="col-10 offset-1 col-md-6 offset-md-3">
+            <h3>Your Cart is Empty</h3>
+            <br>
+            <span class="d-flex justify-content-center">
+                <img src="https://cdn.dribbble.com/users/687236/screenshots/5838300/group_852_2x.png"
+                class="img-fluid" style="height: 40vh;"
+                >
+            </span>
+            <br>
             <div class="row">
-                <div class="col-sm-12  col-md-6">
-                    <button class="btn btn-block btn-light" type="button" (click)="continueShopping()">Continue Shopping</button>
-                </div>
-                <div class="col-sm-12 col-md-6 text-right">
-                    <button class="btn btn-lg btn-block btn-success text-uppercase" (click)="checkout()">Checkout</button>
+                <div class="col-sm-12 col-md-6 offset-md-3 text-right">
+                    <button class="btn btn-block btn-lg btn-dark" type="button" (click)="continueShopping()">Continue Shopping</button>
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
 </div>
-
-<div class="row no-gutters" *ngIf="!cartList.length">
-    <div class="col-10 offset-1 col-md-6 offset-md-3">
-        <h3>Your Cart is Empty</h3>
-        <br>
-        <span class="d-flex justify-content-center">
-            <img src="https://cdn.dribbble.com/users/687236/screenshots/5838300/group_852_2x.png"
-            class="img-fluid" style="height: 40vh;"
-            >
-        </span>
-        <br>
-        <div class="row">
-            <div class="col-sm-12 col-md-6 offset-md-3 text-right">
-                <button class="btn btn-block btn-lg btn-dark" type="button" (click)="continueShopping()">Continue Shopping</button>
-            </div>
-        </div>
-    </div>
+<div *ngIf="isLoading" class="text-center">
+    <app-loading-spinner></app-loading-spinner>
 </div>
