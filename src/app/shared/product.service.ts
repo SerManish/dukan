@@ -1,129 +1,111 @@
 import { Injectable } from '@angular/core';
 import { Product } from './product.model';
+import { AngularFirestore } from '@angular/fire/firestore/';
 
 @Injectable({providedIn: 'root'})
 
 export class ProductService{
 
-    loadedProducts: Product[] = [];
+    loadedProducts: Map< string, Product> = new Map();
+
+    productConverter = {
+      toFirestore: function(product) {
+          let details=[];
+          for(let detail in product.details){
+            details.push(detail);
+          }
+          return {
+            id: product.id,
+            category: product.category,
+            name: product.name,
+            imagePath: product.imagePath ,
+            shortDescription: product.shortDescription ,
+            price: product.price ,
+            longDescription: product.longDescription ,
+            details: details,
+            isBestSeller: product.isBestSeller ,
+          }
+      },
+      fromFirestore: function(snapshot, options){
+          const data = snapshot.data(options);
+          const product=new Product(
+            data.id, 
+            data.category, 
+            data.name, 
+            data.imagePath, 
+            data.shortDescription, 
+            data.longDescription, 
+            data.price,
+            data.details,
+            data.isBestSeller
+          );
+          // console.log('data',product);
+            
+          return product; 
+      }
+    }
     
-    constructor(){
-        this.loadedProducts['1000'] = {
-            id: '1000',
-            category: 'fruit',
-            name:"Orange",
-            imagePath:"../../../assets/images/carousal0.jpg",
-            shortDescription:`Some Description about the item in few words`,
-            longDescription:`Some Description about the item in few words,
-            Some Description about the item in few words,
-            Some Description about the item in few words
-            Some Description about the item in few words`,
-            price:29.99,
-            isBestSeller: true,
-            details: [
-              {detailType:'Battery', detailDesc:'10000 mah'},
-              {detailType:'Colour', detailDesc:'Yellow'},
-              {detailType:'RAM', detailDesc:'16GB'},
-            ]
-          };
+    constructor(
+      private afs: AngularFirestore
+    ){
+      const productCollection = afs.collection("products");
 
-          this.loadedProducts['1001'] = {
-            id: '1001',
-            category: 'camera',
-            name:"Camera",
-            imagePath:"../../../assets/images/carousal1.jpg",
-            shortDescription:`Some Description about the item in few words`,
-            longDescription:`Some Description about the item in few words,
-            Some Description about the item in few words,
-            Some Description about the item in few words
-            Some Description about the item in few words`,
-            price: 49990,
-            isBestSeller: true,
-            details: [
-              {detailType:'Battery', detailDesc:'10000 mah'},
-              {detailType:'Colour', detailDesc:'Black'},
-              {detailType:'Resolution', detailDesc:'4K'},
-              {detailType:'Company', detailDesc:'Kanon'},
-            ]
-          };
-
-          this.loadedProducts['1002'] = {
-            id: '1002',
-            category: 'fruit',
-            name:"Bananas",
-            imagePath:"../../../assets/images/carousal2.jpg",
-            shortDescription:`Some Description about the item in few words`,
-            longDescription:`Some Description about the item in few words,
-            Some Description about the item in few words,
-            Some Description about the item in few words
-            Some Description about the item in few words`,
-            price:109.99,
-            isBestSeller: true,
-            details: [
-              {detailType:'Best before', detailDesc:'3 days'},
-              {detailType:'Colour', detailDesc:'Yellow'}
-            ]
-          }
-          this.loadedProducts['1003'] = {
-            id: '1003',
-            category: 'fruit',
-            name:"Rich Grapes",
-            imagePath:"../../../assets/images/carousal0.jpg",
-            shortDescription:`Some Description about the item in few words`,
-            longDescription:`Some Description about the item in few words,
-            Some Description about the item in few words,
-            Some Description about the item in few words
-            Some Description about the item in few words`,
-            price:2099.99,
-            isBestSeller: false,
-            details: [
-              {detailType:'Best before', detailDesc:'8 days'},
-              {detailType:'Colour', detailDesc:'Purple'}
-            ]
-          }
+      productCollection.get().toPromise().then((querySnapshot => {
+        querySnapshot.forEach( doc => {
+          doc.ref.withConverter(this.productConverter)
+          .get().then( (doc) => {
+            if (doc.exists){  
+              let product = doc.data();
+              this.loadedProducts.set(product.id.toString(), product);
+            } else {
+              console.log("No such document!")
+            }}).catch( (error) => {
+              console.log("Error getting document:", error)
+            });
+        })
+      }));
     }
 
     getProductById(id: string){
-        return this.loadedProducts[id];
+      console.log(this.loadedProducts);
+      return this.loadedProducts.get(id);
     }
 
     getProducts(query: string): Product[] {
       let products: Product[] = [];
-      
       if(query==null){
-        for(let key in this.loadedProducts){
-          products.push(this.loadedProducts[key]);
+        for(let product of this.loadedProducts.values()){
+          products.push(product);
         }
       }
       else{
         let queries: string[] = query.split(' ');
 
-        for(let key in this.loadedProducts){
+        for(let product of this.loadedProducts.values()){
           for(let q of queries){
-            if( q!='' && this.loadedProducts[key].name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
-              products.push(this.loadedProducts[key]);
+            if(q!='' && product.name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
+              products.push(product);
               break;
             }
           }
         }
       }
-
       return products; 
     }
 
     addProduct(product:Product)
     {
-      if(this.loadedProducts[product.id])
+      if(this.loadedProducts.has(product.id.toString()))
         throw("Product Already Exists");
-      this.loadedProducts[product.id]=product;
+      this.loadedProducts.set(product.id.toString(),product);
     }
 
     deleteProduct(id:string)
     {
-      if(!this.loadedProducts[id])
+      if(!this.loadedProducts.has(id.toString()))
         throw("Invalid Product ID");
       else
-        delete this.loadedProducts[id];
+        this.loadedProducts.delete(id.toString());
     }
 
 }

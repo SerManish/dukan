@@ -63,7 +63,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       let gender = this.authForm.get('gender').value;
       result = await this.authService.signup(email, password, name , gender);
     }
-    console.log('res',result);
+    // console.log('res',result);
     if(result == 0){
       this.onClose();
     }    

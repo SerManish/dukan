@@ -3,14 +3,17 @@ class Details{
     detailDesc: string;
 }
 
-export interface Product{
-    id: string;
-    category: string;
-    name: string;
-    imagePath: string;
-    shortDescription: string;
-    longDescription: string;
-    price: number;
-    details: Details[];
-    isBestSeller:boolean;
+export class Product{
+
+    constructor(
+        public id: string,
+        public category: string,
+        public name: string,
+        public imagePath: string,
+        public shortDescription: string,
+        public longDescription: string,
+        public price: number,
+        public details: Details[],
+        public isBestSeller:boolean
+    ){}
 }
