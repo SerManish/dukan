@@ -71,12 +71,16 @@ export class CartService
 
     calculateCartPrice()
     {
+        console.log(this.orders);
         if(this.orders.length==0)
-            return 0;
+        {
+            this.cartPriceUpdated.next(0);
+            return;
+        }
         this.cartPrice=0;
         for(let i=0;i<this.quantity.length;i++)
             this.cartPrice+=(this.quantity[i]*this.orders[i].price);
-        return this.cartPrice;
+        this.cartPriceUpdated.next(this.cartPrice)
     }
 
     getShippingCharges()
