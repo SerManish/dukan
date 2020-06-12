@@ -1,10 +1,13 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+
+import { take } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
+
+import { Product } from 'src/app/shared/product.model';
 
 import { CartService } from '../../shared/cart.service';
-import { Subscription } from 'rxjs';
-import { Product } from 'src/app/shared/product.model';
-import { AngularFirestore } from '@angular/fire/firestore';
 import { AuthService } from 'src/app/shared/auth.service';
 
 @Component({
@@ -14,51 +17,55 @@ import { AuthService } from 'src/app/shared/auth.service';
 })
 export class CartListComponent implements OnInit,OnDestroy {
 
-  cartList:Product[];
-  cartListSubscription :Subscription;
-  quantityList:number[];
-  quantityListSubscription :Subscription;
+  cartList:Product[] = [];
+  quantityList:number[] = [];
   cartPrice:number;
-  cartPriceSubscription :Subscription;
   shippingCharges:number;
   totalPrice:number;
   uid:string = null;
+  userSubscription:Subscription;
 
-  constructor(private cartService:CartService,private router:Router,private afs: AngularFirestore,private authservice :AuthService) { }
+  constructor(
+    private cartService:CartService
+    ,private router:Router
+    ,private afs: AngularFirestore
+    ,private authservice :AuthService
+    ) { }
 
   ngOnInit(): void 
   {
-    this.cartList = this.cartService.getOrders();
-    this.quantityList = this.cartService.getQuantity();
     this.cartPrice = this.cartService.calculateCartPrice();
     this.shippingCharges = this.cartService.getShippingCharges();
     this.totalPrice = this.cartPrice+this.shippingCharges;
-    this.cartListSubscription = this.cartService.ordersUpdated.subscribe(
-      (newProductList:Product[]) => 
-      {
-        if(newProductList)
-          this.cartList = newProductList;
+    this.userSubscription = this.authservice.user.subscribe(
+      (user) => {
+          if(user)
+          {
+            this.afs.collection('carts').doc(user.uid).collection('item').get().pipe(take(1)).subscribe(
+                (snapshot) => 
+                {
+                  this.cartList = [];
+                  this.quantityList = [];
+                  this.cartPrice=0;
+                  snapshot.docs.forEach(
+                  (doc) => {
+                      let data = doc.data()
+                      this.afs.collection('products').doc(doc.id).get().pipe(take(1)).subscribe(
+                        (product) => this.cartList.push(<Product>product.data())
+                      );
+                      this.quantityList.push(<number>data.quantity);
+                      this.cartPrice+=data.price;
+                  }
+                  )
+                  this.cartService.orders = this.cartList;
+                  this.cartService.quantity = this.quantityList;
+                  this.cartService.quantityUpdated.next(this.quantityList);
+                  this.cartService.cartPriceUpdated.next(this.cartPrice);
+                }
+            )
+          }
       }
     );
-    this.quantityListSubscription = this.cartService.quantityUpdated.subscribe(
-      (newQuantityList:number[]) =>
-      {
-        if(newQuantityList)
-          this.quantityList = newQuantityList;
-      }
-    );
-    this.cartListSubscription = this.cartService.cartPriceUpdated.subscribe(
-      (newCartPrice:number) =>
-      {
-        this.cartPrice = newCartPrice;
-        this.totalPrice = this.cartPrice+this.shippingCharges;
-      }
-    );
-
-    
-
-
-
   }
   
   checkout()
@@ -73,8 +80,6 @@ export class CartListComponent implements OnInit,OnDestroy {
   
   ngOnDestroy() 
   {
-    this.cartListSubscription.unsubscribe();
-    this.quantityListSubscription.unsubscribe();
-    this.cartListSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 }

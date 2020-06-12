@@ -9,6 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class CartService
 {
+    
     ordersUpdated = new BehaviorSubject<Product[]>(null);
     quantityUpdated = new BehaviorSubject<number[]>(null);
     cartPriceUpdated = new Subject<number>();
@@ -16,8 +17,8 @@ export class CartService
     private cartPrice = 0;
     private shippingCharges = 50;
 
-    private quantity:number[]=[];
-    private orders:Product[] = [];
+    public quantity:number[]=[];
+    public orders:Product[] = [];
 
     private uid:string = null;
 
@@ -29,48 +30,11 @@ export class CartService
                     this.uid = user.uid;
             }
         );
-    //     afs.collection('carts').doc('XhZZdtraIncGqfYNnDWR').collection('item').get().subscribe(
-    //         (snapshot) => snapshot.docs.forEach(
-    //             (doc) => console.log(doc.data())
-    //         )
-    //     )
-    //    afs.collection('carts').doc('XhZZdtraIncGqfYNnDWR').collection('item').doc('65CmbpWp3PQQfdX79zSv').update({id:1212});
-    this.authservice.user.subscribe(
-        (user) => {
-            if(user)
-            {
-              this.afs.collection('carts').doc(user.uid).collection('item').get().subscribe(
-                  (snapshot) => 
-                  {
-                    this.orders = [];
-                    snapshot.docs.forEach(
-                    (doc) => {
-                        let data = doc.data()
-                        this.orders.push(new Product(data.id,data.category,data.name,data.imagePath,data.shortDescription,data.longDescription,data.price,data.details,data.isBestSeller));
-                    }
-                    )
-                    this.ordersUpdated.next(this.orders);
-                  }
-              )
-            }
-        }
-      );
-
 }
 
-    uploadItem(order:Product)
+    uploadItem(quantity:number,id:string)
     {
-        this.afs.collection('carts').doc(this.uid).collection('item').add(order);
-    }
-
-    getOrders()
-    {
-        return this.orders.slice();
-    }
-
-    getQuantity()
-    {
-        return this.quantity.slice();
+        this.afs.collection('carts').doc(this.uid).collection('item').doc(JSON.stringify(id)).set({quantity:quantity});
     }
 
     addToCart(order:Product)
@@ -90,13 +54,14 @@ export class CartService
             this.quantity.push(1);
             this.ordersUpdated.next(this.orders);
             this.quantityUpdated.next(this.quantity);
-            this.uploadItem(order);
+            this.uploadItem(1,order.id);
         }
     }
 
-    removeOrder(index:number)
+    removeItem(index:number)
     {
         this.cartPrice-=this.orders[index].price*this.quantity[index];
+        this.afs.collection('carts').doc(this.uid).collection('item').doc(JSON.stringify(this.orders[index].id)).delete();
         this.orders.splice(index,1);
         this.quantity.splice(index,1);
         this.cartPriceUpdated.next(this.cartPrice);
@@ -121,6 +86,7 @@ export class CartService
 
     updateQuantity(index:number,newQuantity:number)
     {
+        this.uploadItem(newQuantity,this.orders[index].id);
         this.cartPrice-=this.orders[index].price*this.quantity[index];
         this.quantity[index] = newQuantity;
         this.cartPrice+=this.orders[index].price*this.quantity[index];
