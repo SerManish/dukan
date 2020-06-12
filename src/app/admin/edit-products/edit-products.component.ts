@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ProductService } from 'src/app/shared/product.service';
+import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
   selector: 'app-edit-products',
@@ -14,7 +15,10 @@ export class EditProductsComponent implements OnInit {
   @ViewChild('f') deleteForm;
   detailsArray:FormArray = new FormArray([]);
 
-  constructor(private productService:ProductService) { }
+  constructor(
+    private productService:ProductService,
+    private adminService: AdminService
+    ) { }
 
   ngOnInit(): void {
     this.newForm = new FormGroup({
@@ -48,13 +52,15 @@ export class EditProductsComponent implements OnInit {
 
   addProduct()
   {
-    this.productService.addProduct(this.newForm.value);
+    // this.productService.addProduct(this.newForm.value);
+    this.adminService.addProduct(this.newForm.value);
     this.clearForm();
   }
 
   deleteProduct()
   {
-    this.productService.deleteProduct(this.deleteForm.value.id);
+    this.adminService.deleteProduct(this.deleteForm.value.id);
+    // this.productService.deleteProduct(this.deleteForm.value.id);
   }
 
   clearForm()

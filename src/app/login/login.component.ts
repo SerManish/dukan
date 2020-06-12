@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   authForm: FormGroup;
   isLoginMode = false;
-  isLoading = false;
+  isRequesting = false;
   genders: string[] = ['Male', 'Female'];
   error: string = null;
   loginSub: Subscription;
@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(){
+    this.isRequesting = true;
     let email = this.authForm.get('userData').get('email').value;
     let password = this.authForm.get('userData').get('password').value;
     let result;
@@ -63,7 +64,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       let gender = this.authForm.get('gender').value;
       result = await this.authService.signup(email, password, name , gender);
     }
-    console.log('res',result);
+    // console.log('res',result);
+    this.isRequesting = false;
     if(result == 0){
       this.onClose();
     }    
