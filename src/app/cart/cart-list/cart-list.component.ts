@@ -73,22 +73,23 @@ export class CartListComponent implements OnInit,OnDestroy {
                     this.cartService.quantityUpdated.next(this.quantityList);
                     this.cartService.cartPriceUpdated.next(this.cartPrice);
                     this.totalPrice = this.shippingCharges+this.cartPrice;
-                    this.isLoading = false;
                   }
                 }
               );
-            }
+            },
+            (error) => (console).log(error),
+            () => this.isLoading=false
           )
         }
       }
     );
-
     this.cartPriceSubsription = this.cartService.cartPriceUpdated.subscribe(
       (newPrice) => {
         this.cartPrice = newPrice;
         this.totalPrice = this.cartPrice+this.shippingCharges;
       }
     )
+    //this.isLoading=false;
   }
   
   checkout()
