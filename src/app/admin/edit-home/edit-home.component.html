@@ -1,1 +1,68 @@
-<p>edit-home works!</p>
+<div class="row no-gutters">
+    <div class="col-10 offset-1 col-md-6 offset-md-3">
+        <select class="form-control" [(ngModel)]="mode">
+            <option value="slider">Slider Settings</option>
+            <option value="category">Category Settings</option>
+        </select>
+        <br>
+        <form (ngSubmit)="changeHome()" [formGroup]="sliderForm" *ngIf="mode =='slider' ">
+            <div class="form-group row">
+                <label for="name" class="col-12 col-form-label">Slider Images</label>
+            </div>
+            <div class="form-group row" formArrayName="images">
+                <ng-container *ngFor="let image of imageArray.controls;index as i" [formGroupName]="i">
+                    <div class="col-sm-11 mb-1">
+                        <input type="text" class="form-control" name="source" formControlName="source" placeholder="Image Source">
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-danger" (click)="removeImage(i)">X</button>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 offset-4 mb-2">
+                    <button type="button" class="btn btn-dark" (click)="addNewImage()">Add new Image</button>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-12 col-md-6">
+                    <button type="button" class="btn btn-info btn-block mb-1" (click)="clearForm()">Clear</button>
+                </div>
+                <div class="col-12 col-md-6">
+                    <button type="submit" class="btn btn-success btn-block" [disabled]="!sliderForm.valid">Save</button>
+                </div>
+            </div>
+        </form>
+        <form (ngSubmit)="changeCategory()" [formGroup]="categoryForm" *ngIf="mode =='category' ">
+            <div class="form-group row">
+                <label for="name" class="col-12 col-form-label">Home Product Categories</label>
+            </div>
+            <div class="form-group row" formArrayName="categories">
+                <ng-container *ngFor="let category of categoryArray.controls;index as i" [formGroupName]="i">
+                    <div class="col-sm-4 mb-1">
+                        <input type="text" class="form-control" name="name" formControlName="name" placeholder="Category Name">
+                    </div>
+                    <div class="col-sm-7">
+                        <input type="text" class="form-control" name="source" formControlName="source" placeholder="Image Source">
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="btn btn-danger" (click)="removeCategory(i)">X</button>
+                    </div>
+                </ng-container>
+            </div>
+            <div class="row">
+                <div class="col-sm-4 offset-4 mb-2">
+                    <button type="button" class="btn btn-dark" (click)="addNewCategory()">Add new Category</button>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-12 col-md-6">
+                    <button type="button" class="btn btn-info btn-block mb-1" (click)="clearForm()">Clear</button>
+                </div>
+                <div class="col-12 col-md-6">
+                    <button type="submit" class="btn btn-success btn-block" [disabled]="!categoryForm.valid">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
