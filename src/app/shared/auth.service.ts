@@ -6,6 +6,7 @@ import { BehaviorSubject, Subscription } from 'rxjs';
 import { User } from 'firebase';
 import { Router } from '@angular/router';
 import { AlertService } from './alert-bar/alert.service';
+import { take } from 'rxjs/operators';
 
 @Injectable({providedIn: 'root'})
 
@@ -13,6 +14,7 @@ export class AuthService implements OnDestroy{
 
   user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
   isLoggedIn = false;
+  isAdmin = new BehaviorSubject<boolean>(false);
   afSub: Subscription;
 
     constructor(
@@ -23,13 +25,15 @@ export class AuthService implements OnDestroy{
     ){
       this.afSub = this.afAuth.authState.subscribe( user => {
         this.user.next(user);
-        if(user){
-          this.isLoggedIn = true;
+        this.isLoggedIn = !!user;
+        if(!!user){
+          this.afs.collection('users').doc(user.uid).get().pipe(take(1)).subscribe( doc=>{
+            this.isAdmin.next(!!doc.data().isAdmin);
+          });
         }
         else{
-          this.isLoggedIn = false;
+          this.isAdmin.next(false);
         }
-        // console.log('user',user);
       });
     }
 
