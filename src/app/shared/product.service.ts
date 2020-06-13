@@ -1,15 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Product } from './product.model';
 import { AngularFirestore } from '@angular/fire/firestore/';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 
 export class ProductService{
 
-    loadedProducts: Map< string, Product> = new Map();
+    productsRef = this.afs.collection('products').ref;
 
     productConverter = {
-      toFirestore: function(product) {
+      toFirestore: function(product:Product) {
           let details=[];
           for(let detail in product.details){
             details.push(detail);
@@ -26,7 +27,7 @@ export class ProductService{
             isBestSeller: product.isBestSeller ,
           }
       },
-      fromFirestore: function(snapshot, options){
+      fromFirestore: function(snapshot, options):Product{
           const data = snapshot.data(options);
           const product=new Product(
             data.id, 
@@ -47,69 +48,47 @@ export class ProductService{
     
     constructor(
       private afs: AngularFirestore
-    ){
-      const productCollection = afs.collection("products");
-      productCollection.ref.onSnapshot( snapshot=>{
-        snapshot.docChanges().forEach(change=>{
-          
-          if (change.type === "added") {
-            console.log("New product : ", change.doc.data());
-            
-            change.doc.ref.withConverter(this.productConverter).get().then(doc=>{
-              doc.ref.withConverter(this.productConverter)
-              .get().then( (doc) => {
-                if (doc.exists){  
-                  let product = doc.data();
-                  this.loadedProducts.set(product.id.toString(), product);
-                } else {
-                  console.log("No such document!")
-                }}).catch( (error) => {
-                  console.log("Error getting document:", error)
-                });
-            });
+    ){}
 
-          }
-
-          if (change.type === "modified") {
-              console.log("Modified Product: ", change.doc.data());
-          }
-          
-          if (change.type === "removed") {
-            const id = change.doc.data().id.toString();
-            if(this.loadedProducts.has(id)){
-              this.loadedProducts.delete(id);
-            }
-            console.log("Removed product: ", change.doc.data().id);
-          }
-        })
-      });
-    }
-
-    getProductById(id: string){
+    async getProductById(id: string){
       // console.log(this.loadedProducts);
-      return this.loadedProducts.get(id);
+      let product: Product;
+      await this.productsRef.doc(id)
+      .withConverter(this.productConverter)
+      .get().then(function(doc) {
+        if (doc.exists){
+          product = doc.data();
+        } else {
+          throw('no such product');
+        }}).catch(function(error) {
+          throw(error);
+        });
+        return product;
     }
 
-    getProducts(query: string): Product[] {
-      let products: Product[] = [];
-      if(query==null){
-        for(let product of this.loadedProducts.values()){
+    async getProducts(query: string) {
+      let products: Product[]=[];
+      await this.productsRef.where("name", "==", query)
+      .get()
+      .then(function(querySnapshot) {
+          querySnapshot.forEach(function(doc) {
+          const data = doc.data();
+          let product: Product = new Product(
+            data.id, 
+            data.category,
+            data.name,
+            data.imagePath, 
+            data.shortDescription, 
+            data.longDescription, 
+            data.price, 
+            data.details, 
+            data.isBestSeller
+          )
           products.push(product);
-        }
-      }
-      else{
-        let queries: string[] = query.split(' ');
+      });
+    })
 
-        for(let product of this.loadedProducts.values()){
-          for(let q of queries){
-            if(q!='' && product.name.toLocaleLowerCase().search(q.toLocaleLowerCase()) != -1 ){
-              products.push(product);
-              break;
-            }
-          }
-        }
-      }
-      return products; 
-    }
+    return products;
+  }
 
 }
