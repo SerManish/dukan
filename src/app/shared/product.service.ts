@@ -59,7 +59,7 @@ export class ProductService{
         if (doc.exists){
           product = doc.data();
         } else {
-          throw('no such product');
+          throw('No such product found.');
         }}).catch(function(error) {
           throw(error);
         });

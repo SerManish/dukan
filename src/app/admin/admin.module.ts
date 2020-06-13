@@ -7,9 +7,12 @@ import { AdminComponent } from './admin.component';
 import { EditHomeComponent } from './edit-home/edit-home.component';
 import { EditProductsComponent } from './edit-products/edit-products.component';
 import { EditOrdersComponent } from './edit-orders/edit-orders.component';
+import { AuthGuard } from '../shared/auth.guard';
 
 const routes:Routes = [
-    { path:'admin',component:AdminComponent, children:[
+    { path:'admin',component:AdminComponent, 
+    canActivate: [AuthGuard],
+    children:[
         {path:'edit-home',component:EditHomeComponent},
         {path:'edit-products',component:EditProductsComponent},
         {path:'edit-orders',component:EditOrdersComponent}

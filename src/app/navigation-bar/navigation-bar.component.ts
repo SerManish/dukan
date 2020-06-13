@@ -21,7 +21,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   ) {
     this.userSub = this.authService.user.subscribe( (user) => {
       // console.log('user in nav', user);
-      this.isLoggedIn = user==null?false:true;
+      this.isLoggedIn = !!user;
     });
   }
 
