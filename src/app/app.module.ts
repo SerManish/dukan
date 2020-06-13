@@ -17,12 +17,14 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { LoginComponent } from './login/login.component';
 import { AdminModule } from './admin/admin.module';
 import { environment } from 'src/environments/environment';
+import { AlertBarComponent } from './shared/alert-bar/alert-bar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
-    LoginComponent
+    LoginComponent,
+    AlertBarComponent
   ],
   imports: [
     BrowserAnimationsModule,

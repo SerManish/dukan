@@ -14,6 +14,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
   searchQuery: string = null;
   searchResult:Product[] = [];
   routeSub: Subscription;
+  isLoading=false;
 
   constructor(
     private productService: ProductService,
@@ -24,7 +25,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.fragment.subscribe(
       (fragment) => {
         this.searchQuery = fragment;
-        this.searchResult = this.productService.getProducts(this.searchQuery);
+        this.productService.getProducts(this.searchQuery).then( products =>{
+          this.searchResult = products;
+          this.isLoading=true;
+        });
         // console.log(this.searchResult);
       }
     );
