@@ -5,6 +5,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CartService } from '../shared/cart.service';
 import { AlertService } from '../shared/alert-bar/alert.service';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-product-page',
@@ -23,7 +24,8 @@ export class ProductPageComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private cartService:CartService,
     private router:Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void { 
@@ -44,13 +46,25 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 
   addToCart()
   {
-    this.cartService.addToCart(this.product);
+    if(this.authService.isLoggedIn){
+      this.cartService.addToCart(this.product);
+      this.alertService.alert('Product added to cart');
+    }
+    else{
+      this.alertService.alert('Login to add product to cart');
+    }
   }
 
   buyNow()
   {
-    this.cartService.addToCart(this.product);
-    this.router.navigate(['cart','cartlist']);
+    if(this.authService.isLoggedIn){
+      this.cartService.addToCart(this.product);
+      this.router.navigate(['cart','cartlist']);
+    }
+    else{
+      this.alertService.alert('Login to buy product');
+    }
+    
   }
 
   ngOnDestroy(){
