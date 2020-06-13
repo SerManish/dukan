@@ -1,9 +1,13 @@
 .alert {
     padding: 10px;
-    background-color: green; /* Red */
+    background-color: green;
     width: 60vw;
     color: white;
-    margin: -4vh auto 15px auto;
+    margin-top: 11vh;
+    left: 20vw;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
     display: none;
     z-index: 999;
   }
@@ -23,4 +27,27 @@
   /* When moving the mouse over the close button */
   .closebtn:hover {
     color: black;
+  }
+
+  
+
+  @media only screen and (max-width: 768px) {
+
+    .alert {
+      width: 80vw;
+      left: 10vw;
+      margin-top: 18vh ;
+    }
+    
+  }
+
+  @media only screen and (max-width: 576px) {
+
+    .alert {
+      position: absolute;
+      width: 90vw;
+      left: 5vw;
+      margin-top: 26vh ;
+    }
+    
   }
