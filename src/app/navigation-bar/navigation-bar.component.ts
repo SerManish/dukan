@@ -14,6 +14,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
   userSub: Subscription;
+  adminSub: Subscription;
   
   constructor(
     private loginService: LoginService,
@@ -24,7 +25,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
       this.isLoggedIn = !!user;
     });
 
-    this.authService.isAdmin.subscribe(isAdmin=>{
+    this.adminSub = this.authService.isAdmin.subscribe(isAdmin=>{
       this.isAdmin = isAdmin;
     })
   }
@@ -55,6 +56,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.userSub.unsubscribe();
+    this.adminSub.unsubscribe();
   }
 
 }
