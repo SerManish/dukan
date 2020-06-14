@@ -24,16 +24,19 @@ export class AuthService implements OnDestroy{
       private alertService: AlertService
     ){
       this.afSub = this.afAuth.authState.subscribe( user => {
-        this.user.next(user);
-        this.isLoggedIn = !!user;
         if(!!user){
           this.afs.collection('users').doc(user.uid).get().pipe(take(1)).subscribe( doc=>{
             this.isAdmin.next(!!doc.data().isAdmin);
+            this.user.next(user);
+            this.isLoggedIn = true;
           });
         }
         else{
+          this.user.next(user);
+          this.isLoggedIn = false;
           this.isAdmin.next(false);
         }
+        
       });
     }
 
