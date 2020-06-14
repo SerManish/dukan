@@ -57,13 +57,11 @@ export class AdminService{
 
     saveCategory(categories){
         let imagesToSave=[];
-        let namesToSave=[]
         for(let category of categories){
-            imagesToSave.push(category.source);
-            namesToSave.push(category.name);
+            imagesToSave.push({name: category.name, imagePath: category.source});
         }
         // console.log(imagesToSave, namesToSave);
-        this.afs.collection('home').doc('category').set({images: imagesToSave, names: namesToSave})
+        this.afs.collection('home').doc('category').set({images: imagesToSave})
         .then(() =>{
             this.alertService.alert('Category items updated');
         }).catch(error=>{

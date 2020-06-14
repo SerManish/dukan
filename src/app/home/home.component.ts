@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-home',
@@ -7,21 +8,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  carouselImages = [
-   "../assets/images/carousal0.jpg",
-   "../assets/images/carousal1.jpg",
-   "../assets/images/carousal2.jpg"
-  ];
+  carouselImages = [];
 
-  products = [
-    {name:'Product X',imagePath:'../assets/images/carousal0.jpg'},
-    {name:'Product Y',imagePath:'../assets/images/carousal1.jpg'},
-    {name:'Product Z',imagePath:'../assets/images/carousal2.jpg'}
-  ]
+  products = []
 
-  constructor() { }
+  constructor(private afs: AngularFirestore) { }
 
   ngOnInit(): void {
+    this.afs.collection('home').doc('slider').ref.get().then(doc=>{
+      this.carouselImages = doc.data().images;
+    });
+    this.afs.collection('home').doc('category').ref.get().then(doc=>{
+      this.products = doc.data().images;
+    });
   }
 
 }
