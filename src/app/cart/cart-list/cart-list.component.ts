@@ -26,6 +26,7 @@ export class CartListComponent implements OnInit,OnDestroy {
   userSubscription:Subscription;
   cartPriceSubsription:Subscription;
   isLoading = false;
+  userId:string = null;
 
   itemsReceived = new BehaviorSubject<boolean> (false);
   itemsReceivedSubsription:Subscription;
@@ -45,6 +46,7 @@ export class CartListComponent implements OnInit,OnDestroy {
       (user) => {
         if(user)
         {
+          this.userId = user.uid;
           this.afs.collection('carts').doc(user.uid).collection('item').get().pipe(take(1)).subscribe(
             (snapshot) => 
             {
@@ -94,6 +96,12 @@ export class CartListComponent implements OnInit,OnDestroy {
   
   checkout()
   {
+    let payload = {status:"on the way"};
+    for(let i=0;i<this.cartList.length;i++)
+      {
+         payload[this.cartList[i].id] = this.quantityList[i];
+      }
+    this.afs.collection('orders').doc(this.userId).collection('users-orders').add(payload);
     this.router.navigate(['/cart','address']);
   }
 

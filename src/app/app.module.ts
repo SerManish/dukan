@@ -18,6 +18,7 @@ import { LoginComponent } from './login/login.component';
 import { AdminModule } from './admin/admin.module';
 import { environment } from 'src/environments/environment';
 import { AlertBarComponent } from './shared/alert-bar/alert-bar.component';
+import { OrdersModule } from './orders/orders.module';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { AlertBarComponent } from './shared/alert-bar/alert-bar.component';
     ProductListModule,
     CartModule,
     ProductPageModule,
-    AdminModule
+    AdminModule,
+    OrdersModule
   ],
   providers: [],
   bootstrap: [AppComponent]

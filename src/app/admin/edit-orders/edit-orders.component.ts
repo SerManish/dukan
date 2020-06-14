@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
   selector: 'app-edit-orders',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditOrdersComponent implements OnInit {
 
-  constructor() { }
 
-  ngOnInit(): void {
-  }
+  constructor(
+    private adminService:AdminService
+  ) { }
 
+  	ngOnInit(): void {
+    this.adminService.recieveAllOrders();
+	}
 }
