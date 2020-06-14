@@ -39,7 +39,35 @@ export class AdminService{
                 this.alertService.alert('No products exists with the given ID', 'danger');
             }
         });
+    }
 
-        
+    saveSlider(images){
+        let imagesToSave = []
+        for(let image of images){
+            imagesToSave.push(image.source);
+        }
+        // console.log(imagesToSave);
+        this.afs.collection('home').doc('slider').set({images: imagesToSave})
+        .then(() =>{
+            this.alertService.alert('Slider images updated');
+        }).catch(error=>{
+            this.alertService.alert(error, 'danger');
+        });
+    }
+
+    saveCategory(categories){
+        let imagesToSave=[];
+        let namesToSave=[]
+        for(let category of categories){
+            imagesToSave.push(category.source);
+            namesToSave.push(category.name);
+        }
+        // console.log(imagesToSave, namesToSave);
+        this.afs.collection('home').doc('category').set({images: imagesToSave, names: namesToSave})
+        .then(() =>{
+            this.alertService.alert('Category items updated');
+        }).catch(error=>{
+            this.alertService.alert(error, 'danger');
+        });
     }
 }
