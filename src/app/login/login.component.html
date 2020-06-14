@@ -59,7 +59,7 @@
                 [disabled]="
                     (isLoginMode && !authForm.get('userData').valid) ||
                     (!isLoginMode && !authForm.valid) || 
-                    isRequesting"> {{isLoginMode?'Login':'Signup'}} </button>
+                    isLoading"> {{isLoginMode?'Login':'Signup'}} </button>
             </div>
         </form>
     </div>

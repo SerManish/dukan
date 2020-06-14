@@ -5,6 +5,7 @@ import { auth } from 'firebase/app';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { User } from 'firebase';
 import { Router } from '@angular/router';
+import { AlertService } from './alert-bar/alert.service';
 
 @Injectable({providedIn: 'root'})
 
@@ -16,7 +17,8 @@ export class AuthService implements OnDestroy{
     constructor(
       private afAuth: AngularFireAuth,
       private afs: AngularFirestore,
-      private router: Router
+      private router: Router,
+      private alertService: AlertService
     ){
       this.afSub = this.afAuth.authState.subscribe( user => {
         this.user.next(user);
@@ -27,30 +29,36 @@ export class AuthService implements OnDestroy{
     login(email: string, password: string){
         
       return this.afAuth.signInWithEmailAndPassword(email, password).then( ()=> {
-        alert('login successful');
+        this.alertService.alert('login successful');
         return 0;
       })
-      .catch( this.handleError);
+      .catch( error=>{
+        this.handleError(error);
+      });
     }
 
     signup(email: string, password: string, name: string , gender: string){
       return this.afAuth.createUserWithEmailAndPassword( email, password).then( ()=>{
-          alert('signup successful');
+          this.alertService.alert('signup successful');
           const collection = this.afs.collection<User>('users');
           const data = {name: name, email: email, gender: gender, id: auth().currentUser.uid};
           collection.doc( auth().currentUser.uid ).set(data);
           return 0;
       })
-      .catch( this.handleError);
+      .catch( error=>{
+        this.handleError(error);
+      });
     }
 
     logout(){
         this.afAuth.signOut().then( ()=> {
-        alert('logged out');
+        this.alertService.alert('logged out');
         this.user.next(null);
         this.router.navigate(['/home']);
       })
-      .catch( this.handleError);
+      .catch( error=>{
+        this.handleError(error);
+      });
     }
 
     
@@ -73,8 +81,7 @@ export class AuthService implements OnDestroy{
         errorMessage = 'This email is not registered !';
         break;
       }
-      alert(errorMessage);
-      console.log(error);
+      this.alertService.alert(errorMessage, 'danger');  
       return 1;
     }
     
