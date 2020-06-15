@@ -1,4 +1,4 @@
-<div class="content" *ngIf="isLoading">
+<!-- <div class="content" *ngIf="isLoading">
     <div class="row no-gutters">
         <div class="col-12 col-md-3 filter">
             <app-filter></app-filter>
@@ -8,6 +8,17 @@
             <ng-container *ngFor="let result of searchResult">
                 <app-product-list-item [product]="result"></app-product-list-item>
             </ng-container>
+        </div>
+    </div>
+</div> -->
+
+<div class="container">
+    <div class="row ">
+        <div 
+        class="col-xs-12 col-md-4"
+        style="margin-top: 20px;"
+        *ngFor="let result of searchResult">
+            <app-product-list-item [product]="result"></app-product-list-item>  
         </div>
     </div>
 </div>
