@@ -48,18 +48,19 @@
 }
 
 .nav-links button {
-  width: 35%;
+  width: 30%;
   padding: 8px;
   background: #1b1b1b;
   color: white;
   font-size: 15px;
   border: 1px transparent;
   cursor: pointer;
+  /* overflow: hidden; */
 }
   
 .nav-links :hover {
   background: #f8bac7;
-  letter-spacing: 3px ;
+  letter-spacing: 2px ;
   transition: letter-spacing ease-in-out 0.5s;
 }
 
@@ -74,10 +75,6 @@
 
   .nav-links {
     text-align: center;
-  }
-
-  .nav-links button {
-    width: 37%;
   }
 
   .search button {
@@ -95,10 +92,6 @@
 
   .nav-links {
     text-align: center;
-  }
-
-  .nav-links button {
-    width: 30%;
   }
 
   .search button {
