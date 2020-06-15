@@ -16,8 +16,7 @@ export class AdminService{
         private productService: ProductService
     ){}
 
-    orders = [];
-    allOrders = new Map<string, object[]>();
+    allOrders = [];
 
     addProduct(product: Product){
         this.productCollection.doc(product.id.toString()).ref.get().then( doc=>{
@@ -46,24 +45,6 @@ export class AdminService{
         });
     }
 
-    async recieveOrders(uid:string)
-    {
-        this.orders = [];
-        this.afs.collection('orders').doc(uid).collection('users-orders').get().subscribe(
-            snapshot => {
-                snapshot.forEach(
-                    async (doc) =>
-                    {
-                        let temp = doc.data();
-                        temp['id'] = doc.id; 
-                        this.orders.push(temp);
-                    }
-                )
-            }
-        );
-        console.log(this.orders);
-    }
-
     async recieveAllOrders()
     {
         // this.afs.collection('orders').ref.get().
@@ -72,22 +53,21 @@ export class AdminService{
         //     }
         // );
         
-        this.allOrders.clear();
+        this.allOrders = [];
         this.afs.collection('orders').get().subscribe(doc=>{
             doc.forEach(d=>{
                 this.afs.collection('orders').doc(d.id).collection('users-orders').get().subscribe(
                     snapshot => {
-                        let order=[];
                         snapshot.forEach(
                             async (doc) =>
                             {
-                                order.push(doc.data());
+                                let temp = doc.data();
+                                temp['id']=doc.id;
+                                this.allOrders.push(temp);
                             }
                         );
-                        this.allOrders.set(d.id, order);
                     }
                 );
-                // console.log('pro',d.id, d.data());
             });
         });
         console.log(this.allOrders);

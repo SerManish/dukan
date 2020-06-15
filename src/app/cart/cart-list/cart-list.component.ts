@@ -101,6 +101,7 @@ export class CartListComponent implements OnInit,OnDestroy {
       {
          payload.products.push({name: this.cartList[i].name, quantity: this.quantityList[i]});
       }
+    this.afs.collection('orders').doc(this.userId).set({name:'manish'});
     this.afs.collection('orders').doc(this.userId).collection('users-orders').add(payload);
 
     // Clearing Cart locally and from firebase
