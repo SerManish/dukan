@@ -1,44 +1,50 @@
 <div class="container">
     <h3 *ngIf="orders.length<1"> You have not placed any orders yet.</h3>
-    <ng-container *ngFor="let order of orders">
+    <div *ngFor="let order of orders;index as ind" class=" bg-light text-dark">
         <hr>
         <div class="row">
-            <div class="col-4" >
-                <h4>ORDER-ID</h4>
+            <div class="col-3 col-md-2">
+                <h6>ORDER ID</h6>
             </div>
-            <div class="col-8" >
-                <p> <b> {{order.id}} </b></p>
+            <div class="col-9 col-md-4" >
+                {{order.id | uppercase}}
+            </div>
+            <div class="col-3 col-md-2">
+                <h6>STATUS</h6>
+            </div>
+            <div class="col-9 col-md-4">
+                {{order.status | uppercase}}
             </div>
         </div>
+        <table class="table table-secondary">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of order.products;index as i">
+                <th scope="row">{{i+1}}</th>
+                <td>{{product.name}}</td>
+                <td>{{product.quantity}}</td>
+              </tr>
+            </tbody>
+        </table>
         <div class="row">
-            <div class="col-4" >
-                <h5>Products</h5>
+            <div class="col-6 col-md-2" >
+                <h5>Total Price</h5>
             </div>
-            <div class="col-8" >
-                <hr>
-                <div class="row">
-                    <div class="col-12"
-                    *ngFor="let product of order.products">
-                    <p><b> {{product.name}} </b> 
-                        <i class="fa fa-times"></i>
-                        <span class="fa-stack fa">
-                        <i class="fa fa-circle-o fa-stack-2x"></i>
-                        <strong class="fa-stack-1x"> {{product.quantity}}</strong>
-                        </span>
-                    </p>
-                    </div>
-                </div>
-                <hr>
+            <div class="col-6 col-md-4">
+                <p><b>&#8377;&nbsp;{{order.price}} </b></p>
             </div>
-            <div class="col-4" >
-                <h5>Order Status</h5>
-            </div>
-            <div class="col-8">
-                <p><b> {{order.status}} </b></p>
+            <div class="col-12 col-md-6 d-flex justify-content-center">
+                <button type="button" class="btn btn-lg btn-danger" (click)="cancelOrder(ind)">Cancel</button>
             </div>
         </div>
         <hr>
-    </ng-container>
+    </div>
 </div>
 
 

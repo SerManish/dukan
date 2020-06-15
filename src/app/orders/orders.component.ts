@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AdminService } from '../shared/admin.service';
-import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { AuthService } from '../shared/auth.service';
 
 @Component({
   selector: 'app-orders',
@@ -11,14 +11,12 @@ import { ActivatedRoute } from '@angular/router';
 export class OrdersComponent implements OnInit {
 
   constructor(
-    public adminService:AdminService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private afs: AngularFirestore,
+    private authservice:AuthService
   ) {}
-
   orders = [];
   products = new Map<string , object>();
-  
-  userSubscription:Subscription;
 
   ngOnInit(): void {
     this.route.data.subscribe(data=>{
@@ -28,5 +26,21 @@ export class OrdersComponent implements OnInit {
         this.orders.push(temp);
       });
     });
+  }
+
+  cancelOrder(index:number)
+  {
+    if(confirm("Are You Sure You want to cancel this Order ?"))
+    {
+      this.authservice.user.subscribe(
+        (user) => {
+          if(user)
+          {
+            console.log(this.orders[index].id);
+            this.afs.collection('orders').doc(user.uid).collection('users-orders').doc(this.orders[index].id).delete();
+          }
+        }
+      );
+    }
   }
 }

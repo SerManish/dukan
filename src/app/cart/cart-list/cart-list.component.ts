@@ -96,13 +96,20 @@ export class CartListComponent implements OnInit,OnDestroy {
   
   checkout()
   {
-    let payload = {status:"on the way", products: []};
+    let payload = {status:"on the way", products: [],price:this.totalPrice};
     for(let i=0;i<this.cartList.length;i++)
       {
          payload.products.push({name: this.cartList[i].name, quantity: this.quantityList[i]});
       }
-    // console.log(payload);
     this.afs.collection('orders').doc(this.userId).collection('users-orders').add(payload);
+
+    // Clearing Cart locally and from firebase
+    this.cartList = [];
+    this.quantityList = [];
+    this.cartService.orders = this.cartList;
+    this.cartService.quantity = this.quantityList;
+    this.afs.collection('carts').doc(this.userId).delete();
+
     this.router.navigate(['/cart','address']);
   }
 
