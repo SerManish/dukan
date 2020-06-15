@@ -36,8 +36,8 @@ export class OrdersComponent implements OnInit {
         (user) => {
           if(user)
           {
-            console.log(this.orders[index].id);
             this.afs.collection('orders').doc(user.uid).collection('users-orders').doc(this.orders[index].id).delete();
+            this.orders.splice(index,1);
           }
         }
       );
