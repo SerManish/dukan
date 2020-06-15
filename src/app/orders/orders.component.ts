@@ -3,6 +3,7 @@ import { AdminService } from '../shared/admin.service';
 import { AuthService } from '../shared/auth.service';
 import { Subscription } from 'rxjs';
 import { error } from 'protractor';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-orders',
@@ -13,8 +14,9 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     public adminService:AdminService,
-    private authservice:AuthService
-  ) { }
+    private authservice:AuthService,
+    private route: ActivatedRoute
+  ) {}
 
   orders = [];
   products = new Map<string , object>();
@@ -22,16 +24,14 @@ export class OrdersComponent implements OnInit {
   userSubscription:Subscription;
 
   ngOnInit(): void {
-    this.userSubscription = this.authservice.user.subscribe(
-      async (user) => {
-        if(user)
-        {
-          await this.adminService.recieveOrders(user.uid);
-          this.orders = this.adminService.orders;
-        }
-      }
-  );
-  console.log('1',this.adminService.orders);
-  
+    this.route.data.subscribe(data=>{
+      data.ords.forEach( (doc) =>{
+        let temp = doc.data();
+        temp['id'] = doc.id; 
+        this.orders.push(temp);
+        console.log(doc.data())
+      })
+    });
+    console.log('data',this.orders);
   }
 }
