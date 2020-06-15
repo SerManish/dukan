@@ -63,6 +63,7 @@ export class AdminService{
                             {
                                 let temp = doc.data();
                                 temp['id']=doc.id;
+                                temp['uid']=d.id;
                                 this.allOrders.push(temp);
                             }
                         );

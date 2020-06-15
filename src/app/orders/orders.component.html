@@ -39,7 +39,7 @@
             <div class="col-6 col-md-4">
                 <p><b>&#8377;&nbsp;{{order.price}} </b></p>
             </div>
-            <div class="col-12 col-md-6 d-flex justify-content-center">
+            <div class="col-12 col-md-6 d-flex justify-content-center" *ngIf="order.status!='Cancelled' &&  order.status!='Delivered'">
                 <button type="button" class="btn btn-lg btn-danger" (click)="cancelOrder(ind)">Cancel</button>
             </div>
         </div>
