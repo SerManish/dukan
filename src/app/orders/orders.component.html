@@ -1,21 +1,43 @@
 <div class="container">
+    <h3 *ngIf="orders.length<1"> You have not placed any orders yet.</h3>
     <ng-container *ngFor="let order of orders">
+        <hr>
         <div class="row">
             <div class="col-4" >
-                <p>ORDER-ID</p>
+                <h4>ORDER-ID</h4>
             </div>
             <div class="col-8" >
-                <p>{{order.id}}</p>
+                <p> <b> {{order.id}} </b></p>
             </div>
         </div>
         <div class="row">
             <div class="col-4" >
-                <p>Product Name</p>
+                <h5>Products</h5>
             </div>
             <div class="col-8" >
-                <p>{{order.status}}</p>
+                <hr>
+                <div class="row">
+                    <div class="col-12"
+                    *ngFor="let product of order.products">
+                    <p><b> {{product.name}} </b> 
+                        <i class="fa fa-times"></i>
+                        <span class="fa-stack fa">
+                        <i class="fa fa-circle-o fa-stack-2x"></i>
+                        <strong class="fa-stack-1x"> {{product.quantity}}</strong>
+                        </span>
+                    </p>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="col-4" >
+                <h5>Order Status</h5>
+            </div>
+            <div class="col-8">
+                <p><b> {{order.status}} </b></p>
             </div>
         </div>
+        <hr>
     </ng-container>
 </div>
 

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../shared/admin.service';
-import { AuthService } from '../shared/auth.service';
 import { Subscription } from 'rxjs';
-import { error } from 'protractor';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -14,7 +12,6 @@ export class OrdersComponent implements OnInit {
 
   constructor(
     public adminService:AdminService,
-    private authservice:AuthService,
     private route: ActivatedRoute
   ) {}
 
@@ -29,9 +26,7 @@ export class OrdersComponent implements OnInit {
         let temp = doc.data();
         temp['id'] = doc.id; 
         this.orders.push(temp);
-        console.log(doc.data())
-      })
+      });
     });
-    console.log('data',this.orders);
   }
 }

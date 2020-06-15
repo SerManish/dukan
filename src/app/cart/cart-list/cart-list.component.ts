@@ -96,11 +96,12 @@ export class CartListComponent implements OnInit,OnDestroy {
   
   checkout()
   {
-    let payload = {status:"on the way"};
+    let payload = {status:"on the way", products: []};
     for(let i=0;i<this.cartList.length;i++)
       {
-         payload[this.cartList[i].id] = this.quantityList[i];
+         payload.products.push({name: this.cartList[i].name, quantity: this.quantityList[i]});
       }
+    // console.log(payload);
     this.afs.collection('orders').doc(this.userId).collection('users-orders').add(payload);
     this.router.navigate(['/cart','address']);
   }
