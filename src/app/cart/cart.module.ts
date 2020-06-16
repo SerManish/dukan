@@ -12,7 +12,7 @@ import { AuthGuard } from '../shared/auth.guard';
 import { SharedModule } from '../shared/shared.module';
 
 const routes:Routes = [
-    { path:'cart',component:CartComponent,
+    { path:'',component:CartComponent,
         canActivate: [AuthGuard], 
         children:[
         {path:'cartlist',component:CartListComponent},
