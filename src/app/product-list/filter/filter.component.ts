@@ -52,7 +52,7 @@ export class FilterComponent implements OnInit {
     const form = this.filterForm.nativeElement;
     form.minimum.value = '';
     form.maximum.value = '';
-    form.sortBy.value = 'Relevance';
+    this.onApplyFilter();
   }
 
 }

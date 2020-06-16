@@ -44,7 +44,7 @@
                     <label for="amount">Sort By</label>
                 </div>
                 <div class="col-12">
-                    <select class="form-control" name="sortBy">
+                    <select class="form-control" name="sortBy" (change)="onApplyFilter()">
                         <option>Relevance</option>
                         <option>Price : High to Low</option>
                         <option>Price : Low to High</option>
