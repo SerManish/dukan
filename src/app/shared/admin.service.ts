@@ -71,6 +71,7 @@ export class AdminService{
         }).catch(error=>{
             this.alertService.alert(error, 'danger');
         });
+    }
 
     async recieveAllOrders()
     {
