@@ -1,15 +1,15 @@
 <div (click)="openDetails()" class="card">
-  <div>
-    <img [src]="product.imagePath" [alt]="product.name">
-  </div>
-  <div class="info">
-    <h3> {{product.name}} </h3>
-    <h5> <i class="fa fa-inr"></i> {{product.price}} 
-      <span class="badge" style="background-color: #ed4726; color: white;vertical-align: top;" *ngIf="product.isBestSeller">
-        BestSeller
-      </span>
-    </h5>
-  </div>  
+	<div>
+		<img [src]="product.imagePath" [alt]="product.name">
+	</div>
+	<div class="info">
+		<h3> {{product.name}} </h3>
+		<h5> <i class="fa fa-inr"></i> {{product.price}} 
+			<span class="badge" style="background-color: #ed4726; color: white;vertical-align: top;" *ngIf="product.isBestSeller">
+				BestSeller
+			</span>
+		</h5>
+	</div>  
 </div>
 
 

@@ -5,58 +5,65 @@ import { AuthService } from '../shared/auth.service';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-navigation-bar',
-  templateUrl: './navigation-bar.component.html',
-  styleUrls: ['./navigation-bar.component.css']
+	selector: 'app-navigation-bar',
+	templateUrl: './navigation-bar.component.html',
+	styleUrls: ['./navigation-bar.component.css']
 })
 export class NavigationBarComponent implements OnInit, OnDestroy {
 
-  isLoggedIn: boolean = false;
-  isAdmin: boolean = false;
-  userSub: Subscription;
-  adminSub: Subscription;
-  
-  constructor(
-    private loginService: LoginService,
-    private authService: AuthService,
-    private router: Router
-  ) {
-    this.userSub = this.authService.user.subscribe( (user) => {
-      this.isLoggedIn = !!user;
-    });
+	isLoggedIn: boolean = false;
+	isAdmin: boolean = false;
+	userSub: Subscription;//subscribe to the User data
+	adminSub: Subscription;//subscribe to check whether current user is an admin 
 
-    this.adminSub = this.authService.isAdmin.subscribe(isAdmin=>{
-      this.isAdmin = isAdmin;
-    })
-  }
+	/*	
+		checks whether the user was logged in.
+		checks whether the user is an admin.
+	*/
+	constructor(
+		private loginService: LoginService,
+		private authService: AuthService,
+		private router: Router
+	) {
+		this.userSub = this.authService.user.subscribe((user) => {
+			this.isLoggedIn = !!user;
+		});
 
-  isModeLogin = this.loginService.isModeLogin;
+		this.adminSub = this.authService.isAdmin.subscribe(isAdmin => {
+			this.isAdmin = isAdmin;
+		})
+	}
 
-  ngOnInit(): void {
-    this.isLoggedIn = this.loginService.isLoggedIn;
-  }
+	isModeLogin = this.loginService.isModeLogin;//login service's ismodelogin attribute is used to check if current authentication mode is login/signup
 
-  onLogin(){
-    this.isModeLogin.next(true);
-  }
+	ngOnInit(): void {
+		this.isLoggedIn = this.loginService.isLoggedIn;
+	}
 
-  onSignup(){
-    this.isModeLogin.next(false);
-  }
+	//	moves authentication form to login side
+	onLogin() {
+		this.isModeLogin.next(true);
+	}
 
-  onLogout(){
-    this.authService.logout();
-  }
+	//	moves authentication form to signup side
+	onSignup() {
+		this.isModeLogin.next(false);
+	}
 
-  onSearch(query:string){
-    // console.log('navigate');
-    if(query.trim()!='')
-      this.router.navigate(['productlist'], {fragment: query.trim()});
-  }
+	// logs out the user
+	onLogout() {
+		this.authService.logout();
+	}
 
-  ngOnDestroy(){
-    this.userSub.unsubscribe();
-    this.adminSub.unsubscribe();
-  }
+	//	adds the search query to the route fragment
+	onSearch(query: string) {
+		if (query.trim() != '')
+			this.router.navigate(['productlist'], { fragment: query.trim() });
+	}
+
+	ngOnDestroy() {
+		this.userSub.unsubscribe();
+		this.adminSub.unsubscribe();
+	}
 
 }

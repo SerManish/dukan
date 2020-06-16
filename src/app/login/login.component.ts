@@ -5,72 +5,78 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+	selector: 'app-login',
+	templateUrl: './login.component.html',
+	styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit, OnDestroy {
 
-  authForm: FormGroup;
-  isLoginMode = false;
-  isLoading = false;
-  genders: string[] = ['Male', 'Female'];
-  error: string = null;
-  loginSub: Subscription;
+	authForm: FormGroup;//reactive form
+	isLoginMode = false;//whether login/signup
+	isLoading = false;
+	genders: string[] = ['Male', 'Female'];
+	loginSub: Subscription;
 
-  constructor(
-    private loginService: LoginService,
-    private authService: AuthService, 
-  ) {}
+	constructor(
+		private loginService: LoginService,
+		private authService: AuthService,
+	) { }
 
-  ngOnInit(): void {
-    this.authForm = new FormGroup({
-      'userData':  new FormGroup({
-        'email': new FormControl(null, [Validators.required, Validators.email]),
-        'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
-      }),
-      'name': new FormControl(null, [Validators.required]), 
-      'gender': new FormControl(null)
-    });
-    
-    this.loginSub = this.loginService.isModeLogin.subscribe(
-      isModeLogin => {
-        this.isLoginMode = isModeLogin;
-      }
-    );
-  }
+	//initialize reactive form
+	//login or signup mode is listened fired from other component
+	ngOnInit(): void {
+		this.authForm = new FormGroup({
+			'userData': new FormGroup({
+				'email': new FormControl(null, [Validators.required, Validators.email]),
+				'password': new FormControl(null, [Validators.required, Validators.minLength(6)]),
+			}),
+			'name': new FormControl(null, [Validators.required]),
+			'gender': new FormControl(null)
+		});
 
-  switchToLogin(isLogin: boolean){
-    this.authForm.reset();
-    this.isLoginMode = isLogin;
-  }
+		this.loginSub = this.loginService.isModeLogin.subscribe(
+			isModeLogin => {
+				this.isLoginMode = isModeLogin;
+			}
+		);
+	}
 
-  onClose(){
-    this.loginService.onClose.next();
-  }
+	//resets form and switches to login dialog
+	switchToLogin(isLogin: boolean) {
+		this.authForm.reset();
+		this.isLoginMode = isLogin;
+	}
 
-  async onSubmit(){
-    this.isLoading = true;
-    let email = this.authForm.get('userData').get('email').value;
-    let password = this.authForm.get('userData').get('password').value;
-    let result;
-    if(this.isLoginMode){
-      result = await this.authService.login(email, password);
-    }
-    else{
-      let name = this.authForm.get('name').value;
-      let gender = this.authForm.get('gender').value;
-      result = await this.authService.signup(email, password, name , gender);
-    }
-    // console.log('res',result);
-    this.isLoading = false;
-    if(result == 0){
-      this.onClose();
-    }    
-  }
+	//closes the authentication dialog
+	onClose() {
+		this.loginService.onClose.next();
+	}
 
-  ngOnDestroy(){
-    this.loginSub.unsubscribe();
-  }
+	//disables the submit button
+	//extract user data from form
+	//send user data to authservice for login/signup
+	//
+	async onSubmit() {
+		this.isLoading = true;
+		let email = this.authForm.get('userData').get('email').value;
+		let password = this.authForm.get('userData').get('password').value;
+		let result;
+		if (this.isLoginMode) {
+			result = await this.authService.login(email, password);
+		}
+		else {
+			let name = this.authForm.get('name').value;
+			let gender = this.authForm.get('gender').value;
+			result = await this.authService.signup(email, password, name, gender);
+		}
+		this.isLoading = false;
+		if (result == 0) {
+			this.onClose();
+		}
+	}
+
+	ngOnDestroy() {
+		this.loginSub.unsubscribe();
+	}
 
 }

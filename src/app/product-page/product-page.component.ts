@@ -8,68 +8,72 @@ import { AlertService } from '../shared/alert-bar/alert.service';
 import { AuthService } from '../shared/auth.service';
 
 @Component({
-  selector: 'app-product-page',
-  templateUrl: './product-page.component.html',
-  styleUrls: ['./product-page.component.css']
+	selector: 'app-product-page',
+	templateUrl: './product-page.component.html',
+	styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent implements OnInit, OnDestroy {
 
-  productId: string = '1000';
-  product: Product;
-  productSub: Subscription;
-  isLoading=true;
+	productId: string = '1000';
+	product: Product;
+	productSub: Subscription;
+	isLoading = true;
 
-  constructor(
-    private productService: ProductService,
-    private route: ActivatedRoute,
-    private cartService:CartService,
-    private router:Router,
-    private alertService: AlertService,
-    private authService: AuthService
-  ) {}
+	constructor(
+		private productService: ProductService,
+		private route: ActivatedRoute,
+		private cartService: CartService,
+		private router: Router,
+		private alertService: AlertService,
+		private authService: AuthService
+	) { }
 
-  ngOnInit(): void { 
-    
-    this.productSub = this.route.params.subscribe(
-      (params: Params) => {
-        this.productId = params['id'];
-        this.productService.getProductById(this.productId).then( prod=>{
-          this.product = prod;
-          this.isLoading=false;
-        }).catch( error=>{
-          this.alertService.alert(error, 'danger');
-          this.router.navigate(['/home']);
-        });
-      }
-    );
-      
-  }
+	//gets the product id from the route fragment
+	//uses productservice to get the product data by providing its id 
+	ngOnInit(): void {
 
-  addToCart()
-  {
-    if(this.authService.isLoggedIn){
-      this.cartService.addToCart(this.product);
-      this.alertService.alert('Product added to cart');
-    }
-    else{
-      this.alertService.alert('Login to add product to cart');
-    }
-  }
+		this.productSub = this.route.params.subscribe(
+			(params: Params) => {
+				this.productId = params['id'];
+				this.productService.getProductById(this.productId).then(prod => {
+					this.product = prod;
+					this.isLoading = false;
+				}).catch(error => {
+					this.alertService.alert(error, 'danger');
+					this.router.navigate(['/home']);
+				});
+			}
+		);
 
-  buyNow()
-  {
-    if(this.authService.isLoggedIn){
-      this.cartService.addToCart(this.product);
-      this.router.navigate(['cart','cartlist']);
-    }
-    else{
-      this.alertService.alert('Login to buy product');
-    }
-    
-  }
+	}
 
-  ngOnDestroy(){
-    this.productSub.unsubscribe();
-  }
+	//checks if user is logged in
+	//if user is logged in, send product to cart service to add it to the cart
+	addToCart() {
+		if (this.authService.isLoggedIn) {
+			this.cartService.addToCart(this.product);
+			this.alertService.alert('Product added to cart');
+		}
+		else {
+			this.alertService.alert('Login to add product to cart');
+		}
+	}
+
+	//checks if the user is logged in
+	// if the user is logged in, navigate to cart
+	buyNow() {
+		if (this.authService.isLoggedIn) {
+			this.cartService.addToCart(this.product);
+			this.router.navigate(['cart', 'cartlist']);
+		}
+		else {
+			this.alertService.alert('Login to buy product');
+		}
+
+	}
+
+	ngOnDestroy() {
+		this.productSub.unsubscribe();
+	}
 
 }
