@@ -17,15 +17,14 @@ import { NavigationBarComponent } from './navigation-bar/navigation-bar.componen
 import { LoginComponent } from './login/login.component';
 import { AdminModule } from './admin/admin.module';
 import { environment } from 'src/environments/environment';
-import { AlertBarComponent } from './shared/alert-bar/alert-bar.component';
 import { OrdersModule } from './orders/orders.module';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavigationBarComponent,
-    LoginComponent,
-    AlertBarComponent
+    LoginComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -41,7 +40,8 @@ import { OrdersModule } from './orders/orders.module';
     CartModule,
     ProductPageModule,
     AdminModule,
-    OrdersModule
+    OrdersModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

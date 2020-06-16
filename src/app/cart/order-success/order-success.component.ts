@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CartService } from 'src/app/shared/cart.service';
 
 @Component({
   selector: 'app-order-success',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrderSuccessComponent implements OnInit {
 
-  constructor() { }
+  orderId:string;
+  deliveryDate = new Date();
+
+  constructor(
+    private cartService:CartService
+  ) { }
 
   ngOnInit(): void {
+    this.orderId = this.cartService.orderId;
+    this.deliveryDate.setDate(this.deliveryDate.getDate() + 7);
   }
-
 }

@@ -8,8 +8,8 @@ import { AddressComponent } from './address/address.component';
 import { OrderSuccessComponent } from './order-success/order-success.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
 import { AuthGuard } from '../shared/auth.guard';
+import { SharedModule } from '../shared/shared.module';
 
 const routes:Routes = [
     { path:'cart',component:CartComponent,
@@ -27,13 +27,13 @@ const routes:Routes = [
         CartListComponent,
         CartListItemComponent,
         AddressComponent,
-        OrderSuccessComponent,
-        LoadingSpinnerComponent
+        OrderSuccessComponent
     ],
     imports:[
         RouterModule.forChild(routes),
         CommonModule,
-        FormsModule
+        FormsModule,
+        SharedModule
     ],
     exports:[
         RouterModule

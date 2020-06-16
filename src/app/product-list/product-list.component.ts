@@ -25,14 +25,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ) {}
   
   ngOnInit(): void {
+    this.isLoading = true;
     this.routeSub = this.route.fragment.subscribe(
       (fragment) => {
         this.searchQuery = fragment;
+        this.isLoading = true;
         this.productService.getProducts(this.searchQuery).then( products =>{
           this.searchResult = products;
           this.filteredResult = this.searchResult;
           this.filteredResult.sort((a,b)=> a.isBestSeller?-1:1);
-          this.isLoading=true;
+          this.isLoading=false;
         });
         // console.log(this.searchResult);
       }

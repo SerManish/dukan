@@ -16,7 +16,7 @@ export class CartService
 
     cartPrice = 0;
     shippingCharges = 50;
-
+    orderId:string;
     quantity:number[]=[];
     orders:Product[] = [];
 

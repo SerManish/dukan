@@ -26,7 +26,7 @@ export class AddressComponent implements OnInit {
   onSubmit()
   {
     this.userSubscription  = this.authService.user.subscribe(
-      (user) =>
+      async (user) =>
       {
         if(user)
         {
@@ -36,8 +36,8 @@ export class AddressComponent implements OnInit {
               payload.products.push({name: this.cartService.orders[i].name, quantity: this.cartService.quantity[i]});
             }
           this.afs.collection('orders').doc(user.uid).set({paid:true});
-          this.afs.collection('orders').doc(user.uid).collection('users-orders').add(payload);
-
+          let response = await this.afs.collection('orders').doc(user.uid).collection('users-orders').add(payload);
+          this.cartService.orderId = response.id;
           // Clearing Cart locally and from firebase
           this.afs.collection('carts').doc(user.uid).collection('item').get().subscribe(
             (snapshot) =>
@@ -51,6 +51,9 @@ export class AddressComponent implements OnInit {
             }
           );
           this.afs.collection('carts').doc(user.uid).delete();
+          this.cartService.orders = [];
+          this.cartService.quantity=[];
+          this.cartService.cartPrice=0;
           this.router.navigate(['/cart','ordersuccess']);
         }
       }
