@@ -35,7 +35,6 @@ export class FilterComponent implements OnInit {
     this.filter.max = form.maximum.value==''? 999999999 : Number(form.maximum.value);
     this.filter.sortBy = form.sortBy.value;
 
-    // console.log(this.filter);
     if(this.filter.min>999999999 || this.filter.max>999999999){
       this.alertService.alert('Maximum price should be less than 1000000000.');
       return;
