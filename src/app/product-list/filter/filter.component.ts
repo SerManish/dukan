@@ -9,10 +9,7 @@ export class FilterComponent implements OnInit {
 
   showFilter = false;
 
-  constructor() {
-    if(window.innerWidth>576)
-      this.showFilter=true;
-   }
+  constructor() {}
 
   toggleFilter()
   {
