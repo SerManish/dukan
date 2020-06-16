@@ -48,4 +48,11 @@ export class FilterComponent implements OnInit {
     this.productService.applyFilter.next(this.filter);
   }
 
+  onClear(){
+    const form = this.filterForm.nativeElement;
+    form.minimum.value = '';
+    form.maximum.value = '';
+    form.sortBy.value = 'Relevance';
+  }
+
 }
