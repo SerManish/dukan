@@ -38,7 +38,7 @@
 }
   
 .search :hover{
-  background: #f8bac7;
+  background: #ed4726;
 }
 
 .nav-links {
@@ -59,7 +59,7 @@
 }
   
 .nav-links :hover {
-  background: #f8bac7;
+  background: #ed4726;
   letter-spacing: 2px ;
   transition: letter-spacing ease-in-out 0.5s;
 }
