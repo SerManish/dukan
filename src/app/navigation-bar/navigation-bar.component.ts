@@ -13,8 +13,10 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
 	isLoggedIn: boolean = false;
 	isAdmin: boolean = false;
+	isChecked = false;
 	userSub: Subscription;//subscribe to the User data
 	adminSub: Subscription;//subscribe to check whether current user is an admin 
+	checkSub: Subscription;
 
 	/*	
 		checks whether the user was logged in.
@@ -32,6 +34,10 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 		this.adminSub = this.authService.isAdmin.subscribe(isAdmin => {
 			this.isAdmin = isAdmin;
 		})
+
+		this.checkSub = this.authService.isChecked.subscribe(data => {
+			this.isChecked = data;
+		});
 	}
 
 	isModeLogin = this.loginService.isModeLogin;//login service's ismodelogin attribute is used to check if current authentication mode is login/signup
