@@ -1,16 +1,21 @@
-<hr>
-<app-filter></app-filter>
-<hr>
+<div *ngIf="!isLoading">   
+   <hr>
+    <app-filter></app-filter>
+    <hr>
 
-<div class="container" *ngIf="isLoading">
-    <h3 *ngIf="searchResult.length<1">No products found.</h3>
-    <div class="row ">
-        <div 
-        class="col-xs-12 col-md-4"
-        style="margin-top: 30px;"
-        *ngFor="let result of searchResult">
-            <app-product-list-item [product]="result"></app-product-list-item>
+    <div class="container" *ngIf="!isLoading">
+        <h3 *ngIf="searchResult.length<1">No products found.</h3>
+        <div class="row ">
+            <div 
+            class="col-xs-12 col-md-4"
+            style="margin-top: 30px;"
+            *ngFor="let result of searchResult">
+                <app-product-list-item [product]="result"></app-product-list-item>
+            </div>
         </div>
     </div>
+    <hr>
 </div>
-<hr>
+<div *ngIf="isLoading" class="text-center">
+    <app-loading-spinner></app-loading-spinner>
+</div>

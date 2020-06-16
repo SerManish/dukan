@@ -22,12 +22,14 @@ export class ProductListComponent implements OnInit, OnDestroy {
   ) {}
   
   ngOnInit(): void {
+    this.isLoading = true;
     this.routeSub = this.route.fragment.subscribe(
       (fragment) => {
         this.searchQuery = fragment;
+        this.isLoading = true;
         this.productService.getProducts(this.searchQuery).then( products =>{
           this.searchResult = products;
-          this.isLoading=true;
+          this.isLoading=false;
         });
         // console.log(this.searchResult);
       }
