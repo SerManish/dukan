@@ -1,1 +1,71 @@
-<p>edit-orders works!</p>
+<div class="container">
+    <h3 *ngIf="orders.length<1"> No pending orders</h3>
+    <div *ngFor="let order of orders;index as ind" class=" bg-light text-dark">
+        <ng-container *ngIf="order.status!='Cancelled' &&  order.status!='Delivered'">
+            <hr>
+            <div class="row">
+                <div class="col-3 col-md-2">
+                    <h6>ORDER ID</h6>
+                </div>
+                <div class="col-9 col-md-4" >
+                    {{order.id | uppercase}}
+                </div>
+                <div class="col-3 col-md-2">
+                    <h6>USER ID</h6>
+                </div>
+                <div class="col-9 col-md-4">
+                    {{order.uid | uppercase}}
+                </div>
+            </div>
+            <table class="table table-secondary">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Quantity</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let product of order.products;index as i">
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{product.name}}</td>
+                    <td>{{product.quantity}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-6 col-md-2" >
+                    <h6>STATUS</h6>
+                </div>
+                <div class="col-6 col-md-4">
+                    {{order.status | uppercase}}
+                </div>
+                <div class="col-6 col-md-2" >
+                    <h6>Total Price</h6>
+                </div>
+                <div class="col-6 col-md-4">
+                    &#8377;&nbsp;{{order.price}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    Change Status
+                </div>
+                <div class="col-9">
+                    <select class="form-control" (change)="changeStatus(ind)" #status>
+                        <option>Order Received</option>
+                        <option>Packing</option>
+                        <option>Ready for Shipment</option>
+                        <option>In Transit</option>
+                        <option>Out For Delivery</option>
+                        <option>Delivered</option>
+                        <option>Cancelled</option>
+                    </select>
+                </div>
+            </div>
+            <hr>
+        </ng-container>
+    </div>
+</div>
+
+

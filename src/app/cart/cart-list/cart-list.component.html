@@ -2,7 +2,7 @@
     <div class="row no-gutters" *ngIf="cartList.length">
         <div class="col-12 col-md-8 offset-md-2">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table table-striped table-dark">
                     <thead>
                         <tr>
                             <th style="width: 10%;" class="d-none d-md-table-cell"> </th>
@@ -15,36 +15,50 @@
                     </thead>
                     <tbody>
                         <ng-container *ngFor = "let item of cartList;index as i">
-                            <tr table-row [cartItem]="item" [index]="i"></tr>
+                            <tr table-row [cartItem]="item" [index]="i" style="background-color: #007bff;"></tr>
                         </ng-container>
-                        <tr class="table-light">
-                            <th colspan="2"  class="d-none d-md-table-cell"> </th>
-                            <th colspan="2" class="text-right bg-info">Total Cart Price</th>
-                            <th class="text-center bg-info">&#8377;&nbsp;{{cartPrice | number:'1.2-2'}}</th>
-                            <th class=" bg-info"> </th>
+                        <tr>
+                            <th class="bg-dark d-none d-md-table-cell"></th>
+                            <th class="bg-dark text-white">Total Cart Price</th>
+                            <th class="bg-dark d-none d-md-table-cell"></th>
+                            <th class="bg-dark"></th>
+                            <th class="text-center bg-dark text-white">&#8377;&nbsp;{{cartPrice | number:'1.2-2'}}</th>
+                            <th class="bg-dark"></th>
                         </tr>
-                        <tr class="table-light">
-                            <th colspan="2"  class="d-none d-md-table-cell"> </th>
-                            <th colspan="2" class="text-right bg-info">Shipping Charges</th>
-                            <th class="text-center bg-info">&#8377;&nbsp;{{shippingCharges | number:'1.2-2'}}</th>
-                            <th class=" bg-info"> </th>
+                        <tr>
+                            <th class="bg-dark d-none d-md-table-cell noborder"></th>
+                            <th class="bg-dark text-white noborder">Shipping Charges</th>
+                            <th class="bg-dark d-none d-md-table-cell noborder"></th>
+                            <th class="bg-dark noborder"></th>
+                            <th class="text-center bg-dark text-white noborder">+ &#8377;&nbsp;{{shippingCharges | number:'1.2-2'}}</th>
+                            <th class="bg-dark noborder"></th>
                         </tr>
-                        <tr class="table-light">
-                            <th colspan="2" class="d-none  d-md-table-cell"> </th>
-                            <th colspan="2" class="text-right bg-info">Total Price</th>
-                            <th class="text-center bg-info">&#8377;&nbsp;{{totalPrice | number:'1.2-2'}}</th>
-                            <th class=" bg-info"> </th>
+                        <tr>
+                            <th class="bg-dark d-none d-md-table-cell noborder"></th>
+                            <th class="bg-dark text-white noborder">Discount</th>
+                            <th class="bg-dark d-none d-md-table-cell noborder"></th>
+                            <th class="bg-dark noborder"></th>
+                            <th class="text-center bg-dark text-white noborder">- &#8377;&nbsp;{{0.00 | number:'1.2-2'}}</th>
+                            <th class="bg-dark noborder"></th>
+                        </tr>
+                        <tr>
+                            <th class="bg-dark d-none d-md-table-cell"></th>
+                            <th class="bg-dark text-white">Total Price</th>
+                            <th class="bg-dark d-none d-md-table-cell"></th>
+                            <th class="bg-dark"></th>
+                            <th class="text-center bg-dark text-white">&#8377;&nbsp;{{totalPrice | number:'1.2-2'}}</th>
+                            <th class="bg-dark"></th>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col mb-2">
                 <div class="row">
-                    <div class="col-sm-12  col-md-6">
-                        <button class="btn btn-block btn-light" type="button" (click)="continueShopping()">Continue Shopping</button>
+                    <div class="col-sm-12 col-md-6 mb-1">
+                        <button class="btn btn-lg btn-block btn-dark text-uppercase" type="button" (click)="continueShopping()">Continue Shopping</button>
                     </div>
                     <div class="col-sm-12 col-md-6 text-right">
-                        <button class="btn btn-lg btn-block btn-success text-uppercase" (click)="checkout()">Checkout</button>
+                        <button class="btn btn-lg btn-block btn-primary text-uppercase" (click)="checkout()">Checkout</button>
                     </div>
                 </div>
             </div>
@@ -56,7 +70,7 @@
             <h3>Your Cart is Empty</h3>
             <br>
             <span class="d-flex justify-content-center">
-                <img src="https://cdn.dribbble.com/users/687236/screenshots/5838300/group_852_2x.png"
+                <img src="../../../assets/images/—Pngtree—shopping cart convenient icon_4637407.png"
                 class="img-fluid" style="height: 40vh;"
                 >
             </span>

@@ -14,11 +14,11 @@ export class CartService
     quantityUpdated = new BehaviorSubject<number[]>(null);
     cartPriceUpdated = new Subject<number>();
 
-    private cartPrice = 0;
-    private shippingCharges = 50;
+    cartPrice = 0;
+    shippingCharges = 50;
 
-    public quantity:number[]=[];
-    public orders:Product[] = [];
+    quantity:number[]=[];
+    orders:Product[] = [];
 
     private uid:string = null;
 
@@ -63,10 +63,9 @@ export class CartService
         this.cartPrice-=this.orders[index].price*this.quantity[index];
         this.afs.collection('carts').doc(this.uid).collection('item').doc(JSON.stringify(this.orders[index].id)).delete();
         this.orders.splice(index,1);
-        this.quantity.splice(index,1);
         this.cartPriceUpdated.next(this.cartPrice);
-        this.ordersUpdated.next(this.orders);
         this.quantityUpdated.next(this.quantity);
+        this.quantity.splice(index,1);
     }
 
     calculateCartPrice()

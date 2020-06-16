@@ -11,6 +11,7 @@
         </div>
     </div>
     <div class="col-sm-12 col-md-4 nav-links" *ngIf="isLoggedIn">
+        <button type="button" routerLink="/orders">ORDERS</button>
         <button type="button" routerLink="/cart/cartlist" *ngIf="!isAdmin">CART</button>
         <button type="button" routerLink="/admin" *ngIf="isAdmin">ADMIN</button>
         <button type="button" style="margin-left: 2px;" (click)='onLogout()'>LOGOUT</button>

@@ -1,24 +1,15 @@
-<div class="item" (click)="openDetails()">
-  <div class="d-inline-flex flex-wrap">
-    <div class="image-div">
-      <img class= "listimage" [src]="product.imagePath">
-    </div>
-    <div class="details">
-      <h1 class="display-4" style="color: #FFFFFF;">{{product.name}}</h1>
-      <p>
-          {{product.shortDescription}}
-      </p>
-      <div class="row">
-        <div class="col-12 col-md-8">
-          <span class="price align-middle">
-            <span class="badge" style="font-size: 100%;background-color: #31708E;">&#8377; </span>&nbsp;
-              {{product.price}}
-          </span>&nbsp;
-          <span class="badge" style="font-size: 100%;padding: 0.3rem; background-color: #687864;" *ngIf="product.isBestSeller">
-            BestSeller
-          </span>
-        </div>
-      </div>
-    </div>
+<div (click)="openDetails()" class="card">
+  <div>
+    <img [src]="product.imagePath" [alt]="product.name">
   </div>
+  <div class="info">
+    <h3> {{product.name}} </h3>
+    <h5> <i class="fa fa-inr"></i> {{product.price}} 
+      <span class="badge" style="background-color: #ed4726; color: white;vertical-align: top;" *ngIf="product.isBestSeller">
+        BestSeller
+      </span>
+    </h5>
+  </div>  
 </div>
+
+
