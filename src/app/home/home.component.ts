@@ -2,25 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+	selector: 'app-home',
+	templateUrl: './home.component.html',
+	styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
-  carouselImages = [];
+	carouselImages = [];
 
-  products = []
+	products = []
 
-  constructor(private afs: AngularFirestore) { }
+	constructor(private afs: AngularFirestore) { }
 
-  ngOnInit(): void {
-    this.afs.collection('home').doc('slider').ref.get().then(doc=>{
-      this.carouselImages = doc.data().images;
-    });
-    this.afs.collection('home').doc('category').ref.get().then(doc=>{
-      this.products = doc.data().images;
-    });
-  }
+	// gets the slider and category information from the database
+	ngOnInit(): void {
+	this.afs.collection('home').doc('slider').ref.get().then(doc => {
+		this.carouselImages = doc.data().images;
+	});
+	this.afs.collection('home').doc('category').ref.get().then(doc => {
+		this.products = doc.data().images;
+	});
+	}
 
 }

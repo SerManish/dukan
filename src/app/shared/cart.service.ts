@@ -22,6 +22,7 @@ export class CartService
 
     private uid:string = null;
 
+    // it subscribes to authservice for user data which is widely used in this service to interact with database
     constructor(private afs: AngularFirestore,private authservice :AuthService)
     {
         authservice.user.subscribe(
@@ -30,13 +31,16 @@ export class CartService
                     this.uid = user.uid;
             }
         );
-}
+    }
 
+    // it uploads a cart item to cart of the user in database
     uploadItem(quantity:number,id:string)
     {
         this.afs.collection('carts').doc(this.uid).collection('item').doc(JSON.stringify(id)).set({quantity:quantity});
     }
 
+    /* it takes a product as argument and add it to cart with quantity 1
+     if it doesn't exist and upload the cart item using uploadItem() method*/
     addToCart(order:Product)
     {
         let found = false;
@@ -58,6 +62,8 @@ export class CartService
         }
     }
 
+    /* removes item at a given index locally as well as in database it also adjusts the cartPrice
+       it nexts the updated cartprice and quantity array for other components to subscribe*/
     removeItem(index:number)
     {
         this.cartPrice-=this.orders[index].price*this.quantity[index];
@@ -68,9 +74,10 @@ export class CartService
         this.quantity.splice(index,1);
     }
 
+    /* iterates over every order to calculate cartPrice and nexts them so that other
+       components can subscribe to the changes */
     calculateCartPrice()
     {
-        console.log(this.orders);
         if(this.orders.length==0)
         {
             this.cartPriceUpdated.next(0);
@@ -82,11 +89,15 @@ export class CartService
         this.cartPriceUpdated.next(this.cartPrice)
     }
 
+    // return shipping charges
     getShippingCharges()
     {
         return this.shippingCharges;
     }
 
+    /* it updated the quantity at a given index both locally and in database 
+       it uses uploadItem() method to upload the new item with updated quantity
+       it also adjusts and sends a cartPrice so that other components can subscribe to the changes*/
     updateQuantity(index:number,newQuantity:number)
     {
         this.uploadItem(newQuantity,this.orders[index].id);

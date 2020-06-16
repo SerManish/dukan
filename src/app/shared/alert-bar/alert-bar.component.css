@@ -12,7 +12,6 @@
     z-index: 999;
   }
   
-  /* The close button */
   .closebtn {
     margin-left: 15px;
     color: white;
@@ -24,7 +23,6 @@
     transition: 0.3s;
   }
   
-  /* When moving the mouse over the close button */
   .closebtn:hover {
     color: black;
   }

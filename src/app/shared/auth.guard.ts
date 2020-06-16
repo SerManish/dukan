@@ -12,6 +12,8 @@ export class AuthGuard implements CanActivate {
         private router: Router
     ){}
 
+    //returns true if user data available
+    //else /home address is returned to navigate user to home if not autologged in
     canActivate(route: ActivatedRouteSnapshot, router: RouterStateSnapshot){
         return this.authService.user.pipe(
             take(1),

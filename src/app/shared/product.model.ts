@@ -3,6 +3,7 @@ class Details{
     detailDesc: string;
 }
 
+//structure of a product
 export class Product{
     constructor(
     public id: string,

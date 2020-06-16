@@ -1,66 +1,48 @@
 <div class="screen-container">
-    <div class="form-wrap">
-        <div class="flex-container">
-            <div
-            [ngClass]="{ 'cur-mode':isLoginMode }"
-            (click)="switchToLogin(true)"
-            type="button">Login</div>
-            
-            <div
-            [ngClass]="{ 'cur-mode':!isLoginMode }"
-            (click)="switchToLogin(false)"
-            type="button">Signup</div>
+	<div class="form-wrap">
+		<div class="flex-container">
+			<div [ngClass]="{ 'cur-mode':isLoginMode }" (click)="switchToLogin(true)" type="button">Login</div>
 
-            <div class="f-close" style="flex-basis: 10%;" (click)="onClose()"><i class="fa fa-close"></i></div>
-        </div>
-        
-        <form class="d-form" (ngSubmit)="onSubmit()" [formGroup]="authForm">
-            <div class="form-group" *ngIf="!isLoginMode">
-                <label for="name">Name</label>
-                <input type="text" 
-                class="form-control" 
-                formControlName="name" 
-                id="name">
-            </div>
-            
-            <div formGroupName='userData'>
-                <div class="form-group">
-                    <label for="email">E-Mail</label>
-                    <input type="email" 
-                    class="form-control" 
-                    formControlName="email" 
-                    id="email">
-                    <p *ngIf = "!authForm.get('userData.email').valid && authForm.get('userData.email').touched ">Enter a valid email.</p>
-                </div>    
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" 
-                    class="form-control" 
-                    formControlName="password" 
-                    id="password">
-                    <p *ngIf = "!authForm.get('userData.password').valid && authForm.get('userData.password').touched ">Password should be of atleast 6 characters.</p>
-                </div>
-            </div>
+			<div [ngClass]="{ 'cur-mode':!isLoginMode }" (click)="switchToLogin(false)" type="button">Signup</div>
 
-            <div *ngIf="!isLoginMode">
-                <label>Gender: </label>
-                <div class="radio gender" *ngFor = "let gender of genders">
-                    <input type="radio" 
-                    formControlName="gender" 
-                    [value]="gender" 
-                    required> 
-                    {{gender}}
-                </div>
-            </div>
-            
-            <div class="row justify-content-center mt-3">
-                <button class="btn btn-success submit-btn"
-                type="submit"
-                [disabled]="
+			<div class="f-close" style="flex-basis: 10%;" (click)="onClose()"><i class="fa fa-close"></i></div>
+		</div>
+
+		<form class="d-form" (ngSubmit)="onSubmit()" [formGroup]="authForm">
+			<div class="form-group" *ngIf="!isLoginMode">
+				<label for="name">Name</label>
+				<input type="text" class="form-control" formControlName="name" id="name">
+			</div>
+
+			<div formGroupName='userData'>
+				<div class="form-group">
+					<label for="email">E-Mail</label>
+					<input type="email" class="form-control" formControlName="email" id="email">
+					<p *ngIf="!authForm.get('userData.email').valid && authForm.get('userData.email').touched ">Enter a
+						valid email.</p>
+				</div>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" formControlName="password" id="password">
+					<p *ngIf="!authForm.get('userData.password').valid && authForm.get('userData.password').touched ">
+						Password should be of atleast 6 characters.</p>
+				</div>
+			</div>
+
+			<div *ngIf="!isLoginMode">
+				<label>Gender: </label>
+				<div class="radio gender" *ngFor="let gender of genders">
+					<input type="radio" formControlName="gender" [value]="gender" required>
+					{{gender}}
+				</div>
+			</div>
+
+			<div class="row justify-content-center mt-3">
+				<button class="btn btn-success submit-btn" type="submit" [disabled]="
                     (isLoginMode && !authForm.get('userData').valid) ||
                     (!isLoginMode && !authForm.valid) || 
                     isLoading"> {{isLoginMode?'Login':'Signup'}} </button>
-            </div>
-        </form>
-    </div>
+			</div>
+		</form>
+	</div>
 </div>

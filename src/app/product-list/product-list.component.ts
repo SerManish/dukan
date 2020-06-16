@@ -5,17 +5,17 @@ import { Product } from '../shared/product.model';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-product-list',
-  templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
+	selector: 'app-product-list',
+	templateUrl: './product-list.component.html',
+	styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit, OnDestroy {
 
   searchQuery: string = null;
-  searchResult:Product[] = [];
+  searchResult:Product[] = [];//list of product recieved from the server
   filteredResult:Product[] = [];
   routeSub: Subscription;
-  isLoading=false;
+  isLoading=false;//boolean to guide spinner
   filter;
   filterSub = new Subscription;
 
@@ -24,6 +24,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) {}
   
+  /* extracts search keyword from url fragment and then use product service to search that keyword in datbase
+	 and store it in search result array it also manage the spinner */
   ngOnInit(): void {
     this.isLoading = true;
     this.routeSub = this.route.fragment.subscribe(
@@ -36,14 +38,11 @@ export class ProductListComponent implements OnInit, OnDestroy {
           this.filteredResult.sort((a,b)=> a.isBestSeller?-1:1);
           this.isLoading=false;
         });
-        // console.log(this.searchResult);
       }
     );
 
     this.filterSub = this.productService.applyFilter.subscribe(data=>{
       this.filter = data;
-      // console.log(this.filter);
-
       this.filteredResult = [];
       for(let i=0;i<this.searchResult.length;i++){
         const price = this.searchResult[i].price;
@@ -65,6 +64,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     });
   }
 
+  // unsubscribes the subsription to avoid memory leaks
   ngOnDestroy(){
     this.routeSub.unsubscribe();
     this.filterSub.unsubscribe();

@@ -1,44 +1,42 @@
 <div class="container" *ngIf="!isLoading">
-    <div class="row" style="background-color: white; padding: 5px;">
-        <div class="col-md-5">
-            <div class="p-container card">
-                <img [src]="product.imagePath" 
-                [alt]=" 'Image of '+product.name "
-                height="">
-            </div>
-            <div class="row" style="padding: 0% 1% 0% 1%;">
-                <div class="buy col ">
-                    <button type="button" (click)="addToCart()">
-                        <i class="fa fa-shopping-cart"> ADD TO CART</i>
-                    </button>
-                </div>
-                <div class="buy col">
-                    <button type="button" (click)="buyNow()">
-                        <i class="fa fa-bolt"> BUY NOW</i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7 mg-top">
-            
-            <h2> {{product.name}} </h2>
-            <h5><i class="fa fa-inr"> {{product.price}} </i></h5>
-            
-            <div class="p-container">
-                <h4> Description </h4>
-                <hr>
-                <p> {{product.longDescription}} </p>
-            </div>
-            
-            <div class="p-container">
-                <h4> Specifications </h4>
-                <hr>
-                <div *ngFor="let detail of product.details">
-                    <p>
-                        <b> {{detail.detailType + ' : '}} </b>  {{detail.detailDesc}} 
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+	<div class="row" style="background-color: white; padding: 5px;">
+		<div class="col-md-5">
+			<div class="p-container card">
+				<img [src]="product.imagePath" [alt]=" 'Image of '+product.name " height="">
+			</div>
+			<div class="row" style="padding: 0% 1% 0% 1%;">
+				<div class="buy col ">
+					<button type="button" (click)="addToCart()">
+						<i class="fa fa-shopping-cart"> ADD TO CART</i>
+					</button>
+				</div>
+				<div class="buy col">
+					<button type="button" (click)="buyNow()">
+						<i class="fa fa-bolt"> BUY NOW</i>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-7 mg-top">
+
+			<h2> {{product.name}} </h2>
+			<h5><i class="fa fa-inr"> {{product.price}} </i></h5>
+
+			<div class="p-container">
+				<h4> Description </h4>
+				<hr>
+				<p> {{product.longDescription}} </p>
+			</div>
+
+			<div class="p-container">
+				<h4> Specifications </h4>
+				<hr>
+				<div *ngFor="let detail of product.details">
+					<p>
+						<b> {{detail.detailType + ' : '}} </b> {{detail.detailDesc}}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -14,6 +14,7 @@ export class PreloadGuard implements Resolve<any>{
         private afs: AngularFirestore
     ){}
     
+    //preloads all the orders of a user before the route, /orders is loaded
     resolve(
         next: ActivatedRouteSnapshot,
         state: RouterStateSnapshot
