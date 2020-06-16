@@ -91,6 +91,25 @@ export class ProductService {
 					products.push(product);
 				});
 			})
+		await this.productsRef.where("category", "==", query)
+		.get()
+		.then(function (querySnapshot) {
+			querySnapshot.forEach(function (doc) {
+				const data = doc.data();
+				let product: Product = new Product(
+					data.id,
+					data.category,
+					data.name,
+					data.imagePath,
+					data.shortDescription,
+					data.longDescription,
+					data.price,
+					data.details,
+					data.isBestSeller
+				)
+				products.push(product);
+			});
+		})
 
 		return products;
 	}
