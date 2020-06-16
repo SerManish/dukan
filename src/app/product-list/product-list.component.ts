@@ -15,6 +15,8 @@ export class ProductListComponent implements OnInit, OnDestroy {
   searchResult:Product[] = [];
   routeSub: Subscription;
   isLoading=false;
+  filter;
+  filterSub = new Subscription;
 
   constructor(
     private productService: ProductService,
@@ -32,10 +34,16 @@ export class ProductListComponent implements OnInit, OnDestroy {
         // console.log(this.searchResult);
       }
     );
+
+    this.filterSub = this.productService.applyFilter.subscribe(data=>{
+      this.filter = data;
+      console.log(this.filter);
+    });
   }
 
   ngOnDestroy(){
     this.routeSub.unsubscribe();
+    this.filterSub.unsubscribe();
   }
 
 }
