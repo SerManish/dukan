@@ -10,13 +10,13 @@
             <button type="button" (click)="onSearch(searchInput.value)"><i class="fa fa-search"></i></button>
         </div>
     </div>
-    <div class="col-sm-12 col-md-4 nav-links" *ngIf="isLoggedIn">
-        <button type="button" routerLink="/orders">ORDERS</button>
-        <button type="button" routerLink="/cart/cartlist" *ngIf="!isAdmin">CART</button>
-        <button type="button" routerLink="/admin" *ngIf="isAdmin">ADMIN</button>
-        <button type="button" style="margin-left: 2px;" (click)='onLogout()'>LOGOUT</button>
+    <div class="col-sm-12 col-md-4 nav-links" *ngIf="isChecked && isLoggedIn">
+        <button type="button" routerLink="/orders" *ngIf="!isAdmin">ORDERS</button>
+        <button type="button" routerLink="/cart/cartlist" style="margin: 0px 2px;" *ngIf="!isAdmin">CART</button>
+        <button type="button" routerLink="/admin" style="margin: 0px 2px;" *ngIf="isAdmin">ADMIN</button>
+        <button type="button" (click)='onLogout()'>LOGOUT</button>
     </div>
-    <div class="col-sm-12 col-md-4 nav-links" *ngIf="!isLoggedIn">
+    <div class="col-sm-12 col-md-4 nav-links" *ngIf="isChecked && !isLoggedIn">
         <button type="button" (click)="onSignup()">SIGNUP</button>
         <button type="button" (click)="onLogin()" style="margin-left: 2px;">LOGIN</button>
     </div>

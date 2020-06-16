@@ -1,5 +1,5 @@
 <div class="container">
-    <form>
+    <form #filterForm>
         <div class="row" style="padding-top: 0.5rem;">
             <div class="col-8">
                 <p style="font-size: larger;">Search Options</p>
@@ -19,7 +19,7 @@
                         <div class="input-group-prepend">
                         <div class="input-group-text"><b>&#8377;</b></div>
                         </div>
-                        <input name="minimum" type="number" class="form-control" placeholder="Minimum">
+                        <input name="minimum" type="number" class="form-control" placeholder="Minimum" max="999999999">
                     </div>
                 </div>
                 <div class="col-6 col-md-12">
@@ -27,14 +27,14 @@
                         <div class="input-group-prepend">
                         <div class="input-group-text"><b>&#8377;</b></div>
                         </div>
-                        <input name="maximum" type="number" class="form-control" placeholder="Maximum">
+                        <input name="maximum" type="number" class="form-control" placeholder="Maximum" max="999999999">
                     </div>
                 </div>
                 <div class="col-6 col-md-6">
-                    <button type="button" class="btn btn-block">Clear</button>
+                    <button type="button" class="btn btn-block" (click)="onClear()">Clear</button>
                 </div>
                 <div class="col-6 col-md-6">
-                    <button type="button" class="btn btn-block">Apply</button>
+                    <button type="button" class="btn btn-block" (click)="onApplyFilter()">Apply</button>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                     <label for="amount">Sort By</label>
                 </div>
                 <div class="col-12">
-                    <select class="form-control">
+                    <select class="form-control" name="sortBy" (change)="onApplyFilter()">
                         <option>Relevance</option>
                         <option>Price : High to Low</option>
                         <option>Price : Low to High</option>

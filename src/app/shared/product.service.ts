@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ProductService{
 
     productsRef = this.afs.collection('products').ref;
+    applyFilter = new BehaviorSubject<any>(null);
 
     productConverter = {
       toFirestore: function(product:Product) {

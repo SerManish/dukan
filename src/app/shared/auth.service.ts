@@ -15,6 +15,7 @@ export class AuthService implements OnDestroy{
   user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
   isLoggedIn = false;
   isAdmin = new BehaviorSubject<boolean>(false);
+  isChecked = new BehaviorSubject<boolean>(false);
   afSub: Subscription;
 
     constructor(
@@ -29,12 +30,14 @@ export class AuthService implements OnDestroy{
             this.isAdmin.next(!!doc.data().isAdmin);
             this.user.next(user);
             this.isLoggedIn = true;
+            this.isChecked.next(true);
           });
         }
         else{
           this.user.next(user);
           this.isLoggedIn = false;
           this.isAdmin.next(false);
+          this.isChecked.next(true);
         }
         
       });

@@ -13,8 +13,10 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   isLoggedIn: boolean = false;
   isAdmin: boolean = false;
+  isChecked = false;
   userSub: Subscription;
   adminSub: Subscription;
+  checkSub: Subscription;
   
   constructor(
     private loginService: LoginService,
@@ -28,6 +30,11 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     this.adminSub = this.authService.isAdmin.subscribe(isAdmin=>{
       this.isAdmin = isAdmin;
     })
+
+    this.checkSub = this.authService.isChecked.subscribe(data=>{
+      this.isChecked = data;
+    });
+
   }
 
   isModeLogin = this.loginService.isModeLogin;
