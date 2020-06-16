@@ -7,7 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 
 export class ProductService {
 
-	productsRef = this.afs.collection('products').ref;
+    productsRef = this.afs.collection('products').ref;
+    applyFilter = new BehaviorSubject<any>(null);
 
 	//converts firestore objects to custom object, and vice versa
 	//check firestore docs for more details
