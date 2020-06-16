@@ -1,54 +1,56 @@
-<form>
-    <div class="row" style="padding-top: 0.5rem;">
-        <div class="col-8">
-            <p style="font-size: larger;">Search Options</p>
-        </div>
-        <div class="col-4">
-            <button type="button" class="btn btn-primary float-right" (click)="toggleFilter()">{{showFilter?"Hide":"Show"}}</button>
-        </div>
-    </div>
-     
-    <div class="form-group" *ngIf="showFilter">
-        <div class="row">
-            <div class="col-12 col-md-12">
-                <label for="price">Price</label>
+<div class="container">
+    <form>
+        <div class="row" style="padding-top: 0.5rem;">
+            <div class="col-8">
+                <p style="font-size: larger;">Search Options</p>
             </div>
-            <div class="col-6 col-md-12">
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><b>&#8377;</b></div>
+            <div class="col-4">
+                <button type="button" class="btn float-right" (click)="toggleFilter()">{{showFilter?"Hide":"Show"}}</button>
+            </div>
+        </div>
+        
+        <div class="form-group" *ngIf="showFilter">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <label for="price">Price</label>
+                </div>
+                <div class="col-6 col-md-12">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text"><b>&#8377;</b></div>
+                        </div>
+                        <input name="minimum" type="number" class="form-control" placeholder="Minimum">
                     </div>
-                    <input name="minimum" type="number" class="form-control" placeholder="Minimum">
+                </div>
+                <div class="col-6 col-md-12">
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                        <div class="input-group-text"><b>&#8377;</b></div>
+                        </div>
+                        <input name="maximum" type="number" class="form-control" placeholder="Maximum">
+                    </div>
+                </div>
+                <div class="col-6 col-md-6">
+                    <button type="button" class="btn btn-block">Clear</button>
+                </div>
+                <div class="col-6 col-md-6">
+                    <button type="button" class="btn btn-block">Apply</button>
                 </div>
             </div>
-            <div class="col-6 col-md-12">
-                <div class="input-group mb-2">
-                    <div class="input-group-prepend">
-                      <div class="input-group-text"><b>&#8377;</b></div>
-                    </div>
-                    <input name="maximum" type="number" class="form-control" placeholder="Maximum">
+        </div>
+        <div class="form-group" *ngIf="showFilter">
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <label for="amount">Sort By</label>
+                </div>
+                <div class="col-12">
+                    <select class="form-control">
+                        <option>Relevance</option>
+                        <option>Price : High to Low</option>
+                        <option>Price : Low to High</option>
+                    </select>
                 </div>
             </div>
-            <div class="col-6 col-md-6">
-                <button type="button" class="btn btn-block btn-info">Clear</button>
-            </div>
-            <div class="col-6 col-md-6">
-                <button type="button" class="btn btn-block btn-success">Apply</button>
-            </div>
         </div>
-    </div>
-    <div class="form-group" *ngIf="showFilter">
-        <div class="row">
-            <div class="col-12 col-md-12">
-                <label for="amount">Sort By</label>
-            </div>
-            <div class="col-12">
-                <select class="form-control">
-                    <option>Relevance</option>
-                    <option>Price : High to Low</option>
-                    <option>Price : Low to High</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</form>
+    </form>
+</div>
