@@ -12,6 +12,7 @@ import { AlertService } from './alert-bar/alert.service';
 export class AuthService implements OnDestroy{
 
   user: BehaviorSubject<User> = new BehaviorSubject<User>(null);
+  isLoggedIn = false;
   afSub: Subscription;
 
     constructor(
@@ -22,6 +23,12 @@ export class AuthService implements OnDestroy{
     ){
       this.afSub = this.afAuth.authState.subscribe( user => {
         this.user.next(user);
+        if(user){
+          this.isLoggedIn = true;
+        }
+        else{
+          this.isLoggedIn = false;
+        }
         // console.log('user',user);
       });
     }
