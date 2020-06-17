@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-home',
@@ -12,7 +13,10 @@ export class HomeComponent implements OnInit {
 
 	products = []
 
-	constructor(private afs: AngularFirestore) { }
+	constructor(
+		private afs: AngularFirestore,
+		private router: Router
+		) { }
 
 	// gets the slider and category information from the database
 	ngOnInit(): void {
@@ -22,6 +26,11 @@ export class HomeComponent implements OnInit {
 	this.afs.collection('home').doc('category').ref.get().then(doc => {
 		this.products = doc.data().images;
 	});
+	}
+
+	onSearch(query: string) {
+		if (query.trim() != '')
+			this.router.navigate(['productlist'], { fragment: query.trim() });
 	}
 
 }
