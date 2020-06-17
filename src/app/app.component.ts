@@ -13,10 +13,11 @@ export class AppComponent implements OnInit, OnDestroy {
     private loginService: LoginService
   ){}
 
-  title = 'dukan';
+  title = 'Dukan';
   isLoginDialog: boolean = false;
   loginSub: Subscription;
 
+  // takes login state from login service to initialize the app for logined and non logined users differently
   ngOnInit(){
     this.loginSub = this.loginService.isModeLogin.subscribe(
       (dialogState) => {

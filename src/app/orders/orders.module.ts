@@ -5,7 +5,7 @@ import { OrdersComponent } from './orders.component';
 import { PreloadGuard } from '../shared/preload.guard';
 
 const routes:Routes = [
-    {path:'orders',component: OrdersComponent, resolve:{ords:PreloadGuard}}
+    {path:'',component: OrdersComponent, resolve:{ords:PreloadGuard}}
 ]
 
 @NgModule({

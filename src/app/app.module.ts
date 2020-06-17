@@ -7,17 +7,12 @@ import { AngularFireAnalyticsModule } from '@angular/fire/analytics';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 
 import { HomeModule} from './home/home.module';
-import { ProductListModule } from './product-list/product-list.module';
-import { CartModule } from './cart/cart.module';
-import { ProductPageModule } from './product-page/product-page.module';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
 import { NavigationBarComponent } from './navigation-bar/navigation-bar.component';
 import { LoginComponent } from './login/login.component';
-import { AdminModule } from './admin/admin.module';
 import { environment } from 'src/environments/environment';
-import { OrdersModule } from './orders/orders.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -36,11 +31,6 @@ import { SharedModule } from './shared/shared.module';
     ReactiveFormsModule,
     AppRoutingModule,
     HomeModule,
-    ProductListModule,
-    CartModule,
-    ProductPageModule,
-    AdminModule,
-    OrdersModule,
     SharedModule
   ],
   providers: [],
