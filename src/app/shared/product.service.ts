@@ -8,7 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 export class ProductService {
 
     productsRef = this.afs.collection('products').ref;
-    applyFilter = new BehaviorSubject<any>(null);
+    applyFilter = new BehaviorSubject<any>({ min: 0, max: 999999999, sortBy: 'Relevance' });
 
 	//converts firestore objects to custom object, and vice versa
 	//check firestore docs for more details
