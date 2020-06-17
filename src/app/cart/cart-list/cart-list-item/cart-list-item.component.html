@@ -1,5 +1,5 @@
 <td class="d-none d-md-table-cell"><img [src]="cartItem.imagePath" class="listimage img-thumbnail"> </td>
-<td>{{cartItem.name}}</td>
+<td>{{cartItem.name|titlecase}}</td>
 <td class="text-center d-none d-md-table-cell">&#8377;&nbsp;{{cartItem.price}}</td>
 <td>
     <select class="form-control" [(ngModel)]="quantity" name="quantity" (change)="updatePrice()">

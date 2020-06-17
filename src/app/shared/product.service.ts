@@ -72,6 +72,7 @@ export class ProductService {
 	//gets all products from firestore whose name matches with the query 
 	async getProducts(query: string) {
 		let products: Product[] = [];
+		query = query.toLowerCase();
 		await this.productsRef.where("name", "==", query)
 			.get()
 			.then(function (querySnapshot) {
