@@ -22,17 +22,17 @@ export class EditProductsComponent implements OnInit {
 
 	// initializes newForm
 	ngOnInit(): void {
-	this.newForm = new FormGroup({
-		'id': new FormControl(null, Validators.required),
-		'name': new FormControl(null, Validators.required),
-		'category': new FormControl(null, Validators.required),
-		'imagePath': new FormControl(null, Validators.required),
-		'shortDescription': new FormControl(null, Validators.required),
-		'longDescription': new FormControl(null, Validators.required),
-		'price': new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
-		'isBestSeller': new FormControl(false),
-		'details': this.detailsArray
-	});
+		this.newForm = new FormGroup({
+			'id': new FormControl(null, Validators.required),
+			'name': new FormControl(null, Validators.required),
+			'category': new FormControl(null, Validators.required),
+			'imagePath': new FormControl(null, Validators.required),
+			'description': new FormControl(null, Validators.required),
+			'tags': new FormControl(null, Validators.required),
+			'price': new FormControl(null, [Validators.required, Validators.pattern(/^[1-9]+[0-9]*$/)]),
+			'isBestSeller': new FormControl(false),
+			'details': this.detailsArray
+		});
 	}
 
 	// add new Detail to newForm
@@ -47,24 +47,26 @@ export class EditProductsComponent implements OnInit {
 
 	// remove the detail with given index
 	removeDetail(index: number) {
-	this.detailsArray.controls.splice(index, 1);
-	this.newForm.value['details'].splice(index, 1);
+		this.detailsArray.controls.splice(index, 1);
+		this.newForm.value['details'].splice(index, 1);
 	}
 
 	// calls a admin service which saves the products into database
 	addProduct() {
-	this.adminService.addProduct(this.newForm.value);
-	this.clearForm();
+		let data = this.newForm.value;
+		data.tags = this.newForm.value.tags.split(" ");
+		this.adminService.addProduct(data);
+		this.clearForm();
 	}
 
 	// calls a admin service which deletes a product of given id
 	deleteProduct() {
-	this.adminService.deleteProduct(this.deleteForm.value.id);
+		this.adminService.deleteProduct(this.deleteForm.value.id);
 	}
 
 	// clear the selected form;
 	clearForm() {
-	this.newForm.reset();
+		this.newForm.reset();
 	}
 
 }

@@ -37,6 +37,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
 				this.productId = params['id'];
 				this.productService.getProductById(this.productId).then(prod => {
 					this.product = prod;
+					console.log('pp',prod);
 					this.isLoading = false;
 				}).catch(error => {
 					this.alertService.alert(error, 'danger');

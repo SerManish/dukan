@@ -10,10 +10,11 @@ export class Product{
     public category: string,
     public name: string,
     public imagePath: string,
-    public shortDescription: string,
-    public longDescription: string,
+    public description: string,
     public price: number,
     public details: Details[],
-    public isBestSeller:boolean)
+    public isBestSeller:boolean,
+    public tags:string[]
+    )
     {}
 }

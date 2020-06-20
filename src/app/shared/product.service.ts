@@ -23,9 +23,8 @@ export class ProductService {
 				category: product.category,
 				name: product.name,
 				imagePath: product.imagePath,
-				shortDescription: product.shortDescription,
+				description: product.description,
 				price: product.price,
-				longDescription: product.longDescription,
 				details: details,
 				isBestSeller: product.isBestSeller,
 			}
@@ -37,11 +36,11 @@ export class ProductService {
 				data.category,
 				data.name,
 				data.imagePath,
-				data.shortDescription,
-				data.longDescription,
+				data.description,
 				data.price,
 				data.details,
-				data.isBestSeller
+				data.isBestSeller,
+				data.tags
 			);
 			return product;
 		}
@@ -71,8 +70,11 @@ export class ProductService {
 
 	//gets all products from firestore whose name matches with the query 
 	async getProducts(query: string) {
+		let queries = query.split(" ");
 		let products: Product[] = [];
-		await this.productsRef.where("name", "==", query)
+		
+		queries.forEach(async element => {
+			await this.productsRef.where("tags", "array-contains", element)
 			.get()
 			.then(function (querySnapshot) {
 				querySnapshot.forEach(function (doc) {
@@ -82,15 +84,17 @@ export class ProductService {
 						data.category,
 						data.name,
 						data.imagePath,
-						data.shortDescription,
-						data.longDescription,
+						data.description,
 						data.price,
 						data.details,
-						data.isBestSeller
+						data.isBestSeller,
+						data.tags
 					)
 					products.push(product);
 				});
 			})
+		});
+		
 		await this.productsRef.where("category", "==", query)
 		.get()
 		.then(function (querySnapshot) {
@@ -101,11 +105,11 @@ export class ProductService {
 					data.category,
 					data.name,
 					data.imagePath,
-					data.shortDescription,
-					data.longDescription,
+					data.description,
 					data.price,
 					data.details,
-					data.isBestSeller
+					data.isBestSeller,
+					data.tags
 				)
 				products.push(product);
 			});
