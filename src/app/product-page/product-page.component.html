@@ -33,7 +33,7 @@
 				<hr>
 				<div *ngFor="let detail of product.details">
 					<p>
-						<b> {{(detail.detailType | titlecase) + ' : '}} </b> {{detail.detailDesc}}
+						<b> {{(detail.detailType|titlecase) + ' : '}} </b> {{detail.detailDesc | titlecase}}
 					</p>
 				</div>
 			</div>
