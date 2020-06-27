@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
+import { AdminService } from 'src/app/shared/admin.service';
 
 @Component({
   selector: 'app-edit-home',
@@ -14,7 +15,7 @@ export class EditHomeComponent implements OnInit {
   categoryForm:FormGroup;
   categoryArray:FormArray = new FormArray([]);
 
-  constructor() { }
+  constructor(private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.sliderForm = new FormGroup({
@@ -27,12 +28,12 @@ export class EditHomeComponent implements OnInit {
 
   changeHome()
   {
-    console.table(this.sliderForm.value);
+    this.adminService.saveSlider(this.imageArray.value);
   }
 
   changeCategory()
   {
-    console.table(this.categoryForm.value);
+    this.adminService.saveCategory(this.categoryArray.value);
   }
 
   addNewImage()
@@ -68,7 +69,10 @@ export class EditHomeComponent implements OnInit {
 
   clearForm()
   {
-    this.sliderForm.reset();
+    if(this.mode=='slider')
+      this.sliderForm.reset();
+    else
+      this.categoryForm.reset();
   }
 
 }

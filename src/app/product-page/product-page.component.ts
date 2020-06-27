@@ -38,6 +38,7 @@ export class ProductPageComponent implements OnInit, OnDestroy {
           this.isLoading=false;
         }).catch( error=>{
           this.alertService.alert(error, 'danger');
+          this.router.navigate(['/home']);
         });
       }
     );

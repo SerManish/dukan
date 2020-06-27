@@ -12,7 +12,9 @@ import { Subscription } from 'rxjs';
 export class NavigationBarComponent implements OnInit, OnDestroy {
 
   isLoggedIn: boolean = false;
+  isAdmin: boolean = false;
   userSub: Subscription;
+  adminSub: Subscription;
   
   constructor(
     private loginService: LoginService,
@@ -20,9 +22,12 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.userSub = this.authService.user.subscribe( (user) => {
-      // console.log('user in nav', user);
-      this.isLoggedIn = user==null?false:true;
+      this.isLoggedIn = !!user;
     });
+
+    this.adminSub = this.authService.isAdmin.subscribe(isAdmin=>{
+      this.isAdmin = isAdmin;
+    })
   }
 
   isModeLogin = this.loginService.isModeLogin;
@@ -51,6 +56,7 @@ export class NavigationBarComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(){
     this.userSub.unsubscribe();
+    this.adminSub.unsubscribe();
   }
 
 }

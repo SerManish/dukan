@@ -45,6 +45,34 @@ export class AdminService{
         });
     }
 
+    saveSlider(images){
+        let imagesToSave = []
+        for(let image of images){
+            imagesToSave.push(image.source);
+        }
+        // console.log(imagesToSave);
+        this.afs.collection('home').doc('slider').set({images: imagesToSave})
+        .then(() =>{
+            this.alertService.alert('Slider images updated');
+        }).catch(error=>{
+            this.alertService.alert(error, 'danger');
+        });
+    }
+
+    saveCategory(categories){
+        let imagesToSave=[];
+        for(let category of categories){
+            imagesToSave.push({name: category.name, imagePath: category.source});
+        }
+        // console.log(imagesToSave, namesToSave);
+        this.afs.collection('home').doc('category').set({images: imagesToSave})
+        .then(() =>{
+            this.alertService.alert('Category items updated');
+        }).catch(error=>{
+            this.alertService.alert(error, 'danger');
+        });
+    }
+
     async recieveAllOrders()
     {
         // this.afs.collection('orders').ref.get().

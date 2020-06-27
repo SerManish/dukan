@@ -9,9 +9,12 @@ import { OrderSuccessComponent } from './order-success/order-success.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { LoadingSpinnerComponent } from '../shared/loading-spinner/loading-spinner.component';
+import { AuthGuard } from '../shared/auth.guard';
 
 const routes:Routes = [
-    { path:'cart',component:CartComponent, children:[
+    { path:'cart',component:CartComponent,
+        canActivate: [AuthGuard], 
+        children:[
         {path:'cartlist',component:CartListComponent},
         {path:'address',component:AddressComponent},
         {path:'ordersuccess',component:OrderSuccessComponent}
